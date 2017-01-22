@@ -1,0 +1,26 @@
+<select name="cat_id">
+      <!--{if $catlevel1}-->
+      
+      <!--{loop $catlevel1 $onecat_l1}-->
+      <option value ="{$onecat_l1[cat_id]}" {$onecat_l1[selected]}>{$onecat_l1[name]}</option>
+        <!--{loop $catlevel2 $onecat_l2}-->
+        <!--{if $onecat_l2[parent_id] == $onecat_l1[cat_id]}-->
+        <option value ="{$onecat_l2[cat_id]}" {$onecat_l2[selected]}>--{$onecat_l2[name]}</option>
+          <!--{loop $catlevel3 $onecat_l3}-->
+          <!--{if $onecat_l3[parent_id] == $onecat_l2[cat_id]}-->
+          <option value ="{$onecat_l3[cat_id]}" {$onecat_l3[selected]}>----{$onecat_l3[name]}</option>
+            <!--{loop $catlevel4 $onecat_l4}-->
+	        <!--{if $onecat_l4[parent_id] == $onecat_l3[cat_id]}-->
+	        <option value ="{$onecat_l4[cat_id]}" {$onecat_l4[selected]}>------{$onecat_l4[name]}</option>
+            <!--{/if}-->
+	        <!--{/loop}-->
+          <!--{/if}-->
+	      <!--{/loop}-->
+	    <!--{/if}-->
+	    <!--{/loop}-->
+	    
+	  <!--{/loop}-->
+	  <!--{/if}-->
+      
+      
+</select>      

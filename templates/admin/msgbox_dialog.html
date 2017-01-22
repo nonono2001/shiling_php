@@ -1,0 +1,47 @@
+<style type="text/css">
+.dialog_message_contents {
+	margin: 0px 10px;
+padding-left: 80px;
+padding-top: 15px;
+padding-bottom: 20px;
+font-size: 14px;
+font-weight: 600;
+color: #555;
+}
+.dialog_message_warn {
+background: url(templates/admin/images/alert.png) no-repeat 20px top;
+}
+.dialog_message_success {
+background: url(templates/admin/images/right.png) no-repeat 20px top;
+}
+.dialog_message_error {
+background: url(templates/admin/images/error.png) no-repeat 20px top;
+}
+.dialog_message_password {
+background: url(templates/admin/images/alert.png) no-repeat 20px top;
+}
+
+</style>
+
+
+<div style="float:left;width:100%;margin-top: 20px;margin-bottom:10px;">
+  <div class="dialog_message_contents dialog_message_{$type}">{$msg}</div>
+</div>
+<!--{if $type == 'password'}-->
+<div style="float:left;width:100%;margin-bottom: 20px;margin-top: -15px;">
+<div style="float:left;width:100%;margin-bottom: 5px;">
+  <span style="margin-left:50px;font-size:12px;height:18px;line-height:18px;">为了确保安全，请输入登录密码：</span>
+</div>
+<div style="float:left;width:100%;">
+  <input id="messagebox_password" type="password" name="login_password" style="width:200px;height:28px;font-size:18px;margin-left:50px;" />
+</div>
+</div>
+<!--{/if}-->
+
+<div style="float:left;width:100%;margin-bottom:30px;">
+  <input type="submit" id="messagebox_yes_btn" value="确定" class="btnText" style="height:26px;line-height:26px;margin:0px;margin-left: 85px;padding:0 15px;" onclick="msgbox_click_yes('{$msgboxid}');">
+  <input type="button" value="取消" class="canlText" style="margin-left:20px;" onclick="msgbox_click_no('{$msgboxid}');">
+</div>
+<div class="cf"></div>
+
+<input id="id_of_replytid" type="hidden" value="{$replytid}" />

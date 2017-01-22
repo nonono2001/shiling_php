@@ -1,0 +1,205 @@
+<!--{template page_header}-->
+<script charset="utf-8" src="templates/admin/js/kindeditor-4.1.7/kindeditor.js"></script>
+<script charset="utf-8" src="templates/admin/js/kindeditor-4.1.7/lang/zh_CN.js"></script>
+<script type="text/javascript">
+        //对详情编辑器进行初始化。
+		var option = {
+		  items:[
+        'source', '|', 'undo', 'redo', '|', 'template', 'cut', 'copy', 'paste',
+        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+        'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+        'anchor', 'link', 'unlink','|', 'preview'],
+		  resizeType: 1,
+		  filterMode: false //是否开启过滤模式
+		};
+        var editor;
+        KindEditor.ready(function(K) {
+                editor = K.create( '#custompage_content_editor', option);				
+        });
+
+</script>
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <!--{if $custompage_id>0}-->
+        <span>编辑自定义页面</span>
+        <!--{else}-->
+        <span>新建自定义页面</span>
+        <!--{/if}-->
+        <span style="font-size:12px;">（有<span style="color:red">*</span>为必填项）</span>
+    </h2>
+  </div>
+  
+  <style type="text/css">
+  .bianji_ul li{
+  	float: left;
+text-align: left;
+width: 100%;
+margin-top: 10px;
+  }
+  
+  .bianji_ul .fill_left{
+	float: left;
+text-align: right;
+line-height: 30px;
+height: 30px;
+width: 140px;
+margin-right: 10px;
+  }
+  
+  .bianji_ul .fill_right{
+	float: left;
+width: 400px;
+  }
+.fillnamechar{
+	color: #4372B0;
+font-weight: bold;
+}
+  textarea{
+	border: 1px solid #CECECF;
+line-height: 18px;
+color: #555;
+background: white;
+padding: 4px;
+vertical-align: middle;
+box-shadow: 2px 2px 2px #F0F0F0 inset;
+margin: 0px;
+  }
+  </style>
+  <div class="workground-content scroll-div">
+    <!--{if $custompage_id>0}-->
+    <form id="cp_add_form" action="ajax.php?mod=custompage&act=do_edit_custompage" method="post"  target="form-target" >
+    <input type="hidden" name="cpid" value="{$custompage_id}" />
+    <!--{else}-->
+    <form id="cp_add_form" action="ajax.php?mod=custompage&act=do_add_custompage" method="post"  target="form-target" >
+    <!--{/if}-->
+    <ul style="float:left;width:100%;margin-bottom:50px;" class="bianji_ul">
+      <li>
+        <div class="fill_left"><span class="fillnamechar">标题</span></div>
+        <div class="fill_right" style="width: 170px;"><input type="text" id="cp_title" name="cp_title" value="{$custompagerow[title]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('cp_title','cp_title_tip',1,50);" /></div>
+        <div style="line-height:25px;color:red;font-weight:bold;margin-top:5px;margin-right:3px;font-size:14px;">*</div><div style="line-height:30px;" id="cp_title_tip">1~50字</div><div style="line-height:30px;">，中英文都算1个字符</div>
+      </li>
+      
+      <li>
+        <div class="fill_left" style="line-height:220px;"><span class="fillnamechar">内容</span></div>
+        <style type="text/css">
+        #kindeditor_wrap div{
+	        float:none;
+        }
+        .ke-container, .ke-container-default, .ke-container div, .ke-container-default div{
+			float:none;/*全屏编辑时，样式出错问题。*/
+        }
+        </style>
+        <div id="kindeditor_wrap" style="width:660px;">
+          <textarea  id="custompage_content_editor" name="cp_content" style="width:580px;height:400px;" >
+          {$custompagerow[content_specialchar]}
+          </textarea>
+        </div>
+        <div style="line-height:220px;">
+        <div><span>图文并茂</span></div>
+        </div>
+      </li>
+      
+      
+      
+      <li>
+      <div style="float:left;margin-left: 250px;margin-top:20px;">
+  		<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="save_cp_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+  		</a>
+      </div>
+      </li>
+      
+      
+    </ul>
+    </form>
+    <iframe style="display:none;" id="form-target" name="form-target"></iframe>
+    
+    <script type="text/javascript">
+    //检查各项所填值长度、格式等正不正确
+    //返回值true或false
+    function check_custompage_info()
+    {	
+		//得到自定义页面的标题。必填
+   		var cp_title = $.trim($("#cp_title").val());
+   		var title_len = cp_title.length;//标题长度。
+   		if(title_len>50 || title_len<1)
+   		{
+   			$.jBox.tip('标题必填，长度为1~50个字符','error');
+   			return false;
+   		}
+   		//标题的格式没有特殊要求。任何字符都可以。
+   		
+   		//文章内容。可以为空，没有字数限制，js端不用检查。
+   		
+   		return true;
+    }
+    function save_cp_btn_click(t)
+    {
+    	if($(t).find('em').text() == '保存')
+    	{
+    		//让保存按钮暂时失效
+    		$(t).find('em').text('保存中...');
+    		$(t).addClass('W_btn_a_disable');
+    		
+    		var res = check_custompage_info();
+    		if(res)
+    		{
+    			editor.sync();
+        		$("#cp_add_form").submit();
+    		}
+    		else
+    		{
+    			//保存按钮恢复
+        		$(t).find('em').text('保存');
+        		$(t).removeClass('W_btn_a_disable');
+    		}
+    	}
+    }
+    
+    //参数res为：err或者succ
+    function afterupload(res, msg)
+    {
+    	//如果失败，则恢复保存按钮。给出错误提示
+    	if(res == 'err')
+    	{
+    		$.jBox.tip(msg,'error');
+    		//保存按钮恢复
+    		$("#baocun_btn").find('em').text('保存');
+    		$("#baocun_btn").removeClass('W_btn_a_disable');
+			return;
+    	}
+    	else //如果成功，则跳转到文章列表页。
+    	{
+    		window.location.href="admin.php?mod=cpl";
+    	}
+    	
+    }
+    
+    
+    
+    
+    </script>
+    
+  </div>
+
+</div>
+
+</div>
+
+</div>
+<!--{template page_footer}-->

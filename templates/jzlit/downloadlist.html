@@ -1,0 +1,105 @@
+<!--{template page_header}-->
+
+<div class="mainwrap">
+
+  <div class="main">
+  
+  <div style="width:100%;margin-bottom:20px;">
+    
+    <div>
+    <!--{template leftside}-->    
+    </div>
+    
+    <div class="main_right_wrap">
+      <div class="main_right_title">
+        <span>{$Breadcrumb}</span>
+      </div>
+      
+      <style type="text/css">
+      .articlelist_ul{
+			float:left;
+      		width:100%;
+      	margin-top:15px;
+      }
+      .articlelist_ul li{
+			float:left;
+      		text-align:left;
+      		margin-bottom:15px;
+      		border-bottom: 1px dashed #0088D6;
+      	padding-bottom:5px;
+      	width:670px;
+      	margin-left:10px;
+      }
+      .articlelist_ul li div{
+			width:100%;
+      	margin-bottom:5px;
+      }
+      .articlelist_ul li div .article_title{
+			display: inline-block;
+  font-family: Microsoft YaHei;
+  font-size: 15px;
+  color: #180603;
+  font-weight: bold;
+  line-height: 140%;
+      }
+      .articlelist_ul li div .article_title:hover{
+			color: #0064d4;
+      }
+      .article_pub_time{
+	  display: inline-block;
+  font-family: Microsoft YaHei;
+  font-size: 11px;
+  color: #929292;
+  font-weight: normal;
+  line-height: 140%;
+      	margin-bottom: 3px;
+      	  margin-top: 3px;
+      }
+      
+      .article_abs{
+	display: inline-block;
+  font-family: Microsoft YaHei;
+  font-size: 14px;
+  color: #5a5a5a;
+  font-weight: normal;
+  line-height: 140%;
+      font-style: italic;
+      }
+      </style>
+      <div name="articlelist-area" style="width:100%;    padding-bottom: 10px;">
+          <ul class="articlelist_ul">
+            <!--{loop $downloadlist $onedownload}-->
+            <li>
+              <div><a class="article_title" href="index.php?mod=dl&act=download_detail&did={$onedownload[id]}" target="_blank">{$onedownload[download_title]}</a></div>
+              <div><span class="article_abs">{$onedownload[download_des]}</span></div>
+            </li>
+            <!--{/loop}-->
+            
+          </ul>
+          
+          <div style="float:left;width:100%;margin-top:30px;">
+		    <!--{if !$page_arr[page]}-->
+		      <div style="float:left;width:100%;text-align:center;">
+		        <span style="color:red;">当前没有任何内容</span>
+		      </div>
+		    <!--{else}-->
+		      <!--{template page_list}-->
+		    <!--{/if}-->
+		  </div>
+      </div>
+    
+    </div>
+    
+  </div>
+  
+  
+  
+  <div class="cf"></div>
+  </div>
+
+
+<div class="cf"></div>
+</div><!--mainwrap end-->
+
+
+<!--{template page_footer}-->

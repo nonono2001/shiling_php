@@ -1,0 +1,123 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>编辑产品对比的值</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+    
+  
+  
+  <div>
+    <div id="base_info_prod" style="width: 100%;font-family: microsoft yahei;font-size: 14px;margin-top:20px;" data="{$productrow[product_id]}">您正在编辑产品“{$productrow[name]} 货号：{$productrow[bn]}”的对比值，请按以下属性名称，填写相应的值。每个值最多300字符。记得保存哦！</div>
+    <div id="compare_key_wrap" style="margin-top:30px;">
+      <!--{if !$property_name_list}-->
+      <div style="width: 100%;font-family: microsoft yahei;font-size: 14px;margin-bottom:20px;" id="no_property_tip">您还没有输入任何的产品对比属性名称，<a href="admin.php?mod=pl&act=comparekey" class="blue_a" target="_self">现在就去添加！</a></div>
+      <!--{else}-->
+      <!--{loop $property_name_list $onepropertyid $onename}-->
+      <div style="width:100%;margin-bottom:20px;" class="property_kv_wrap">
+        <div class="one_property_name" data="{$onepropertyid}" style="height: 32px;line-height: 32px;margin-right: 20px;font-size:12px;font-family:microsoft yahei;text-align:right;width:200px;">{$onename}</div>
+        <input type="text" name="" value="{$property_value_list[$onepropertyid][property_value]}" style="width: 200px;height: 22px;float: left;box-shadow: none;">
+      </div>
+      <!--{/loop}-->
+      <!--{/if}-->
+    
+    </div>
+    <!--{if $property_name_list}-->
+    <div style="float:left;width:100%;margin-left: 250px;margin-top:20px;">
+  		<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="baocun_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+  		</a>
+    </div>
+    <!--{/if}-->
+  </div>
+  
+  
+  </div>
+
+
+
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+//保存按钮点击
+function baocun_btn_click(t)
+{
+	if($(t).find('em').text() == '保存')
+	{
+		
+		//获取input的值。
+		var property_kv_rows = $("#compare_key_wrap .property_kv_wrap");
+		var property_data =  {};
+		for(i=0;i<property_kv_rows.length;i++)
+		{
+			var onepropertyid = $(property_kv_rows[i]).find('.one_property_name').attr('data');
+			var onepropertyvalue = $(property_kv_rows[i]).find('input').val();
+			property_data[onepropertyid] = onepropertyvalue;
+		}		
+		//让保存按钮暂时失效
+		$(t).find('em').text('保存中...');
+		$(t).addClass('W_btn_a_disable');
+		
+		//产品id
+		var current_product_id = $("#base_info_prod").attr('data');
+		
+		//传送门
+		  $.ajax({
+	           		type:"post",
+	           		async : true,//false表示同步，true表示异步
+	           		url:"ajax.php?mod=product&act=do_save_compare_property_value",
+	           		data:{'compare_property_data':property_data, 'product_id':current_product_id},
+	           		beforeSend: function(XMLHttpRequest){
+	           			loadingbox();
+	           		},
+	           		success: function(data){//data是json格式
+	           			data = jQuery.parseJSON( data );
+	           			if(data.done)//成功
+	           			{
+	           				close_loadingbox();
+	           				$.jBox.tip('保存成功', 'success');
+	           				
+	           				setTimeout('location.reload();', 1000);//1秒后刷新页面
+	           				return;
+	           			}
+	           			else//失败
+	           			{
+	           				close_loadingbox();
+	           				$.jBox.tip(data.msg, 'error');
+	           				
+	           				//保存按钮恢复
+	           	    		$(t).find('em').text('保存');
+	           	    		$(t).removeClass('W_btn_a_disable');
+	           				return;
+	           			}
+	           		}
+	           		});
+	}
+	
+}
+
+
+
+</script>
+
+
+</div>
+<!--{template page_footer}-->

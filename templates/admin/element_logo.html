@@ -1,0 +1,105 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<style type="text/css">
+.fill_left {
+float: left;
+text-align: right;
+line-height: 30px;
+height: 30px;
+width: 140px;
+margin-right: 10px;
+}
+.fillnamechar {
+color: #4372B0;
+font-weight: bold;
+}
+</style>
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>网站Logo图片管理</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+  
+    <div style="width:100%">
+    <div style="width:100%;margin-top:20px;">
+      <div class="fill_left"><span class="fillnamechar">当前Logo：</span></div>
+      <div class="fill_right" style=""><img src="{$currentlogo}" onerror="javascript:logoError(this);"/></div>
+      
+    </div>
+    
+    <form id="logo_sub_form" action="ajax.php?mod=element&act=do_save_logo" method="post" enctype="multipart/form-data" target="form-target" >
+    <div style="width:100%;margin-top:40px;">
+      <div class="fill_left"><span class="fillnamechar">新Logo：</span></div>
+      <div class="fill_right" style=""><input type="file" name="logo_pic"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+      <div class="fill_right" style="line-height: 30px;margin-left:20px;"><span>格式支持jpg、png、gif，图片最大1M。</span></div>
+    </div>
+    
+    </form>
+    <iframe style="display:none;" id="form-target" name="form-target"></iframe>
+    
+    <div style="float:left;margin-left: 185px;margin-top: 50px;">
+  		<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="save_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+  		</a>
+    </div>
+      
+    </div>
+    
+  </div>
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+function save_btn_click(t)
+{
+	if($(t).find('em').text() == '保存')
+	{
+		//让保存按钮暂时失效
+		$(t).find('em').text('保存中...');
+		$(t).addClass('W_btn_a_disable');
+
+    	$("#logo_sub_form").submit();
+	
+	}
+}
+
+//参数res为：err或者succ
+function afterupload(res, msg)
+{
+	//如果失败，则恢复保存按钮。给出错误提示
+	if(res == 'err')
+	{
+		$.jBox.tip(msg,'error');
+		//保存按钮恢复
+		$("#baocun_btn").find('em').text('保存');
+		$("#baocun_btn").removeClass('W_btn_a_disable');
+		return;
+	}
+	else //如果成功
+	{
+		setTimeout('location.reload();', 1000);//1秒后刷新页面
+	}
+	
+}
+</script>
+
+
+</div>
+<!--{template page_footer}-->

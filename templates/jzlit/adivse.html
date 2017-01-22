@@ -1,0 +1,125 @@
+<!--{template page_header}-->
+
+
+
+<div class="mainwrap">
+
+  <div class="main">
+  
+  <div style="width:100%;margin-bottom:20px;">
+    
+    <div>
+    <!--{template leftside}-->    
+    </div>
+    
+    <div class="main_right_wrap">
+      <div class="main_right_title">
+        <span>留言板</span>
+      </div>
+      
+      <div name="advise_wrap" style="width:100%;  margin-top: 20px;    margin-bottom: 20px;">
+        <!--div style="width:600px;margin-left:55px;">
+        <div style="  line-height: 33px;
+  font-family: 'Microsoft YaHei';
+  color: rgb(255, 102, 0);
+  font-size: 26px;
+  letter-spacing: 1px;margin-bottom:20px;">我们会做的更好！WE WILL DO BETTER</div>
+        <div style="  line-height: 190%;
+  font-family: 'Microsoft YaHei';
+  color: rgb(102, 102, 102);
+  font-size: 16px;">如果您对我们有什么建议、投诉、需求，可以在此留言告诉我们，我们会在第一时间了解并及时与您联系。</div>
+        </div-->
+        
+        <div style="width:600px;margin-left:55px;margin-top:0px;">
+          <style type="text/css">
+          .message_left{
+float: left;
+  width: 560px;
+  height: 34px;
+  line-height: 34px;
+  background-color: #ffffff;
+  background-image: none;
+  font-size: 14px;
+  color: #777777;
+  text-align: left;
+  word-spacing: 0px;
+  padding: 0px;
+  font-family: Microsoft YaHei;
+  border: 0px;
+  border-color: #333333;
+  border-style: none;
+  clear: both;
+  margin-top: 8px;
+  margin-left: 0px;
+}
+		  input.input_message , textarea.input_message{
+	
+		  	float: left;
+  width: 560px;
+  height: 24px;
+  line-height: 24px;
+  background-color: #eeeeee;
+  background-image: none;
+  font-size: 14px;
+  color: #777777;
+  text-align: left;
+  word-spacing: 0px;
+  padding: 4px;
+  font-family: Microsoft YaHei;
+  border: 1px;
+  border-color: #aaa;
+  border-style: dashed;
+  clear: both;
+  margin-top: 0px;
+  margin-left: 0px;
+		  }
+          </style>
+          <form id="user_advise_form" action="index.php?mod=advise&act=dosub" method="post" target="_self" >
+          <div class="message_left">您的姓名</div>
+          <input type="text" name="username" value="" class="input_message"/>
+        
+          <div class="message_left">您的电话</div>
+          <input type="text" name="userphone" value="" class="input_message"/>
+          
+          <div class="message_left">您的邮箱</div>
+          <input type="text" name="useremail" value="" class="input_message"/>
+          
+          <div class="message_left">留言内容</div>
+          <textarea name="advisecontent" value="" class="input_message" style="height:122px;  resize: both;"></textarea>
+          
+          <div style="width:100%;">
+          <div class="message_left" style="width:55px;">验证码</div>
+          <input id="valicode" type="text" class="reginput" name="valicode" style="width:103px;float:left;margin-top:12px;"/>
+          <img id="valipicture" style="margin-left: 10px;margin-top: 16px;width: 55px;float: left;" src="module/ValidateCode.php" alt="验证码" width="50" height="20" vspace="6" align="absmiddle" onclick='this.src="module/ValidateCode.php?"+new Date().getTime()' />
+          </div>
+          <input type="button" value="提交" class="btnText" style="  margin-top: 30px;  width: 100px;  height: 40px;  margin-left: 0px;" onclick="advise_sub_click();">
+          </form>
+        </div>
+        
+      </div>
+      
+      <div class="list_bot"></div>
+    </div>
+    
+  </div>
+  
+  <script type="text/javascript">
+  //提交按钮触发。
+  function advise_sub_click()
+  {
+	  $("#user_advise_form").submit();
+
+  
+  }
+  
+  
+  </script>  
+  <div class="cf"></div>
+  </div>
+
+
+<div class="cf"></div>
+</div><!--mainwrap end-->
+
+
+<!--{template page_footer}-->

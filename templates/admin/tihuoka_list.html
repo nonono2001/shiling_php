@@ -1,0 +1,234 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>提货卡列表</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+  
+  <div style="margin-top:5px;margin-bottom: 6px;"><input type="button" value="删除选中项" class="btnText" style="cursor:pointer;float:right;margin-left:0px;" onclick="delete_selected_item('');"></div>
+  
+  <script type="text/javascript">
+$(document).ready(function(){
+	 $(".stripe_tb tr").mouseover(function(){
+	 $(this).addClass("over");}).mouseout(function(){
+	 $(this).removeClass("over");})
+	 $(".stripe_tb tr:even").addClass("alt");
+});
+
+function all_select_click(t)
+{
+	//全选复选框被选中
+	if($(t).attr("checked")=="checked")//注意这里不能用true来判断。
+	{
+		//让下面每个条目的复选框都被选中
+		$("input[name=one_item_select]").attr("checked",true);
+		$("input[name=one_item_select]").closest('tr').addClass('checked');
+	}
+	else//全选复选框被去掉
+	{
+		//让下面每个条目前的复选框都被去掉
+		$("input[name=one_item_select]").attr("checked",false);
+		$("input[name=one_item_select]").closest('tr').removeClass('checked');
+	}
+	
+}
+function one_select_click(t)
+{
+	if($(t).attr("checked")=="checked")//选中。注意这里不能用true来判断。
+	{
+		$(t).closest('tr').addClass('checked');
+	}
+	else //去除勾选
+	{
+		//让全选复选框去除勾选
+		$("#all_item_select").attr('checked',false);
+		$(t).closest('tr').removeClass('checked');
+
+	}
+}
+
+</script>
+  <style type="text/css">
+.stripe_tb th {
+/*background: #B5CBE6;*/
+color: #333;
+line-height: 20px;
+height: 23px;
+padding: 0 8px;
+text-align: left;
+font-size: 12px;
+	font-weight:normal;
+	border-bottom: 1px #ccc solid;
+	border-right: 1px solid #ccc;
+}
+
+.stripe_tb tr td{
+	padding: 5px 8px;
+text-align: left;
+font-size: 12px;
+	vertical-align: top;
+}
+.stripe_tb tr.alt td {
+background: #ecf6fc;
+}
+.stripe_tb tr.over td {
+background: #FEF3D1;
+}
+.stripe_tb tr.checked td {
+	background: #FEF3D1;
+}
+
+.tb_geziimg img{
+	width:100px;
+	margin:0px 5px 5px 0px;
+}
+    </style>
+    
+    <table width="100%" border="0" class="stripe_tb" style="float:left;table-layout:fixed;border-spacing: 0px;width:1500px;">
+      
+      <thead style="background: url(templates/admin/images/tile_bg.png) 0 -100px;">
+	  <!--thead style="background: #E9E9E9;"-->
+      <tr class="">
+        <th style="width: 4%;border-left: 1px solid #ccc;">全选<input id="all_item_select" type="checkbox" onclick="all_select_click(this);" style="vertical-align: middle;margin-left: 2px;" /></th>
+        <th style="width: 6%">提货券号</th>
+        <th style="width: 6%;">提货码</th>
+        <th style="width: 7%;">有效期开始日期</th>
+        <th style="width: 7%;">有效期结束日期</th>
+        <th style="width: 7%;">是否已要求提货</th>
+        <th style="width: 9%;">发出请求的时间</th>
+		<th style="width: 6%;"> 收货人姓名</th>
+		<th style="width: 6%;">收货人电话</th>
+		<th style="width: 6%;">收货人地址</th>
+		<th style="width: 6%;">发货状态</th>
+		<th style="width: 6%;">物流公司</th>
+		<th style="width: 6%;">物流单号</th>
+		<th style="width: 6%;"> 发货时间</th>
+		<th style="width: 7%;"> 管理员备注</th>
+		<th style="width: 5%;"> 操作</th>
+      </tr>
+      </thead>
+      <tbody> 
+      
+      <!--{loop $thcard_info $oneinfo}-->
+      <tr class="">
+          <td style="text-align: center;"><input name="one_item_select" onclick="one_select_click(this);" type="checkbox" value="{$oneinfo[id]}" style="margin-top:2px;"/></td>
+          <td>{$oneinfo[tihuoquanhao]}</td>
+		  <td>{$oneinfo[tihuoma]}</td>
+		  <td>{$oneinfo[validity_start_date]}</td>
+		  <td>{$oneinfo[validity_end_date]}</td>
+		  <td><!--{eval $is_asked_tihuo=$oneinfo[is_ask_tihuo]>0?'是':'否';}-->{$is_asked_tihuo}</td>
+		  <td>{$oneinfo[last_ask_tihuo_time]}</td>
+		  <td>{$oneinfo[shouhuoren_name]}</td>
+		  <td>{$oneinfo[shouhuoren_phone]}</td>
+		  <td>{$oneinfo[shouhuoren_address]}</td>
+		  <td><!--{eval $is_shipped=$oneinfo[ship_status]=='shipped'?'已发货':'未发货';}-->{$is_shipped}</td>
+		  <td>{$oneinfo[wuliu_company]}</td>
+		  <td>{$oneinfo[wuliu_danhao]}</td>
+		  <td>{$oneinfo[ship_time]}</td>
+		  <td>{$oneinfo[remarks]}</td>
+          <td>
+            <a href="admin.php?mod=thcard&act=thcard_edit&id={$oneinfo[id]}&topage={$topage}" class="blue_a" target="_self">编辑</a>
+            <a href="javascript:void(0);" onclick="delete_selected_item('{$oneinfo[id]}');" class="blue_a" >删除</a>
+          </td>
+      </tr>
+      <!--{/loop}-->
+
+      </tbody>
+    </table>
+    
+    
+    <div style="float:left;width:100%;margin-top:30px;">
+    <!--{if !$page_arr[page]}-->
+      <div style="float:left;width:100%;text-align:center;">
+        <span style="color:red;">当前无数据！</span>
+      </div>
+    <!--{else}-->
+      <!--{template page_list}-->
+    <!--{/if}-->
+    </div>
+    
+  </div>
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+//用弹出层，显示一个留言的内容。
+function show_advise_content(advise_id)
+{
+	$.jBox("post:ajax.php?mod=advise&act=show_one_advise_dialog&advise_id="+advise_id,{
+		id: 'show_advise',
+	    title: "查看留言",
+	    width: 500,
+	});
+
+}
+
+//批量删除被勾选的条目，或者只删除单个条目
+function delete_selected_item(aid)
+{
+	options = {
+            'onClickYes':function (){
+            	var aids = '';
+            	if(!aid)
+            	{
+            		//批量删除被勾选的条目。得到被勾选的条目的id，组成字符串传到ajax服务端。
+                	$("input[name=one_item_select]:checked").each(function(){
+                		aids = aids + $(this).val() + ",";
+                	});
+            	}
+            	else //aid不为空，说明只单独删除某一个条目
+            	{
+            		aids = aid;
+            	}
+            	
+            	$.ajax({
+            		type:"post",
+            		async : true,//false表示同步，true表示异步
+            		url:"ajax.php?mod=waxs_tihuo_card&act=do_delete_card",
+            		data:{aids:aids},
+            		beforeSend: function(XMLHttpRequest){
+            			
+            		},
+            		success: function(data){//data是json格式
+            			
+            			data = jQuery.parseJSON( data );
+            			if(data.done)//删除成功
+            			{
+            				$.jBox.tip('删除成功', 'success');
+            				setTimeout('location.reload();', 1000);//1秒后刷新页面
+            				
+            				return;
+            			}
+            			else//删除失败
+            			{
+            				$.jBox.tip(data.msg, 'error');
+            				return;
+            			}
+            		}
+            		});
+           }
+    };
+	MessageBox('warn','确定要删除吗?','提示', options);
+	
+}
+
+</script>
+
+
+</div>
+<!--{template page_footer}-->

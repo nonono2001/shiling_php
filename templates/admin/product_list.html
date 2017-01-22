@@ -1,0 +1,315 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>产品列表</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+  <div style="float:left;margin-top: 5px;margin-bottom:10px;">
+    <a href="admin.php?mod=pl&act=add" class="addwatch" target="_self">
+      <span><em style="">+</em>添加新产品</span>
+    </a>
+  </div>
+  <div style="margin-left: 50px;margin-top:5px;"><input type="button" value="删除所勾选产品" class="btnText" style="cursor:pointer;float:right;" onclick="delete_selected_product('');"></div>
+  <div style="margin-left: 422px;px;margin-top:5px;"><input type="button" value="保存排序" class="btnText" style="cursor:pointer;float:right;" onclick="save_product_paixu_num();"></div>
+  <script type="text/javascript">
+  function save_product_paixu_num()
+  {
+	  //找到所有name=cat_item_paixu的input
+	  var paixu_obj = new Array();
+	  var i = 0;
+	  $("input[name='product_item_paixu']").each(function(){
+		paixu_obj[i] = new Array();
+		paixu_obj[i] = {p_id:$(this).attr('data'), paixu_num:$(this).val()};
+		i++;
+		
+	  });
+	  if(!paixu_obj[0])
+	  {
+		alert('还没有产品！'); 
+		return;
+	  }
+	  //paixu_obj这个变量，也可以这样定义：var paixu_obj = [{p_id : '7', paixu_num:'1'},{p_id:"8", paixu_num:"2"}];
+	  
+	  //传送门
+	  $.ajax({
+           		type:"post",
+           		async : true,//false表示同步，true表示异步
+           		url:"ajax.php?mod=product&act=save_product_paixu",
+           		data:{product_paixu:paixu_obj},
+           		beforeSend: function(XMLHttpRequest){
+           			loadingbox();
+           		},
+           		success: function(data){//data是json格式
+           			data = jQuery.parseJSON( data );
+           			if(data.done)//成功
+           			{
+           				close_loadingbox();
+           				$.jBox.tip('保存成功', 'success');
+           				
+           				setTimeout('location.reload();', 1000);//1秒后刷新页面
+           				return;
+           			}
+           			else//保存失败
+           			{
+           				close_loadingbox();
+           				$.jBox.tip(data.msg, 'error');
+           				return;
+           			}
+           		}
+           		});
+	  
+	  //刷新本页面
+  }
+  </script>
+  <script type="text/javascript">
+$(document).ready(function(){
+	 $(".stripe_tb tr").mouseover(function(){
+	 $(this).addClass("over");}).mouseout(function(){
+	 $(this).removeClass("over");})
+	 $(".stripe_tb tr:even").addClass("alt");
+});
+
+function all_select_click(t)
+{
+	//全选复选框被选中
+	if($(t).attr("checked")=="checked")//注意这里不能用true来判断。
+	{
+		//让下面每个条目的复选框都被选中
+		$("input[name=one_item_select]").attr("checked",true);
+	}
+	else//全选复选框被去掉
+	{
+		//让下面每个条目前的复选框都被去掉
+		$("input[name=one_item_select]").attr("checked",false);
+	}
+	
+}
+function one_select_click(t)
+{
+	if($(t).attr("checked")=="checked")//注意这里不能用true来判断。
+	{
+		
+	}
+	else
+	{
+		//让全选复选框去除勾选
+		$("#all_item_select").attr('checked',false);
+	}
+}
+
+</script>
+
+<div style="width:100%;margin: 10px 0 10px 0;">
+<div>按分类筛选产品：</div>
+<form action="admin.php?mod=pl" method="post" target="_self">
+
+<script type="text/javascript">
+  $(document).ready(function(){
+	  //该ajax是为了加载一个widget
+	  $.ajax({
+  		type:"post",
+  		async : true,//false表示同步，true表示异步
+  		url:"ajax.php?mod=frontsite_widget&act=get_widget_product_cat_select&cat_id={$cat_id}",
+  		data:{},
+  		beforeSend: function(XMLHttpRequest){
+
+  		},
+  		success: function(data){//data就是widget的html
+  			
+  			if(data)//widget获取成功
+  			{
+  				//把data放在#newsbar_wrap下面
+  				$('#product_cat_select_widget').html(data);
+  				return;
+  			}
+  			else//widget获取成功失败
+  			{				
+  				return;
+  			}
+  		}
+  		});
+  });
+  </script>
+<div id="product_cat_select_widget">
+
+</div>
+<div style="margin-left: 30px;">
+<input type="submit" value="确定" class="btnText" style="cursor: pointer;
+    float: right;
+    height: 20px;
+    width: 40px;
+    padding: 0px;
+    margin: 0px;
+    line-height: 20px;">
+</div>
+</form>
+</div>
+  <style type="text/css">
+.stripe_tb th {
+/*background: #B5CBE6;*/
+color: #333;
+line-height: 20px;
+height: 23px;
+padding: 0 8px;
+text-align: left;
+font-size: 12px;
+	font-weight:normal;
+	border-bottom: 1px #ccc solid;
+	border-right: 1px solid #ccc;
+}
+
+.stripe_tb tr td{
+	padding: 5px 8px;
+text-align: left;
+font-size: 12px;
+	vertical-align: top;
+}
+.stripe_tb tr.alt td {
+background: #ecf6fc;
+}
+.stripe_tb tr.over td {
+background: #FEF3D1;
+}
+
+.tb_geziimg img{
+	width:100px;
+	margin:0px 5px 5px 0px;
+}
+    </style>
+    
+    <table width="100%" border="0" class="stripe_tb" style="float:left;table-layout:fixed;border-spacing: 0px;">
+      
+      <thead style="background: url(templates/admin/images/tile_bg.png) 0 -100px;">
+      <tr class="">
+        <th style="width: 6%;border-left: 1px solid #ccc;">全选<input id="all_item_select" type="checkbox" onclick="all_select_click(this);" style="vertical-align: middle;margin-left: 2px;" /></th> 
+        <th style="width: 7%">货号</th>
+        <th style="width: 20%;">产品名称</th> 
+        <th style="width: 10%;">价格</th> 
+        <th style="width: 10%;">所属分类</th> 
+        <th style="width: 10%;">发布及修改时间</th> 
+        <th style="width: 7%;">是否上架</th> 
+        <th style="width: 5%;">排序</th> 
+        <th style="width: 15%;">备注</th> 
+        <th style="width: 10%;">操作</th> 
+      </tr> 
+      </thead>  
+      
+      
+      <tbody> 
+      <!--{loop $products_info $oneproduct}-->
+      <tr class="">
+        <td><input name="one_item_select" onclick="one_select_click(this);" type="checkbox" value="{$oneproduct[product_id]}" style="margin-top:10px;"/></td> 
+        <td>{$oneproduct[bn]}</td>
+        <td>{$oneproduct[name]}</td> 
+        <td>售价：{$oneproduct[deal_price]}元<br />市场价：{$oneproduct[market_price]}元<br />成本：{$oneproduct[cost]}元</td> 
+        <td><!--{if $oneproduct[catname]}-->{$oneproduct[catname]}<!--{else}-->未分类<!--{/if}--></td> 
+        <td>
+            <span>发布时间：<br />{$oneproduct[createtime]}</span><br />
+            <span>最后修改时间：<br />{$oneproduct[lastmodifytime]}</span>
+        </td> 
+        <td>
+            <span><!--{if $oneproduct[is_sale] == 1}-->上架<!--{else}-->下架<!--{/if}--></span>
+        </td> 
+        <td>
+            <input type="text" name="product_item_paixu" data="$oneproduct[product_id]" value="{$oneproduct[paixu_num]}" style="width: 30px;padding: 0px;margin-top: 3px;margin-left: 4px;" />
+        </td> 
+        <td>
+            <span>{$oneproduct[mark]}</span>
+        </td> 
+        <td>
+            <a href="admin.php?mod=pl&act=edit&pid={$oneproduct[product_id]}" class="blue_a" target="_self">编辑</a>
+            <a href="javascript:void(0);" onclick="delete_selected_product('{$oneproduct[product_id]}');" class="blue_a" >删除</a>
+            <br /><br />
+            <a href="admin.php?mod=pl&act=edit_compare_value&pid={$oneproduct[product_id]}" class="blue_a" target="_blank">产品对比属性值</a>
+            
+        </td> 
+      </tr>
+      <!--{/loop}-->
+      </tbody>
+    </table>
+    
+    
+    <div style="float:left;width:100%;margin-top:30px;">
+    <!--{if !$page_arr[page]}-->
+      <div style="float:left;width:100%;text-align:center;">
+        <span style="color:red;">当前没有任何产品，请添加新产品！</span>
+      </div>
+    <!--{else}-->
+      <!--{template page_list}-->
+    <!--{/if}-->
+    </div>
+    
+  </div>
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+//批量删除被勾选的产品，或者只删除单条产品
+function delete_selected_product(pid)
+{
+	options = {
+            'onClickYes':function (){
+            	var pids = '';
+            	if(!pid)
+            	{
+            		//删除被勾选的产品。得到被勾选的产品的id，组成字符串传到ajax服务端。
+                	$("input[name=one_item_select]:checked").each(function(){
+                		pids = pids + $(this).val() + ",";
+                	});
+            	}
+            	else //pid不为空，说明只单独删除某一个产品
+            	{
+            		pids = pid;
+            	}
+            	
+            	$.ajax({
+            		type:"post",
+            		async : true,//false表示同步，true表示异步
+            		url:"ajax.php?mod=product&act=do_delete_products",
+            		data:{pids:pids},
+            		beforeSend: function(XMLHttpRequest){
+            			
+            		},
+            		success: function(data){//data是json格式
+            			
+            			data = jQuery.parseJSON( data );
+            			if(data.done)//删除成功
+            			{
+            				$.jBox.tip('删除成功', 'success');
+            				setTimeout('location.reload();', 1000);//1秒后刷新页面
+            				
+            				return;
+            			}
+            			else//删除失败
+            			{
+            				$.jBox.tip(data.msg, 'error');
+            				return;
+            			}
+            		}
+            		});
+           }
+    };
+	MessageBox('warn','确定要删除产品吗?','提示', options);
+	
+}
+
+</script>
+
+
+</div>
+<!--{template page_footer}-->

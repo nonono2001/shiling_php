@@ -1,0 +1,523 @@
+<!--{template page_header}-->
+<script charset="utf-8" src="templates/admin/js/kindeditor-4.1.7/kindeditor.js"></script>
+<script charset="utf-8" src="templates/admin/js/kindeditor-4.1.7/lang/zh_CN.js"></script>
+<script type="text/javascript">
+        //对产品详情编辑器进行初始化。
+		var option = {
+		  items:[
+        'source', '|', 'undo', 'redo', '|', 'template', 'cut', 'copy', 'paste',
+        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+        'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+        'anchor', 'link', 'unlink','|', 'preview'],
+		  resizeType: 1
+		};
+        var editor;
+        KindEditor.ready(function(K) {
+                editor = K.create( '#product_detail_editor', option);				
+        });
+
+</script>
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>产品编辑</span>
+        <span style="font-size:12px;">（有<span style="color:red">*</span>为必填项）</span>
+    </h2>
+  </div>
+  
+  <style type="text/css">
+  .bianji_ul li{
+  	float: left;
+text-align: left;
+width: 100%;
+margin-top: 10px;
+  }
+  
+  .bianji_ul .fill_left{
+	float: left;
+text-align: right;
+line-height: 30px;
+height: 30px;
+width: 140px;
+margin-right: 10px;
+  }
+  
+  .bianji_ul .fill_right{
+	float: left;
+width: 400px;
+  }
+.fillnamechar{
+	color: #4372B0;
+font-weight: bold;
+}
+  textarea{
+	border: 1px solid #CECECF;
+line-height: 18px;
+color: #555;
+background: white;
+padding: 4px;
+vertical-align: middle;
+box-shadow: 2px 2px 2px #F0F0F0 inset;
+margin: 0px;
+  }
+  </style>
+  <div class="workground-content scroll-div">
+    <form id="p_add_form" action="ajax.php?mod=product&act=do_edit_product" method="post" enctype="multipart/form-data" target="form-target" >
+    <input type="hidden" name="pid" value="{$product_id}" />
+    <ul style="float:left;width:100%;margin-bottom:50px;" class="bianji_ul">
+      <li>
+        <div class="fill_left"><span class="fillnamechar">货号</span></div>
+        <div class="fill_right" style="width: 170px;"><input type="text" id="product_bn" name="product_bn" value="{$productrow[bn]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('product_bn','bn_tip',1,10);" /></div>
+        <div style="line-height:30px;" id="bn_tip">1~10字</div><div style="line-height: 30px;"><span>（不填或者填0，相当于货号不变）</span></div>
+      </li>
+      <li>
+        <div class="fill_left"><span class="fillnamechar">产品名称</span></div>
+        <div class="fill_right" style="width: 170px;"><input type="text" id="product_name" name="product_name" value="{$productrow[name]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('product_name','pname_tip',1,50);" /></div>
+        <div style="line-height:25px;color:red;font-weight:bold;margin-top:5px;margin-right:3px;font-size:14px;">*</div><div style="line-height:30px;" id="pname_tip">1~50字</div><div style="line-height:30px;">，中英文都算1个字符</div>
+      </li>
+      <li>
+        <div class="fill_left"><span class="fillnamechar">所属分类</span></div>
+        <div class="fill_right" style="width: 170px;">
+          <select name="product_cat" id="product_cat" style="float:left;width: 160px;margin-top:2px;height: 28px;">
+            <option value="">未分类</option>
+            <!--{loop $catlevel1 $onecat_l1}-->
+            <option value="{$onecat_l1[cat_id]}" {$onecat_l1[is_selected]}>{$onecat_l1[name]}</option>
+              <!--{loop $catlevel2 $onecat_l2}-->
+              <!--{if $onecat_l2[parent_id] == $onecat_l1[cat_id]}-->
+              <option value="{$onecat_l2[cat_id]}" {$onecat_l2[is_selected]}>&nbsp;--&nbsp;{$onecat_l2[name]}</option>
+                <!--{loop $catlevel3 $onecat_l3}-->
+                <!--{if $onecat_l3[parent_id] == $onecat_l2[cat_id]}-->
+                <option value="{$onecat_l3[cat_id]}" {$onecat_l3[is_selected]}>&nbsp;--&nbsp;--&nbsp;{$onecat_l3[name]}</option>
+                
+                <!--{/if}-->
+                <!--{/loop}-->
+                
+              <!--{/if}-->
+              <!--{/loop}-->
+            <!--{/loop}-->
+          </select>
+        </div>
+        <div style="line-height:25px;color:red;font-weight:bold;margin-top:5px;margin-right:3px;font-size:14px;">*</div>
+        <div class="fill_right" style="line-height: 30px;"><a href="admin.php?mod=pcat" class="blue_a" target="_blank">管理分类</a></div>
+      </li>
+      <li>
+        <div class="fill_left" style="line-height:110px;"><span class="fillnamechar">简介</span></div>
+        <div class="fill_right" style="width:320px;"><textarea  name="product_intro" id="product_intro" style="float:left;border-radius: 3px;width: 300px;height:100px;dmargin-top:2px;" onkeyup="changeTip_by_val('product_intro','intro_tip',1,200);">{$productrow[introduction]}</textarea></div>
+        <div style="line-height:110px;" id="intro_tip">1~200字</div><div style="line-height: 110px;"><span>，中英文都算1个字符</span></div>
+      </li>
+      <li>
+        <div class="fill_left"><span class="fillnamechar">售价</span></div>
+        <div class="fill_right" style="width:120px;"><input type="text" name="deal_price" id="deal_price" value="{$productrow[deal_price]}" style="float:left;border-radius: 3px;width: 100px;margin-top:2px;"></div>
+        <div class="fill_right" style="line-height: 30px;"><span>￥人民币</span></div>
+      </li>
+      <li>
+        <div class="fill_left"><span class="fillnamechar">市场价</span></div>
+        <div class="fill_right" style="width:120px;"><input type="text" name="market_price" id="market_price" value="{$productrow[market_price]}" style="float:left;border-radius: 3px;width: 100px;margin-top:2px;"></div>
+        <div class="fill_right" style="line-height: 30px;"><span>￥人民币（应该大于售价）</span></div>
+      </li>
+      <li>
+        <div class="fill_left"><span class="fillnamechar">成本价</span></div>
+        <div class="fill_right" style="width:120px;"><input type="text" name="cost_price" id="cost_price" value="{$productrow[cost]}" style="float:left;border-radius: 3px;width: 100px;margin-top:2px;"></div>
+        <div class="fill_right" style="line-height: 30px;"><span>￥人民币（自己可见，前端店铺不可见）</span></div>
+      </li>
+      <li>
+        <div class="fill_left"><span class="fillnamechar">备注</span></div>
+        <div class="fill_right" style="width: 170px;"><input type="text" name="mark" id="mark" value="{$productrow[mark]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('mark','mark_tip',1,80);"></div>
+        <div style="line-height:30px;" id="mark_tip">1~80字</div><div class="fill_right" style="line-height: 30px;"><span>（自己可见，前端店铺不可见）</span></div>
+      </li>
+      <li>
+        <div class="fill_left"><span class="fillnamechar">是否上架</span></div>
+        <div class="fill_right" style="width: 100px;">
+          <!--{if $productrow[is_sale] == 1}-->
+          <div style="line-height:30px;margin-right:10px;">
+              <input checked type="radio" name="is_sale" value="1" style="margin-top: 10px;float: left;"/><span>是</span>
+          </div>
+          <div style="line-height:30px;">
+              <input type="radio" name="is_sale" value="0"  style="margin-top: 10px;float: left;"/><span>否</span>
+          </div>
+          <!--{else}-->
+          <div style="line-height:30px;margin-right:10px;">
+              <input type="radio" name="is_sale" value="1" style="margin-top: 10px;float: left;"/><span>是</span>
+          </div>
+          <div style="line-height:30px;">
+              <input checked type="radio" name="is_sale" value="0"  style="margin-top: 10px;float: left;"/><span>否</span>
+          </div>
+          <!--{/if}-->
+        </div>
+        <div style="line-height:25px;color:red;font-weight:bold;margin-top:5px;margin-right:3px;font-size:14px;">*</div>
+        <div class="fill_right" style="line-height: 30px;"><span>（只有上架，才能在前端店铺展示）</span></div>
+      </li>
+      <li>
+        <div class="fill_left" style="line-height:220px;"><span class="fillnamechar">产品详情</span></div>
+        <style type="text/css">
+        #kindeditor_wrap div{
+	        float:none;
+        }
+        </style>
+        <div id="kindeditor_wrap" style="width:660px;">
+          <textarea  id="product_detail_editor" name="product_detail" style="width:580px;height:200px;" >
+          {$productrow[detail_specialchar]}
+          </textarea>
+        </div>
+        <div style="line-height:220px;">
+        <div><span>图文并茂</span></div>
+        </div>
+      </li>
+      <li>
+        <div class="fill_left" style="line-height:110px;"><span class="fillnamechar">上传主图</span></div>
+        <div class="fill_right" style="line-height: 30px;width:440px;">
+		  <div style="width:100%;">
+			<div style="margin-right:20px;margin-bottom:10px;text-align:center;">
+			<span>1、</span><input type="file" name="p_img[]"  style="width: 170px; border: 1px solid #CECECF;" /><br />
+			<!--{if $main_img_arr[0]}-->
+			<div id="main_img_0" style="width:100%;text-align:center;">
+			<img src="{$main_img_arr[0]}" style="width:180px;" /><br />
+			<a class="blue_a" href="javascript:void(0);" onclick="delete_one_main_img('{$productrow[product_id]}','0');">删除</a>
+			</div>
+			<!--{/if}-->
+			</div>
+			<div style="margin-bottom:10px;text-align:center;">
+			<span>2、</span><input type="file" name="p_img[]"  style="width: 170px; border: 1px solid #CECECF;" /><br />
+			<!--{if $main_img_arr[1]}-->
+			<div id="main_img_1" style="width:100%;text-align:center;">
+			<img src="{$main_img_arr[1]}" style="width:180px;" /><br />
+			<a class="blue_a" href="javascript:void(0);" onclick="delete_one_main_img('{$productrow[product_id]}','1');">删除</a>
+			</div>
+			<!--{/if}-->
+			</div>
+		  </div>
+		  <div style="width:100%;">
+			<div style="margin-right:20px;margin-bottom:10px;text-align:center;">
+			<span>3、</span><input type="file" name="p_img[]"  style="width: 170px; border: 1px solid #CECECF;" /><br />
+			<!--{if $main_img_arr[2]}-->
+			<div id="main_img_2" style="width:100%;text-align:center;">
+			<img src="{$main_img_arr[2]}" style="width:180px;" /><br />
+			<a class="blue_a" href="javascript:void(0);" onclick="delete_one_main_img('{$productrow[product_id]}','2');">删除</a>
+			</div>
+			<!--{/if}-->
+			</div>
+			<div style="margin-bottom:10px;text-align:center;">
+			<span>4、</span><input type="file" name="p_img[]"  style="width: 170px; border: 1px solid #CECECF;" /><br />
+			<!--{if $main_img_arr[3]}-->
+			<div id="main_img_3" style="width:100%;text-align:center;">
+			<img src="{$main_img_arr[3]}" style="width:180px;" /><br />
+			<a class="blue_a" href="javascript:void(0);" onclick="delete_one_main_img('{$productrow[product_id]}','3');">删除</a>
+			</div>
+			<!--{/if}-->
+			</div>
+		  </div>
+		  <div style="width:100%;">
+			<div style="margin-right:20px;margin-bottom:10px;text-align:center;">
+			<span>5、</span><input type="file" name="p_img[]"  style="width: 170px; border: 1px solid #CECECF;" /><br />
+			<!--{if $main_img_arr[4]}-->
+			<div id="main_img_4" style="width:100%;text-align:center;">
+			<img src="{$main_img_arr[4]}" style="width:180px;" /><br />
+			<a class="blue_a" href="javascript:void(0);" onclick="delete_one_main_img('{$productrow[product_id]}','4');">删除</a>
+			</div>
+			<!--{/if}-->
+			</div>
+			<div style="margin-bottom:10px;text-align:center;">
+			<span>6、</span><input type="file" name="p_img[]"  style="width: 170px; border: 1px solid #CECECF;" /><br />
+			<!--{if $main_img_arr[5]}-->
+			<div id="main_img_5" style="width:100%;text-align:center;">
+			<img src="{$main_img_arr[5]}" style="width:180px;" /><br />
+			<a class="blue_a" href="javascript:void(0);" onclick="delete_one_main_img('{$productrow[product_id]}','5');">删除</a>
+			</div>
+			<!--{/if}-->
+			</div>
+		  </div>
+		  <div style="width:100%;">
+			<div style="margin-right:20px;margin-bottom:10px;text-align:center;">
+			<span>7、</span><input type="file" name="p_img[]"  style="width: 170px; border: 1px solid #CECECF;" /><br />
+			<!--{if $main_img_arr[6]}-->
+			<div id="main_img_6" style="width:100%;text-align:center;">
+			<img src="{$main_img_arr[6]}" style="width:180px;" /><br />
+			<a class="blue_a" href="javascript:void(0);" onclick="delete_one_main_img('{$productrow[product_id]}','6');">删除</a>
+			</div>
+			<!--{/if}-->
+			</div>
+			<div style="margin-bottom:10px;text-align:center;">
+			<span>8、</span><input type="file" name="p_img[]"  style="width: 170px; border: 1px solid #CECECF;" /><br />
+			<!--{if $main_img_arr[7]}-->
+			<div id="main_img_7" style="width:100%;text-align:center;">
+			<img src="{$main_img_arr[7]}" style="width:180px;" /><br />
+			<a class="blue_a" href="javascript:void(0);" onclick="delete_one_main_img('{$productrow[product_id]}','7');">删除</a>
+			</div>
+			<!--{/if}-->
+			</div>
+	      </div>
+        </div>
+        <div style="margin-top: 30px;line-height: 20px;"><span>每张图片最大5M，支持jpg、png、gif格式。<br />主图就是产品详情里的大图，<br />好比淘宝的产品页面左上角的图。</span></div>
+      </li>
+      <li>
+        <div class="fill_left"><span class="fillnamechar">购买链接</span></div>
+        <div class="fill_right" style="width:320px;"><input type="text" name="buy_url" id="buy_url" value="{$productrow[buy_url]}" style="float:left;border-radius: 3px;width: 300px;margin-top:2px;"></div>
+        <div style="line-height:30px;">280字以内，用户能下订单的页面地址。</div>
+      </li>
+      
+      <li>
+      <div style="float:left;margin-left: 250px;margin-top:20px;">
+  		<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="edit_product_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+  		</a>
+      </div>
+      </li>
+      
+      
+    </ul>
+    </form>
+    <iframe style="display:none;" id="form-target" name="form-target"></iframe>
+    
+    <script type="text/javascript">
+    //检查各项所填值长度、格式等正不正确
+    //返回值true或false
+    function check_product_info()
+    {
+    	//得到货号，检查货号。货号可以为空
+		var product_bn = $.trim($("#product_bn").val());
+		var bn_len = product_bn.length;//货号长度，中文英文数字，都只算一个字符
+		if(bn_len>10 || bn_len<0)//bn_len长度出错，货号最多10字符。
+		{
+			$.jBox.tip('货号长度为0~10个字符','error');
+			return false;
+		}
+		//货号只能由英文和数字组成。js端不检查货号格式。
+		
+		//得到产品名称。必填
+   		var product_name = $.trim($("#product_name").val());
+   		var name_len = product_name.length;//产品名称长度。
+   		if(name_len>50 || name_len<1)
+   		{
+   			$.jBox.tip('产品名称必填，长度为1~50个字符','error');
+   			return false;
+   		}
+   		//产品名称的格式没有特殊要求。任何字符都可以。
+   		
+   		//产品所属分类id，js端不用check
+    	
+    	
+   		//得到简介，检查字数，可以为空，最多200字
+   		var product_intro = $.trim($("#product_intro").val());
+		var intro_len = product_intro.length;//简介长度，中文英文数字，都只算一个字符
+		if(intro_len>200 || intro_len<0)//简介可以为空，最多200字。
+		{
+			$.jBox.tip('简介长度为0~200个字符','error');
+			return false;
+		}
+   		
+   		
+   		//售价，即成交价
+   		var dealprice = $("#deal_price").val();//成交价
+		if(!dealprice)
+		{
+			//售价可以为空
+			//$.jBox.tip("售价不能为空", 'error');
+			//return false;
+		}
+		//成交价不为空，0不是空
+		if(!isNaN(dealprice))
+		{
+			//是数字（整数、小数或负数）
+			if(dealprice<0)
+			{
+				$.jBox.tip("成交价必需大于等于0", 'error');
+				return false;
+			}
+		}
+		else
+		{
+			$.jBox.tip("成交价只能是整数或小数", 'error');
+			return false;
+		}
+		dealprice = parseFloat(dealprice);
+   		
+   		//市场价
+   		var marketprice = $("#market_price").val();//市场价
+		if(!marketprice)
+		{
+			//价格为空，市场价可以为空
+		}
+		else //市场价不为空，0也是不为空
+		{
+			if(!isNaN(marketprice))
+			{
+				//是数字（整数、小数或负数）
+				if(marketprice<0)
+				{
+					$.jBox.tip("市场价必需大于等于0", 'error');
+					return false;
+				}
+			}
+			else
+			{
+				$.jBox.tip("市场价只能是整数或小数", 'error');
+				return false;
+			}
+			
+			marketprice = parseFloat(marketprice);
+			
+			if(marketprice<dealprice)
+			{
+				$.jBox.tip("市场价不能低于售价", 'error');
+				return false;
+			}
+		}
+   		
+   		//成本价
+   		var costprice = $("#cost_price").val();//成交价
+		if(!costprice)
+		{
+			//成本价可以为空
+		}
+		
+		if(!isNaN(costprice))
+		{
+			//是数字（整数、小数或负数）
+			if(costprice<0)
+			{
+				$.jBox.tip("成本价必需大于等于0", 'error');
+				return false;
+			}
+		}
+		else
+		{
+			$.jBox.tip("成本价只能是整数或小数", 'error');
+			return false;
+		}
+		costprice = parseFloat(costprice);
+   		
+   		
+   		//备注。可以为空，最多80字。
+   		var mark = $.trim($("#mark").val());
+ 		var mark_len = mark.length;//备注的长度。
+ 	   	if(mark_len>80 || mark_len<0)
+ 	   	{
+ 	   		$.jBox.tip('备注长度为0~80个字符','error');
+ 	   		return false;
+ 	   	}
+
+   		
+   		//是否上架
+   		//var is_sale = $("input[name=is_sale]:checked").val();
+   		
+   		//产品详情。可以为空，没有字数限制，js端不用检查。
+   		
+   		//购买链接。可以为空，280字以内。
+   		var buy_url = $.trim($("#buy_url").val());
+   		var buy_url_len = buy_url.length;//购买链接长度。
+   		if(buy_url_len>280 || buy_url_len<0)
+   		{
+   			$.jBox.tip('购买链接，长度为0~280个字符','error');
+   			return false;
+   		}
+   		
+   		//图片
+   		//选通过ajax把图片传到php，在服务器端检查图片的格式、大小等合法性，保存下来。
+   		//图片格式支持：jpg、gif、png、bmp
+   		//图片大小：不超过5M
+   		
+   		return true;
+    }
+    function edit_product_btn_click(t)
+    {
+    	if($(t).find('em').text() == '保存')
+    	{
+    		//让保存按钮暂时失效
+    		$(t).find('em').text('保存中...');
+    		$(t).addClass('W_btn_a_disable');
+    		
+    		var res = check_product_info();
+    		if(res)
+    		{
+    			editor.sync();
+        		$("#p_add_form").submit();
+    		}
+    		else
+    		{
+    			//保存按钮恢复
+        		$(t).find('em').text('保存');
+        		$(t).removeClass('W_btn_a_disable');
+    		}
+    	}
+    }
+    
+    //参数res为：err或者succ
+    function afterupload(res, msg)
+    {
+    	//如果失败，则恢复保存按钮。给出错误提示
+    	if(res == 'err')
+    	{
+    		$.jBox.tip(msg,'error');
+    		//保存按钮恢复
+    		$("#baocun_btn").find('em').text('保存');
+    		$("#baocun_btn").removeClass('W_btn_a_disable');
+			return;
+    	}
+    	else //如果成功，则跳转到产品列表页。
+    	{
+    		window.location.href="admin.php?mod=pl";
+    	}
+    	
+    }
+    
+    //删除产品的一张主图
+    //参数，product_id是产品id；img_bn是图片序号，0~7.
+    function delete_one_main_img(product_id , img_bn)
+    {   
+    	//传送门
+    	$.ajax({
+     		type:"post",
+     		async : true,//false表示同步，true表示异步
+     		url:"ajax.php?mod=product&act=do_delete_one_main_img",
+     		data:{product_id:product_id,img_bn:img_bn},
+     		beforeSend: function(XMLHttpRequest){
+     			loadingbox();
+     		},
+     		success: function(data){//data是json格式
+     			data = jQuery.parseJSON( data );
+     			if(data.done)//删除成功
+     			{
+     				close_loadingbox();
+     				$("#main_img_"+img_bn).remove();
+     				$.jBox.tip('删除成功', 'success');
+     				
+     				return;
+     			}
+     			else//删除失败
+     			{
+     				close_loadingbox();
+     				$.jBox.tip(data.msg, 'error');
+     				return;
+     			}
+     		}
+     		});
+    	
+    	
+    	
+    }
+    
+    
+    </script>
+    
+  </div>
+
+</div>
+
+</div>
+
+</div>
+<!--{template page_footer}-->

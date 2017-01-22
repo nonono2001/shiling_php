@@ -1,0 +1,183 @@
+<style type="text/css">
+
+.nav_edit_ul{
+	float:left;
+	width:100%;
+}
+.nav_edit_ul li{
+	float:left;
+	text-align:left;
+	width:100%;
+	margin-top:10px;
+}
+
+.fill_name{
+	float:left;text-align:right;line-height:30px;height:30px;width:100px;margin-right:10px;
+}
+.fillnamechar{
+	color: #4372B0;
+font-weight: bold;
+}
+
+.fill_right{
+	float:left;
+	width:160px;
+}
+.fill_right input[type="radio"]{
+	margin:0px;
+}
+
+.nav_link_type{
+	float:left;
+	width:130px;
+	height:30px;
+	line-height:30px;
+}
+</style>
+
+<ul class="nav_edit_ul" style="margin-top:20px;">
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">下载标题</span>
+    </div>
+    <div class="fill_right">
+      <input type="text" id="download_title" name="download_title" value="{$iteminfo[download_title]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;"/>
+    </div>
+    <div style="float:left;line-height:30px;"><span>（最多50个字符）</span></div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">下载描述</span>
+    </div>
+    <div class="fill_right">
+      <input type="text" id="download_des" name="download_des" value="{$iteminfo[download_des]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;"/>
+    </div>
+    <div style="float:left;line-height:30px;"><span>（最多200个字符）</span></div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">下载链接</span>
+    </div>
+    <div class="fill_right">
+      <input type="text" id="download_url" name="download_url" value="{$iteminfo[url]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;"/>
+    </div>
+    <div style="float:left;line-height:30px;"><span>（最多200个字符）</span></div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">下载密码</span>
+    </div>
+    <div class="fill_right">
+      <input type="text" id="down_pass" name="down_pass" value="{$iteminfo[password]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;"/>
+    </div>
+  </li>
+  
+  
+</ul>
+<div style="width:100%;float:left;margin-top: 20px;">
+  <input type="button" value="取消" class="canlText" style="cursor:pointer;float:right;margin-right:40px;" onclick="close_dialog('cat_dialog_first');"/>
+  <!--{if $optype == 'new'}-->
+  <input id="savebutton" type="button" value="添加" class="btnText" style="cursor:pointer;float:right;margin-right:20px;" onclick="save_download_item(this, 'new', 0);"/>
+  <!--{elseif $optype == 'edit'}-->
+  <input id="savebutton" type="button" value="保存" class="btnText" style="cursor:pointer;float:right;margin-right:20px;" onclick="save_download_item(this, 'edit',{$iteminfo[id]});"/>
+  <!--{/if}-->
+</div>
+
+<script type="text/javascript">
+function save_download_item(t, optype, download_id)
+{
+	var download_title = $.trim($("#download_title").val()); //下载标题
+	
+	var download_des = $.trim($("#download_des").val());  //下载描述
+	
+	var download_url = $.trim($("#download_url").val());  //下载链接
+
+	var download_pass = $("#down_pass").val();  //下载密码
+
+	var len = download_url.length;//中文、英文、数字、符号，都算一个字符。并不是中文算2个或3个。
+	if(len<1)
+	{
+		alert('下载链接不能为空');
+		return;
+	}
+	else if(len > 200)
+	{
+		alert('下载链接不能大于200个字符。');
+		return;
+	}
+	
+	//optype可能是edit或者new。即“编辑”还是“新增”
+	if(optype == 'new') //新增一个下载
+	{
+		//新增，忽略download_id参数。
+		//走ajax
+		$.ajax({
+       		type:"post",
+       		async : true,//false表示同步，true表示异步
+       		url:"ajax.php?mod=download&act=do_save_download",
+       		data:{optype:optype,download_title:download_title,download_des:download_des,download_url:download_url,download_pass:download_pass},
+       		beforeSend: function(XMLHttpRequest){
+       			//让保存按扭的功能失郊
+       			$(t).val('添加中...');
+    			btnclickattr = $(t).attr('onclick');
+    			$(t).attr('onclick','');//让按钮失效。
+       		},
+       		success: function(data){//data是json格式
+       			data = jQuery.parseJSON( data );
+       			if(data.done)//成功
+       			{
+       				$.jBox.close('cat_dialog_first');
+       				$.jBox.tip('添加成功', 'success');
+       				
+       				setTimeout('location.reload();', 1000);//1秒后刷新页面
+       				return;
+       			}
+       			else//失败
+       			{
+       				$.jBox.close('cat_dialog_first');
+       				$.jBox.tip(data.msg, 'error');
+       				return;
+       			}
+       		}
+       		});
+		
+	}
+	else if(optype == 'edit') //编辑一个下载
+	{
+		//download_id就是要编辑的下载id
+		//走ajax
+		$.ajax({
+       		type:"post",
+       		async : true,//false表示同步，true表示异步
+       		url:"ajax.php?mod=download&act=do_save_download",
+       		data:{download_id:download_id,optype:optype,download_title:download_title,download_des:download_des,download_url:download_url,download_pass:download_pass},
+       		beforeSend: function(XMLHttpRequest){
+       			//让保存按扭的功能失郊
+       			$(t).val('保存中...');
+    			btnclickattr = $(t).attr('onclick');
+    			$(t).attr('onclick','');//让按钮失效。
+       		},
+       		success: function(data){//data是json格式
+       			data = jQuery.parseJSON( data );
+       			if(data.done)//成功
+       			{
+       				$.jBox.close('cat_dialog_first');
+       				$.jBox.tip('保存成功', 'success');
+       				
+       				setTimeout('location.reload();', 1000);//1秒后刷新页面
+       				return;
+       			}
+       			else//失败
+       			{
+       				$.jBox.close('cat_dialog_first');
+       				$.jBox.tip(data.msg, 'error');
+       				return;
+       			}
+       		}
+       		});
+		
+	}
+	
+}
+
+</script>

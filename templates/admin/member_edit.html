@@ -1,0 +1,158 @@
+<!--{template page_header}-->
+
+
+<div class="main">
+
+	<!--{template top_menu}-->
+
+	<div class="main_middle" style="width:100%;">
+		<!--{template left_menu}-->
+
+		<div class="workground">
+			<div class="workground-title">
+				<h2>
+					<span>提货卡券编辑</span>
+				</h2>
+			</div>
+
+			<style type="text/css">
+				.bianji_ul li{
+					float: left;
+					text-align: left;
+					width: 100%;
+					margin-top: 10px;
+				}
+
+				.bianji_ul .fill_left{
+					float: left;
+					text-align: right;
+					line-height: 30px;
+					height: 30px;
+					width: 140px;
+					margin-right: 10px;
+				}
+
+				.bianji_ul .fill_right{
+					float: left;
+					width: 400px;
+				}
+				.fillnamechar{
+					color: #4372B0;
+					font-weight: bold;
+				}
+				textarea{
+					border: 1px solid #CECECF;
+					line-height: 18px;
+					color: #555;
+					background: white;
+					padding: 4px;
+					vertical-align: middle;
+					box-shadow: 2px 2px 2px #F0F0F0 inset;
+					margin: 0px;
+				}
+			</style>
+			<div class="workground-content scroll-div">
+				<form id="p_add_form" action="ajax.php?mod=waxs_tihuo_card&act=do_edit_member" method="post" enctype="multipart/form-data" target="form-target" >
+					<input type="hidden" name="member_id" value="{$onememberinfo[member_id]}" />
+					<ul style="float:left;width:100%;margin-bottom:50px;" class="bianji_ul">
+
+						<li>
+							<div class="fill_left"><span class="fillnamechar">手机号码</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="cellphone" name="cellphone" value="{$onememberinfo[cellphone]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('cellphone','cellphone_tip',1,20);" /></div>
+							<div style="line-height:30px;" id="cellphone_tip">1~20字</div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">真实姓名</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="real_name" name="real_name" value="{$onememberinfo[real_name]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('real_name','real_name_tip',1,20);" /></div>
+							<div style="line-height:30px;" id="real_name_tip">1~20字</div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">最近一次登录时间时间</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" readonly="readonly" value="{$onememberinfo[lastlogin_dateline]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;"  /></div>
+						</li>
+
+						<li>
+							<div class="fill_left"><span class="fillnamechar">新or老会员</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" readonly="readonly" value="{$onememberinfo[is_new_old_member]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;"  /></div>
+						</li>
+
+
+
+						<li>
+							<div style="float:left;margin-left: 250px;margin-top:20px;">
+								<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="save_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+								</a>
+							</div>
+						</li>
+
+
+					</ul>
+				</form>
+				<iframe style="display:none;" id="form-target" name="form-target"></iframe>
+
+				<script type="text/javascript">
+					//检查各项所填值长度、格式等正不正确
+					//返回值true或false
+					function check_input_info()
+					{
+
+						return true;
+					}
+					function save_btn_click(t)
+					{
+						if($(t).find('em').text() == '保存')
+						{
+							//让保存按钮暂时失效
+							$(t).find('em').text('保存中...');
+							$(t).addClass('W_btn_a_disable');
+
+							var res = check_input_info();
+							if(res)
+							{
+								$("#p_add_form").submit();
+							}
+							else
+							{
+								//保存按钮恢复
+								$(t).find('em').text('保存');
+								$(t).removeClass('W_btn_a_disable');
+							}
+						}
+					}
+
+					//参数res为：err或者succ
+					function afterupload(res, msg)
+					{
+						//如果失败，则恢复保存按钮。给出错误提示
+						if(res == 'err')
+						{
+							$.jBox.tip(msg,'error');
+							//保存按钮恢复
+							$("#baocun_btn").find('em').text('保存');
+							$("#baocun_btn").removeClass('W_btn_a_disable');
+							return;
+						}
+						else //如果成功，则跳转到卡券列表页。
+						{
+							window.location.href="admin.php?mod=member&page={$topage}";
+						}
+
+					}
+
+
+
+
+				</script>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+<!--{template page_footer}-->

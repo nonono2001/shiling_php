@@ -1,0 +1,95 @@
+<!--{template page_header}-->
+
+<div class="mainwrap">
+
+  <div class="main">
+  
+  <div style="width:100%;margin-bottom:20px;">
+    
+    <div>
+    <!--{template leftside}-->    
+    </div>
+    
+    <div class="main_right_wrap">
+      <div class="main_right_title">
+        <span>友链中心</span>
+      </div>
+      
+      <style type="text/css">
+      .articlelist_ul{
+			float:left;
+      		width:100%;
+      	margin-top:28px;
+      }
+      .articlelist_ul li{
+			float:left;
+      	width:100%;
+      		text-align:center;
+      		margin-bottom:15px;
+      		/*border-bottom: 1px dashed #FFCC99;*/
+      	padding-bottom:5px;
+      }
+      .articlelist_ul li div{
+			width:100%;
+      	margin-bottom:5px;
+      }
+      .articlelist_ul li div .article_title{
+      	float:left;
+      	width:350px;text-align:left;
+			display: inline-block;
+  
+  font-size:16px;
+  color: #180603;
+
+  line-height: 140%;
+      }
+      .articlelist_ul li div .article_title:hover{
+			color: red;
+      }
+      .article_pub_time{
+	  display: inline-block;
+  font-family: Microsoft YaHei;
+  font-size: 11px;
+  color: #929292;
+  font-weight: normal;
+  line-height: 140%;
+      	margin-bottom: 3px;
+      	  margin-top: 3px;
+      }
+      
+      .article_abs{
+	display: inline-block;
+  font-family: Microsoft YaHei;
+  font-size: 14px;
+  color: #5a5a5a;
+  font-weight: normal;
+  line-height: 140%;
+      }
+      </style>
+      <div name="articlelist-area" style="width:100%;padding: 0 10px 50px 10px;">
+          <ul class="articlelist_ul">
+          
+            <!--{loop $fl_list $onefl}-->
+            <li>
+              <div><a class="article_title" href="http://{$onefl[friendlink_url]}" target="_blank">{$onefl[friendlink_name]}</a><a style="float:left;width:150px;text-align:left;font-size:14px;color:red;line-height:28px;margin-left:20px;display:none;" href="http://{$onefl[friendlink_url]}" target="_blank">去访问 >></a></div>
+            </li>
+            <!--{/loop}-->
+           
+          </ul>
+      </div>
+    
+    </div>
+    
+  </div>
+  
+  
+  
+  <div class="cf"></div>
+  </div>
+
+
+<div class="cf"></div>
+</div><!--mainwrap end-->
+
+
+<!--{template page_footer}-->

@@ -1,0 +1,509 @@
+/*
+ * 一个模板的主样式，一个模板的几乎所有网页都会包含该样式文件
+ * 2014-11-4
+ */
+
+
+/******************************************全局*************************************************/
+body{
+	margin:0; padding:0;color:#333; 
+	font-size:12px;
+	font-family: Tahoma, Helvetica, Arial, sans-serif; /*字体样式参考 人人逛街网*/
+	text-align:left; 
+	background: url(../images/main-tail_6sPzDLKl.gif) ;/*#E7E7E78*/
+	word-break:break-all;
+}
+
+.layout{
+width:100%;
+	float:left;
+}
+
+div,form,img,ul,ol,li,dl,dt,dd,p {border: 0; margin:0; padding:0;}
+
+a{
+text-decoration: none;
+/*color:#7594B3;*/
+color:#333;
+}
+
+.blue_a{
+	color: #7594B3;
+}
+
+.black_a{
+	color:#3c3c3c;
+}
+.changecolor_a:hover{
+	color:#f40;
+}
+
+.sep{
+float:left;
+width:100%;
+height:10px;
+clear:both;/*让它不挨着任何浮动区块*/
+}
+
+.cf{
+float:none;
+clear:both;
+}/*相当于一个回车*/
+
+.disblo{
+display:block;
+}
+
+.disnon{
+display:none;
+}
+
+ul{
+margin:0px;
+padding:0px;
+list-style:none;
+}/*对于不需要absolute定位的ul，这个样式已经够了*/
+
+li{
+float:left;
+list-style-type:none;
+text-align:center;
+}
+
+div{float:left;}
+
+.jbox-body, .jbox-body *{
+	float:none;
+}
+textarea{resize:none;}
+
+input[type="password"], input[type="text"] {
+border: 1px solid #CECECF;
+line-height: 18px;
+color: #555;
+background: white;
+padding: 4px;
+vertical-align: middle;
+box-shadow: 2px 2px 2px #F0F0F0 inset;
+margin:0px;
+}
+input {
+	margin:0px;
+}
+
+
+
+/*********************************page header*****************************************/
+.header{
+	width:100%;
+	background-color: #FEFEFE;
+box-shadow: 0 3px 3px #9a9a9a;
+-webkit-box-shadow: 0 3px 3px #9a9a9a;
+min-width: 1200px;
+background-image: -webkit-linear-gradient(top, #FEFEFE, #F5F5F6);
+}
+
+
+.mid-nav{
+	width:100%;
+	background:#fff;
+	
+}
+
+.mid-nav-middle{
+	width:1200px;
+	margin:0 auto;
+	min-height:46px;
+	float:none;
+}
+
+.logo-font{
+	font-size:26px;
+	font-weight:bold;
+	font-family:microsoft yahei;
+	line-height:30px;
+	color:#33404d;
+	margin-top:5px;
+}
+
+.logo-small-font{
+	line-height: 17px;
+float: left;
+margin-top: 14px;
+color: #999;
+font-family: microsoft yahei;
+margin-left: 10px;
+}
+
+.top-bar{
+	float:right;
+	min-width:100px;
+	border-right:1px solid #BCCFE9;
+	background: white;
+border-left: 1px solid #BCCFE9;
+border-bottom: 1px solid #BCCFE9;
+padding-left: 20px;
+	padding-right: 20px;
+-moz-border-radius: 0 0 27px 27px;
+-webkit-border-radius: 0 0 27px 27px;
+-o-border-radius: 0 0 27px 27px;
+-ms-border-radius: 0 0 27px 27px;
+-khtml-border-radius: 0 0 27px 27px;
+border-radius: 0 0 27px 27px;
+}
+
+.mainwrap{
+width:100%;
+
+
+}
+.main{
+	margin:auto; 
+	margin-top:10px;
+	width:1200px;
+	min-height:400px;
+	float:none;
+	background:#FFF;
+}
+
+/************************************page footer页脚样式**************************************/
+.footer{
+	width:100%;
+	min-height:50px;
+	background: #f6f6f6;
+padding: 25px 0;
+border-top: 4px solid #dedede;
+}
+
+.footer .footer_mid li{
+	font: 14px/20px Microsoft Yahei;
+	height: 20px;
+line-height: 20px;
+margin-right: 20px;
+display: inline-block;
+	
+}
+.footer  a{
+	color: #333;
+}
+
+/****************登录页面的“登录按钮”组件***********************/
+.loginFormBtn{
+float:left;
+width:  270px;
+height: 36px;
+line-height: 36px;
+border:0px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+background-color: #c92020;
+-webkit-box-shadow: 0 1px 4px rgba(51,51,51,.36);
+-moz-box-shadow: 0 1px 4px rgba(51,51,51,.36);
+box-shadow: 0 1px 4px rgba(51,51,51,.36);
+background-image: -webkit-linear-gradient(bottom, #c6261a, #e63e32);
+background-image: -moz-linear-gradient(bottom, #c6261a, #e63e32);
+background-image: -o-linear-gradient(bottom, #c6261a, #e63e32);
+background-image: -ms-linear-gradient(bottom, #c6261a, #e63e32);
+background-image: linear-gradient(to top, #c6261a, #e63e32);
+text-shadow: 0 1px 3px rgba(0,0,0,.59);
+color: #fff;
+letter-spacing: 5px;
+text-align:center;
+font-weight:bold;
+font-size:14px;
+font-family:microsoft yahei;
+margin-top:20px;
+margin-left: 48px;
+cursor:pointer;
+}
+
+.loginFormBtn:hover {
+color: #fff;
+background-image: -webkit-linear-gradient(bottom, #a4261a, #d53e32);
+background-image: -moz-linear-gradient(bottom, #a4261a, #d53e32);
+background-image: -o-linear-gradient(bottom, #a4261a, #d53e32);
+background-image: -ms-linear-gradient(bottom, #a4261a, #d53e32);
+background-image: linear-gradient(to top, #a4261a, #d53e32);
+text-decoration: none;
+}
+
+
+/*******************scroll-div自定义滚动条*******************************/
+/*根据http://www.xuanfengge.com/css3-webkit-scrollbar.html  http://www.lyblog.net/2013/314.html  等*/
+/*滚动条宽度*/ 
+.scroll-div::-webkit-scrollbar {
+width: 13px;
+	height:13px;
+}
+
+/* Handle样式， 通讯handle被hover时的样式 */ 
+.scroll-div::-webkit-scrollbar-thumb:vertical , .scroll-div::-webkit-scrollbar-thumb:vertical:hover {
+	background: -webkit-gradient(linear,50% center,100% center,from(#dee2ec),to(#b6c0d5));/*这是ocs的参数*/
+-webkit-box-shadow: 0 0 1px #ccc;
+-webkit-border-radius: 8px;
+}
+.scroll-div::-webkit-scrollbar-thumb:horizontal , .scroll-div::-webkit-scrollbar-thumb:horizontal:hover {
+	background: -webkit-gradient(linear,center top,center bottom,from(#dee2ec),to(#b6c0d5));
+-webkit-box-shadow: 0 0 1px #ccc;
+-webkit-border-radius: 8px;
+}
+
+/* 轨道样式 */
+.scroll-div::-webkit-scrollbar-track-piece {
+background-color: #EBEFF4;
+-webkit-border-radius: 8px;
+}
+
+.scroll-div::-webkit-scrollbar-corner {
+background: #fff;
+}
+
+/*箭头按钮*/
+.scroll-div::-webkit-scrollbar-button {
+    height:20px;
+    width:20px;
+}
+
+.scroll-div::-webkit-scrollbar-button:vertical:start{
+	background:url(../images/icons.png) 0px -300px;
+}
+
+.scroll-div::-webkit-scrollbar-button:vertical:end {
+	background:url(../images/icons.png) 0px -85px;
+}
+
+.scroll-div::-webkit-scrollbar-button:horizontal:start{
+	background:url(../images/icons.png) 0px -131px;
+}
+
+.scroll-div::-webkit-scrollbar-button:horizontal:end {
+	background:url(../images/icons.png) 10px -175px;
+}
+
+/*******************************workground区*****************************************/
+.workground{
+	width:1032px;
+	padding-left:8px;
+	
+	height:100%;
+}
+
+.workground-title{
+	width:100%;
+	padding-bottom:2px;
+}
+
+.workground-title h2{
+	color: #222;
+	padding: 1px 7px 2px 0px;
+	margin: 5px 0 2px 0;
+	font-size: 14px;
+	height: 22px;
+	line-height: 22px;
+}
+
+.workground-content{
+	width:100%;
+    overflow-y:auto;
+	overflow-x:auto;
+	
+}
+
+/******************小组件，淘宝首页右侧橙色按钮**********************************/
+.btnText{
+float: left;
+/*height: 35px;*/
+height:26px;
+line-height: 26px;
+overflow: hidden;
+/*width: 75px;*/
+padding: 0 15px;	
+margin-left: 5px;
+text-align: center;
+color: #fff;
+cursor: pointer;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+-ms-border-radius: 2px;
+-o-border-radius: 2px;
+border-radius: 2px;
+-webkit-box-shadow: #ddd 0 1px 1px;
+-moz-box-shadow: #ddd 0 1px 1px;
+box-shadow: #ddd 0 1px 1px;
+/*background: #f40;晒格子用的橙色*/
+background: #646AF3;/*蓝色*/
+border:none;
+/*	
+*padding:0px;*/
+}
+.btnText:hover{
+/*background: #f22d00;淘宝的值，感觉有些淡*/
+	/*background:#F50808;这个值也有些淡*/
+	/*background:#CC3215;晒格子用的，橙色*/
+	background:#575CDA;;/*蓝色*/
+}
+
+.canlText {
+height: 26px;
+line-height: 26px;
+background-color: #cacaca;
+border: none;
+cursor: pointer;
+color: #333;
+border-radius: 2px;
+padding: 0 15px;
+margin: 0;
+box-shadow: none;
+font-size: 12px;
+font-weight: normal;
+}
+.canlText:hover {
+background-color: #d5d5d5;
+}
+
+/************************模仿新浪微博“加关注”按钮样式**********************************/
+.addwatch{
+	border-color: #d9d9d9;
+	background-color: #f2f2f2;
+	display: inline-block;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 2px;
+	overflow: hidden;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.addwatch span{
+	border-color: #ffffff;
+	color: #333333;
+	text-align: center;
+	padding: 0 9px 0 8px;
+	white-space: nowrap;
+	display: inline-block;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 2px;
+	height: 18px;
+	line-height: 17px;
+	vertical-align: middle;
+}
+
+.addwatch span em{
+	margin-right: 2px;
+	vertical-align: -2px;
+	font: bold 16px Arial;
+	height: 16px;
+	text-decoration: none;
+	color: #FFA00A;
+}
+
+.addwatch:hover{
+	border-color: #ff9b01;
+background-color: #ffa00a;
+}
+
+.addwatch:hover span{
+	border-color: #ffb33b;
+color: #fff;
+}
+
+.addwatch:hover span em{
+	color:#fff;
+}
+/*******************************************************************/
+
+/*****************************产品分类管理的表的样式**********************************/
+
+
+/***********************新浪微博评论按钮*************************************/
+.W_btn_a{
+	border-width: 1px;
+border-style: solid;
+border-color: #ff9b01;
+background-color: #ffa00a;
+color: #fff;
+border-radius: 2px;
+display: inline-block;
+overflow: hidden;
+vertical-align: middle;
+cursor: pointer;
+}
+
+.W_btn_a span{
+	border-color: #ffb33b;
+color: #fff;
+padding: 0 9px 0 10px;
+white-space: nowrap;
+display: inline-block;
+border-style: solid;
+border-width: 1px;
+border-radius: 2px;
+height: 18px;
+line-height: 18px;
+}
+
+
+.W_btn_a:hover span{
+border-width: 1px;
+border-style: solid;
+border-color: #ffce82;
+color: #fff;
+background: -webkit-linear-gradient(top, rgba(255,184,71,1) 0%,rgba(255,162,16,1) 100%);
+}
+
+.W_btn_a_disable{
+	border-color: rgb(177, 166, 166);
+background-color: rgb(179, 165, 165);
+}
+.W_btn_a_disable span{
+border-color: #BDB8B1;
+}
+.W_btn_a_disable:hover span{
+background:rgb(179, 165, 165);
+	border-color: #BDB8B1;
+}
+
+
+span.W_loading{
+background: url("../images/loading_WB.gif") no-repeat 0 2px;
+padding: 0 0 0 18px;
+line-height: 18px;
+height: 18px;
+display: inline-block;
+}
+
+/****************************以下亲客新加********************************************/
+/*********table列表一般样式***************/
+.stripe_tb th {
+/*background: #B5CBE6;*/
+color: #333;
+line-height: 20px;
+height: 23px;
+padding: 0 8px;
+text-align: left;
+font-size: 12px;
+	font-weight:normal;
+	border-bottom: 1px #ccc solid;
+	border-right: 1px solid #ccc;
+}
+
+.stripe_tb tr td{
+	padding: 5px 8px;
+text-align: left;
+font-size: 12px;
+	vertical-align: top;
+}
+.stripe_tb tr.alt td {
+background: #ecf6fc;
+}
+.stripe_tb tr.over td {
+background: #FEF3D1;
+}
+
+.tb_geziimg img{
+	width:100px;
+	margin:0px 5px 5px 0px;
+}
+/**************************************/

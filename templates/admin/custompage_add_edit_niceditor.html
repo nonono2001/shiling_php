@@ -1,0 +1,188 @@
+<!--{template page_header}-->
+<script type="text/javascript" src="templates/admin/js/nicEdit/nicEdit.js"></script>
+<script type="text/javascript">
+bkLib.onDomLoaded(function() {
+
+	new nicEditor({maxHeight : 600,fullPanel : true,iconsPath : 'templates/admin/js/nicEdit/nicEditorIcons.gif'}).panelInstance('custompage_content_editor');
+});
+</script>
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <!--{if $custompage_id>0}-->
+        <span>编辑自定义页面</span>
+        <!--{else}-->
+        <span>新建自定义页面</span>
+        <!--{/if}-->
+        <span style="font-size:12px;">（有<span style="color:red">*</span>为必填项）</span>
+    </h2>
+  </div>
+  
+  <style type="text/css">
+  .bianji_ul li{
+  	float: left;
+text-align: left;
+width: 100%;
+margin-top: 10px;
+  }
+  
+  .bianji_ul .fill_left{
+	float: left;
+text-align: right;
+line-height: 30px;
+height: 30px;
+width: 140px;
+margin-right: 10px;
+  }
+  
+  .bianji_ul .fill_right{
+	float: left;
+width: 400px;
+  }
+.fillnamechar{
+	color: #4372B0;
+font-weight: bold;
+}
+  textarea{
+	border: 1px solid #CECECF;
+line-height: 18px;
+color: #555;
+background: white;
+padding: 4px;
+vertical-align: middle;
+box-shadow: 2px 2px 2px #F0F0F0 inset;
+margin: 0px;
+  }
+  </style>
+  <div class="workground-content scroll-div">
+    <!--{if $custompage_id>0}-->
+    <form id="cp_add_form" action="ajax.php?mod=custompage&act=do_edit_custompage" method="post"  target="form-target" >
+    <input type="hidden" name="cpid" value="{$custompage_id}" />
+    <!--{else}-->
+    <form id="cp_add_form" action="ajax.php?mod=custompage&act=do_add_custompage" method="post"  target="form-target" >
+    <!--{/if}-->
+    <ul style="float:left;width:100%;margin-bottom:50px;" class="bianji_ul">
+      <li>
+        <div class="fill_left"><span class="fillnamechar">标题</span></div>
+        <div class="fill_right" style="width: 170px;"><input type="text" id="cp_title" name="cp_title" value="{$custompagerow[title]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('cp_title','cp_title_tip',1,50);" /></div>
+        <div style="line-height:25px;color:red;font-weight:bold;margin-top:5px;margin-right:3px;font-size:14px;">*</div><div style="line-height:30px;" id="cp_title_tip">1~50字</div><div style="line-height:30px;">，中英文都算1个字符</div>
+      </li>
+      
+      <li>
+        <div class="fill_left" style="line-height:220px;"><span class="fillnamechar">内容</span></div>
+        
+        <div  style="width:680px;">
+          <textarea  id="custompage_content_editor" name="cp_content" style="width:666px;height:400px;" >
+          {$custompagerow[content_specialchar]}
+          </textarea>
+        </div>
+        <div style="line-height:220px;">
+        <div><span>图文并茂</span></div>
+        </div>
+      </li>
+      
+      
+      
+      <li>
+      <div style="float:left;margin-left: 250px;margin-top:20px;">
+  		<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="save_cp_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+  		</a>
+      </div>
+      </li>
+      
+      
+    </ul>
+    </form>
+    <iframe style="display:none;" id="form-target" name="form-target"></iframe>
+    
+    <script type="text/javascript">
+    //检查各项所填值长度、格式等正不正确
+    //返回值true或false
+    function check_custompage_info()
+    {	
+		//得到自定义页面的标题。必填
+   		var cp_title = $.trim($("#cp_title").val());
+   		var title_len = cp_title.length;//标题长度。
+   		if(title_len>50 || title_len<1)
+   		{
+   			$.jBox.tip('标题必填，长度为1~50个字符','error');
+   			return false;
+   		}
+   		//标题的格式没有特殊要求。任何字符都可以。
+   		
+   		//文章内容。可以为空，没有字数限制，js端不用检查。
+   		
+   		return true;
+    }
+    function save_cp_btn_click(t)
+    {
+    	if($(t).find('em').text() == '保存')
+    	{
+    		//让保存按钮暂时失效
+    		$(t).find('em').text('保存中...');
+    		$(t).addClass('W_btn_a_disable');
+    		
+    		var res = check_custompage_info();
+    		if(res)
+    		{
+    			/******这种方法也可以得到niceditor编辑的内容。其中myNicEditor要在myNicEditor = new nicEditor()时定义。*****************/
+    			//var ed = myNicEditor.nicInstances[0];
+    			//var textcontent = ed.getContent();//textcontent这是富文本编辑器中的最新内容。
+    			/****************************************/
+    			
+    			var textcontent = nicEditors.findEditor("custompage_content_editor").getContent();//textcontent这是富文本编辑器中的最新内容。
+    			$('#custompage_content_editor').html(textcontent);
+        		$("#cp_add_form").submit();
+    		}
+    		else
+    		{
+    			//保存按钮恢复
+        		$(t).find('em').text('保存');
+        		$(t).removeClass('W_btn_a_disable');
+    		}
+    	}
+    }
+    
+    //参数res为：err或者succ
+    function afterupload(res, msg)
+    {
+    	//如果失败，则恢复保存按钮。给出错误提示
+    	if(res == 'err')
+    	{
+    		$.jBox.tip(msg,'error');
+    		//保存按钮恢复
+    		$("#baocun_btn").find('em').text('保存');
+    		$("#baocun_btn").removeClass('W_btn_a_disable');
+			return;
+    	}
+    	else //如果成功，则跳转到文章列表页。
+    	{
+    		window.location.href="admin.php?mod=cpl";
+    	}
+    	
+    }
+    
+    
+    
+    
+    </script>
+    
+  </div>
+
+</div>
+
+</div>
+
+</div>
+<!--{template page_footer}-->

@@ -1,0 +1,46 @@
+<!--{template page_header}-->
+{$url_redirect}
+<div class="main" style="margin-top:5px;">
+
+<div class="box_frame" style="margin-top:20px;margin-bottom:20px;">
+<div class="box_title"><span class="box_title_txt">系统提示信息</span></div>
+
+<div style="width:100%;">
+<h3 style="float: left;margin-left: 30px;margin-top: 35px;line-height: 22px;width:100%;">{$msgstr}</h3>
+<!--{if $url_redirect}-->
+<h3 style="float: left;color: #7594B3;margin-left: 30px;">
+  <a href="{$redir}" style="color: #7594B3;">
+  <span id='redirect_status'><span id='msg_time'>{$time}</span>秒后跳转到指定页面，如果您的浏览器没有自动跳转，请点击这里。</span>
+  </a>
+</h3>
+<script language="JavaScript" type="text/javascript">
+function showTimeStatus()
+{
+	var timeObj=document.getElementById('msg_time');
+	if(timeObj.innerHTML==1)
+	{
+		document.getElementById('redirect_status').innerHTML="正在跳转到指定页面，如果您的浏览器没有自动跳转，请点击这里。";
+		return false;
+	}
+	timeObj.innerHTML-=1;
+
+	setTimeout(showTimeStatus,1000);
+}
+showTimeStatus();
+</script>
+<!--{elseif $redir}-->
+<h3 style="float: left;color: #7594B3;margin-left: 30px;">
+  <a href="{$redir}" style="color: #7594B3;">
+  <span id='redirect_status'>点击这里，跳转到指定页面。</span>
+  </a>
+</h3>
+
+<!--{/if}-->
+</div>
+
+</div>
+
+<div class="cf"></div>
+</div>
+
+<!--{template page_footer}-->

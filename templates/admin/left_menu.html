@@ -1,0 +1,103 @@
+<style type="text/css">
+.left-side{
+	width:160px;
+	height:100%;
+	background: #EAEEF4;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.side-content{
+	width:99%;
+	border-right: 1px solid #d4d4d4;
+	padding:6px 0;
+}
+
+.side-bx{
+	float:none;
+	margin:0 6px;
+	border-bottom: 1px solid white;
+}
+
+.side-bx-title {
+	width:100%;
+}
+.side-bx-title h3 {
+background: url(templates/admin/images/side_open_title_icon.png) no-repeat 0 1px;
+cursor: pointer;
+padding: 4px 18px;
+font-size: 12px;
+color: black;
+line-height: 22px;
+margin:0px;
+}
+
+.side-bx-bd{
+	width:100%;
+}
+
+.side-bx-bd ul {
+	float:left;
+padding: 1px 0 5px;
+	
+	border-bottom: 1px solid #C1CFE2;
+	width:100%;
+}
+
+.side-bx-bd ul li{
+	width:100%;
+	margin-bottom:1px;
+}
+
+.side-bx-bd ul  a {
+padding: 2px 18px;
+zoom: 1;
+text-decoration: none;
+	color: #3F4D69;
+	display: block;
+	text-align:left;
+	line-height:19px;
+}
+
+.side-bx-bd ul .current, .side-bx-bd ul .current:hover{
+color: white;
+padding: 2px 18px;
+	background: url(templates/admin/images/sprite.png) no-repeat;
+	background-position: 0 -1006px;
+}
+
+
+
+.side-bx-bd ul a:hover {
+background: #D8DDE9;
+text-decoration: none;
+color: #3c5283;
+}
+</style>
+
+<div class="left-side scroll-div">
+  <div class="side-content">
+
+      <!--{eval $admin_menu = getSetting('admin_menu'); $leftmenu = $admin_menu[$menu_level_1];}-->
+      <!--{loop $leftmenu[level2] $onel2menu}-->
+        <div class="side-bx">
+          <div class="side-bx-title">
+            <h3>{$onel2menu[name]}</h3>
+          </div>
+          <div class="side-bx-bd">
+            <ul>
+              <!--{loop $onel2menu[level3] $l3menu_key $onel3menu}-->
+			  <!--{eval $iscurrent = $menu_level_3==$l3menu_key?'current':'';}-->
+              <li><a target="" href="{$onel3menu[url]}" class="{$iscurrent}">{$onel3menu[name]}</a></li>
+              <!--{/loop}-->
+            </ul>
+          </div>
+          <div class="cf"></div>
+        </div>
+
+      <!--{/loop}-->
+
+  
+
+    
+  </div>
+</div>

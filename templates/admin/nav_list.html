@@ -1,0 +1,280 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>前端店铺导航栏管理</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+  
+  <style type="text/css">
+  .tab_line{
+	width:100%;
+	border: 1px solid #e8e8e8;
+border-bottom:none;
+clear: both;
+overflow: hidden;
+line-height:27px;
+  }
+  
+  .cat_item_level{
+	width:20%;
+	text-align:left;
+  }
+  
+  .cat_item_name{
+	width:40%;
+	word-wrap: break-word;
+	word-break: break-all;
+	white-space: normal;
+	text-align:left;
+  }
+  
+  .cat_item_paixu{
+	width:10%;
+	text-align:center;
+  }
+  .cat_item_paixu input{
+	width:30px;
+	padding:0px;
+	margin-top:3px;
+	margin-left:4px;
+  }
+  </style>
+  <script type="text/javascript">
+
+//新增导航项，包括新增子导航项和顶级导航项
+function show_nav_new(p_nav_id)
+{
+	$.jBox("post:admin.php?mod=nav&act=dialog_nav_new&p_nav_id="+p_nav_id,{
+		id: 'nav_dialog_first',
+	    title: "新增导航项",
+	    width: 600,
+	    height: 370
+	});
+
+}
+  
+//编辑导航项
+function show_nav_edit(nav_id)
+{
+	$.jBox("post:admin.php?mod=nav&act=dialog_nav_edit&nav_id="+nav_id,{
+		id: 'nav_dialog_first',
+	    title: "编辑导航项",
+	    width: 600,
+	    height: 370
+	});
+
+}
+
+//删除导航项提示确认
+function delete_nav_item(nav_id)
+{
+	var options = {
+            'onClickYes':function (){
+            	$.ajax({
+            		type:"post",
+            		async : true,//false表示同步，true表示异步
+            		url:"ajax.php?mod=nav&act=delete_nav",
+            		data:{nav_id:nav_id},
+            		beforeSend: function(XMLHttpRequest){
+            			
+            		},
+            		success: function(data){//data是json格式
+            			
+            			data = jQuery.parseJSON( data );
+            			if(data.done)//删除成功
+            			{
+            				$.jBox.tip('删除成功', 'success');
+            				
+            				setTimeout('location.reload();', 1000);//1秒后刷新页面
+            				return;
+            			}
+            			else//删除失败
+            			{				
+            				$.jBox.tip(data.msg, 'error');
+            				return;
+            			}
+            		}
+            		});
+           }
+     };
+	MessageBox('warn','确定删除？如果有子导航，子导航同时会被删除。','提示', options);
+}
+
+  //保存导航排序数
+  function save_nav_paixu_num()
+  {
+	  //找到所有name=cat_item_paixu的input
+	  var paixu_obj = new Array();
+	  var i = 0;
+	  $("input[name='nav_item_paixu']").each(function(){
+		paixu_obj[i] = new Array();
+		paixu_obj[i] = {nav_id:$(this).attr('data'), paixu_num:$(this).val()};
+		i++;
+		
+	  });
+	  if(!paixu_obj[0])
+	  {
+		alert('没有排序数要保存！'); 
+		return;
+	  }
+	  //paixu_obj这个变量，也可以这样定义：var paixu_obj = [{cat_id : '7', paixu_num:'1'},{cat_id:"8", paixu_num:"2"}];
+	  
+	  //传送门
+	  $.ajax({
+       		type:"post",
+       		async : true,//false表示同步，true表示异步
+       		url:"ajax.php?mod=nav&act=save_nav_paixu",
+       		data:{nav_paixu:paixu_obj},
+       		beforeSend: function(XMLHttpRequest){
+       			loadingbox();
+       		},
+       		success: function(data){//data是json格式
+       			data = jQuery.parseJSON( data );
+       			if(data.done)//成功
+       			{
+       				close_loadingbox();
+       				$.jBox.tip('保存成功', 'success');
+       				
+       				setTimeout('location.reload();', 1000);//1秒后刷新页面
+       				return;
+       			}
+       			else//失败
+       			{
+       				close_loadingbox();
+       				$.jBox.tip(data.msg, 'error');
+       				return;
+       			}
+       		}
+       	});
+	  
+  }
+  
+  </script>
+  <div style="float:left;margin-top: 5px;">
+    <a href="javascript:void(0);" class="addwatch" onclick="show_nav_new(0);">
+      <span><em style="">+</em>添加一个顶级导航项</span>
+    </a>
+  </div>
+  <div style="line-height:30px;">（最多四级导航）</div>
+  <div style="margin-left: 374px;"><input type="button" value="保存顺序" class="btnText" style="cursor:pointer;float:right;" onclick="save_nav_paixu_num();"></div>
+  
+  <table width="1011px;" border="0" class="stripe_tb" style="float:left;table-layout:fixed;border-spacing: 0px;">
+      <thead style="background: url(templates/admin/images/tile_bg.png) 0 -100px;">
+      <tr class=""> 
+        <th style="width: 20%;border-left: 1px solid #ccc;text-align:center;">导航层级</th>
+        <th style="width: 40%;text-align:center;">导航名称</th> 
+        <th style="width: 10%;text-align:center;">排序</th> 
+        <th style="width: 30%;text-align:center;">操作</th> 
+      </tr> 
+      </thead>
+  </table>
+  <div style="width:1009px;border-bottom:1px solid #e8e8e8;margin-bottom:50px;">
+      <!--{if $navlevel1}-->
+      <!--{loop $navlevel1 $onenav_l1}-->
+      <div style="width:100%;" name="catl1">
+        <div class="tab_line" style="background-color: #FFFFD4;">
+        <div class="cat_item_level"><span style="margin-left:70px;">{$onenav_l1[level]}级</span></div>
+        <div class="cat_item_name"><span style="margin-left:150px;">{$onenav_l1[name]}</span></div>
+        <div class="cat_item_paixu"><input type="text" name="nav_item_paixu" data="{$onenav_l1[nav_id]}" value="{$onenav_l1[paixu_num]}" /></div>
+        <div style="width:30%;">
+          <div style="width:100%;text-align:center;">
+	        <a href="javascript:void(0);" class="blue_a" onclick="show_nav_edit({$onenav_l1[nav_id]});">编辑</a>
+	        <a href="javascript:void(0);" class="blue_a" onclick="delete_nav_item({$onenav_l1[nav_id]});">删除</a>
+	        <a href="javascript:void(0);" class="blue_a" onclick="show_nav_new({$onenav_l1[nav_id]});">添加子导航</a>
+          </div>
+        </div>
+        </div>
+        <!--{loop $navlevel2 $onenav_l2}-->
+        <!--{if $onenav_l2[parent_id] == $onenav_l1[nav_id]}-->
+        <div style="width:100%;" name="catl2">
+          <div class="tab_line" style="background-color: #C4CEDF;">
+            <div class="cat_item_level"><span style="margin-left:85px;">--{$onenav_l2[level]}级</span></div>
+            <div class="cat_item_name"><span style="margin-left:165px;">{$onenav_l2[name]}</span></div>
+            <div class="cat_item_paixu"><input type="text" name="nav_item_paixu" data="{$onenav_l2[nav_id]}" value="{$onenav_l2[paixu_num]}" /></div>
+            <div style="width:30%;">
+              <div style="width:100%;text-align:center;">
+	            <a href="javascript:void(0);" class="blue_a" onclick="show_nav_edit({$onenav_l2[nav_id]});">编辑</a>
+	            <a href="javascript:void(0);" class="blue_a" onclick="delete_nav_item({$onenav_l2[nav_id]});">删除</a>
+	            <a href="javascript:void(0);" class="blue_a" onclick="show_nav_new({$onenav_l2[nav_id]});">添加子导航</a>
+              </div>
+            </div>
+          </div>
+          
+          <!--{loop $navlevel3 $onenav_l3}-->
+          <!--{if $onenav_l3[parent_id] == $onenav_l2[nav_id]}-->
+          <div style="width:100%;" name="catl3">
+          <div class="tab_line" style="background-color: #B7E9CD;">
+            <div class="cat_item_level"><span style="margin-left:100px;">----{$onenav_l3[level]}级</span></div>
+            <div class="cat_item_name"><span style="margin-left:180px;">{$onenav_l3[name]}</span></div>
+            <div class="cat_item_paixu"><input type="text" name="nav_item_paixu" data="{$onenav_l3[nav_id]}" value="{$onenav_l3[paixu_num]}" /></div>
+            <div style="width:30%;">
+              <div style="width:100%;text-align:center;">
+	            <a href="javascript:void(0);" class="blue_a" onclick="show_nav_edit({$onenav_l3[nav_id]});">编辑</a>
+	            <a href="javascript:void(0);" class="blue_a" onclick="delete_nav_item({$onenav_l3[nav_id]});">删除</a>
+	            <a href="javascript:void(0);" class="blue_a" onclick="show_nav_new({$onenav_l3[nav_id]});">添加子导航</a>
+              </div>
+            </div>
+          </div>
+          
+	          <!--{loop $navlevel4 $onenav_l4}-->
+	          <!--{if $onenav_l4[parent_id] == $onenav_l3[nav_id]}-->
+	          <div style="width:100%;" name="catl4">
+	          <div class="tab_line" style="background-color: #F4E1E6;">
+	            <div class="cat_item_level"><span style="margin-left:115px;">----{$onenav_l4[level]}级</span></div>
+	            <div class="cat_item_name"><span style="margin-left:195px;">{$onenav_l4[name]}</span></div>
+	            <div class="cat_item_paixu"><input type="text" name="nav_item_paixu" data="{$onenav_l4[nav_id]}" value="{$onenav_l4[paixu_num]}" /></div>
+	            <div style="width:30%;">
+	              <div style="width:100%;text-align:center;">
+		            <a href="javascript:void(0);" class="blue_a" onclick="show_nav_edit({$onenav_l4[nav_id]});">编辑</a>
+		            <a href="javascript:void(0);" class="blue_a" onclick="delete_nav_item({$onenav_l4[nav_id]});">删除</a>
+	              </div>
+	            </div>
+	          </div>
+	          
+	          </div>
+	          <!--{/if}-->
+	          <!--{/loop}-->
+          
+          </div>
+          <!--{/if}-->
+          <!--{/loop}-->
+          
+        </div>
+        <!--{/if}-->
+        <!--{/loop}-->
+      </div>
+      <!--{/loop}-->
+      <!--{else}-->
+      <div style="float:left;width:100%;text-align:center;margin:10px 0px 10px 0px;">
+        <span style="color:red;">当前没有任何导航，请添加新导航！</span>
+      </div>
+      <!--{/if}-->
+      
+  </div> 
+    
+  
+  
+  </div>
+
+
+
+</div>
+
+</div>
+
+
+
+
+</div>
+<!--{template page_footer}-->

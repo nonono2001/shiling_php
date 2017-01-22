@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我爱鲜生</title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+		<!-- 禁止浏览器从本地缓存中调阅页面。--> 
+		<meta http-equiv="pragram" content="no-cache"> 
+		<!--网页不保存在缓存中，每次访问都刷新页面。--> 
+		<meta http-equiv="cache-control" content="no-cache, must-revalidate"> 
+		<!--同上面意思差不多，必须重新加载页面--> 
+		<meta http-equiv="expires" content="0"> 
+		<!-- Mobile Devices Support @begin -->
+		<meta content="telephone=no, address=no" name="format-detection">
+		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/jquery-2.2.0.js"></script>
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/basic.css">
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/style.css">
+	</head>
+	<body>
+		<div class="page2 page bg_1">
+			<div class="top-box">
+				<div class="logo-box">
+					<img src="templates/{TEMPLATE_NAME}/img/logo.png">
+				</div>
+				<div class="title-box">
+					<img src="templates/{TEMPLATE_NAME}/img/title_1.png">
+				</div>
+				<div class="subtitle-box">
+					<img src="templates/{TEMPLATE_NAME}/img/title2.png">
+				</div>
+			</div>
+			<div class="content-box">
+				<div class="form-box">
+					<form id="tihuo_apply_form" action="index.php?mod=waxs_tihuo_apply&act=do_send_shouhuoinfo" method="post" target="_self" >
+						<input type="hidden" name="tihuoquanhao" value="{$tihuoquanhao}" />
+						<input type="hidden" name="tihuoma" value="{$tihuoma}"  />
+						<div class="input-box">
+							<label class="person"></label>
+							<input type="text" class="input-person" name="shuohuoren" placeholder="收货人">
+						</div>
+						<div class="input-box input-mgbtm">
+							<label class="mobile"></label>
+							<input type="text" class="input-mobile" name="lianxidianhua" placeholder="联系电话">
+						</div>
+						<div class="input-box input-mgbtm">
+							<label class="address"></label>
+							<input type="text" class="input-address" name="shouhuodizhi" placeholder="收货地址">
+						</div>
+						<div class="btn-box">
+							<button type="button">提&nbsp;交</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="bottom-box line-box">
+				<p>
+					温馨提示<br/>
+					收货信息提交后，请注意保持联系电话畅通！
+				</p>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+
+			function mobileVerify(value){
+				var mobile=/^1[3|4|5|7|8]\d{9}$/;
+				if(mobile.test(value)){
+					return true;
+				}else{
+					return false;
+				}
+			}
+
+			var bottomWidth = $('.bottom-box').width();
+			var leftPosition = '-'+bottomWidth/2+'px';
+			// $('.bottom-box').css({"margin-left":leftPosition})
+
+			var contentWidth = $('.content-box').width();
+			var leftContent = '-'+contentWidth/2+'px'
+			// $('.content-box').css({"margin-left":leftContent})
+
+
+			$('.btn-box button').bind('touchend',function(){
+				if(!$('.input-person').val()){
+					alert('请输入收货人');
+					return false
+				}else if(!$('.input-mobile').val()){
+					alert('请输入联系电话');
+					return false
+				}else if(!mobileVerify($('.input-mobile').val())){
+					alert('请输入正确的手机号');
+					return false;
+				}else if(!$('.input-address').val()){
+					alert('请输入收货地址');
+					return false;
+				}
+				$('form').submit();
+			})
+
+			var height = $('body').height()
+			var width = $('body').width()
+			var size = width+'px '+height+'px'
+			$('input').bind('focus',function(){
+				$('.bottom-box').hide()
+				// console.log(size)
+				// alert(1)
+
+				$('.page').css({'background-size':size})
+				// document.addEventListener("touchmove",function(e){
+
+				// 	e.preventDefault();
+				// 	e.stopPropagation();
+				// },false);
+
+			})
+
+			$('input').bind('blur',function(){
+				$('.bottom-box').show()
+			})
+				
+			
+
+
+			
+			
+		})
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

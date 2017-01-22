@@ -1,0 +1,179 @@
+<!--{template page_header}-->
+
+<style type="text/css">
+.backlist{
+color:#0088D6;
+}
+
+.backlist:hover{
+color:#0261A1;
+
+}
+
+.fill_left {
+float: left;
+text-align: right;
+line-height: 30px;
+height: 30px;
+width: 140px;
+margin-right: 10px;
+}
+.fillnamechar {
+color: #4372B0;
+font-weight: bold;
+}
+
+</style>
+
+<div class="mainwrap">
+
+  <div class="main">
+  
+  <div style="width:100%;margin-bottom:20px;">
+    
+    <div>
+    <!--{template leftside}-->    
+    </div>
+    
+    <div  class="main_right_wrap">
+      <div class="main_right_title">
+        <span>{$Breadcrumb}</span>
+        
+        <div style="float:right;margin-right: 10px;"><a href="index.php?mod=dl" class="backlist">&lt;&lt;返回下载列表</a></div>
+      </div>
+      
+      <div name="articledetail_wrap" style="width: 674px;margin-top: 20px;padding: 6px 8px 70px 8px;">
+        <div name="download_title" id="download_title" data="{$downloadinfo[id]}" style="width:100%;text-align:center;"><span style="display: block;  padding: 3px 0;
+  line-height: 1.7em;
+  font-family: Microsoft YaHei;
+  font-size: 18px;
+  color: #5a5a5a;
+  font-weight: bold;
+  text-decoration: none;">{$downloadinfo[download_title]}</span></div>
+        
+        
+        <div name="article_abstract" style="font-family: Microsoft YaHei;width:652px;
+  font-size: 12px;
+  color: #868686;
+  font-weight: normal;
+  text-decoration: none;
+  background-color: #F5F5F5;
+  border-style: solid solid solid solid;
+  border-color: #E5E5E5 #E5E5E5 #E5E5E5 #E5E5E5;
+  border-width: 1px 1px 1px 1px;
+  padding: 5px;
+    margin-left: 5px;
+  line-height: 1.7em;
+  border: #E5E5E5 1px solid;
+  margin-bottom: 10px;
+  text-indent: 24px;">
+        <span>{$downloadinfo[download_des]}</span>
+        
+        
+        </div>
+        
+        <div class="richtext_show_area" style="text-indent: 28px;">
+          <div style="width:100%;margin-top:10px;">如果您想下载该资料，需要填写以下信息（请放心填写，我们会绝对保密您的个人信息）：</div>
+          
+          <div style="width:100%;margin-top:20px;">
+            <div class="fill_left"><span class="fillnamechar">姓名：</span></div>
+            <div class="fill_right" style="width: 170px;"><input type="text" id="yourname" name="yourname" value="" style="float: left;border-radius: 3px;width: 150px;margin-top: 2px;" onkeyup="changeTip_by_val('yourname','yourname_tip',1,30);"/></div>
+            <div style="line-height:26px;" id="yourname_tip">1~30字</div>
+          </div>
+    
+          <div style="width:100%;margin-top:20px;">
+            <div class="fill_left"><span class="fillnamechar">职务：</span></div>
+            <div class="fill_right" style="width: 170px;"><input type="text" id="yourjob" name="yourjob" value="" style="float: left;border-radius: 3px;width: 150px;margin-top: 2px;" onkeyup="changeTip_by_val('yourjob','yourjob_tip',1,50);"/></div>
+            <div style="line-height:26px;" id="yourjob_tip">1~50字</div>
+          </div>
+          
+          <div style="width:100%;margin-top:20px;">
+            <div class="fill_left"><span class="fillnamechar">联系方式：</span></div>
+            <div class="fill_right" style="width: 170px;"><input type="text" id="yourphone" name="yourphone" value="" style="float: left;border-radius: 3px;width: 150px;margin-top: 2px;" onkeyup="changeTip_by_val('yourphone','yourphone_tip',1,50);"/></div>
+            <div style="line-height:26px;" id="yourphone_tip">1~50字</div>
+          </div>
+          
+          <div style="width:100%;margin-top:20px;">
+            <div class="fill_left"><span class="fillnamechar">工作单位：</span></div>
+            <div class="fill_right" style="width: 170px;"><input type="text" id="yourcompany" name="yourcompany" value="" style="float: left;border-radius: 3px;width: 150px;margin-top: 2px;" onkeyup="changeTip_by_val('yourcompany','yourcompany_tip',1,50);"/></div>
+            <div style="line-height:26px;" id="yourcompany_tip">1~50字</div>
+          </div>
+          
+          <input type="button" value="提交" class="btnText" style="margin-top: 30px;width: 75px;height: 30px;margin-left: 190px;" onclick="sub_btn_click(this);">
+        
+          <div id="show_download_url_pwd" style="display:none;">
+            <div style="width:100%;">信息提交成功，</div>
+            <div style="width:100%;">下载链接：{$downloadinfo[url]} （请拷贝链接至浏览器地址栏进行访问）</div>
+            <div style="width:100%;">下载密码：<span style="color:red;">{$downloadinfo[password]}</span></div>
+          </div>
+        </div>
+        
+      </div>
+      
+    
+    </div>
+    
+  </div>
+  
+  <script type="text/javascript">
+function sub_btn_click(t)
+{
+	var yourname = $.trim($("#yourname").val());  //姓名
+	
+	var yourjob = $.trim($("#yourjob").val());  //职务
+	
+	var yourphone = $.trim($("#yourphone").val());  //联系方式
+	
+	var yourcompany = $.trim($("#yourcompany").val());  //工作单位
+	
+	if(yourname.length < 1 || yourjob.length < 1 || yourphone.length < 1 || yourcompany.length < 1)
+	{
+		alert('不能少填信息。');
+		return;
+	}
+	
+	var download_id = $("#download_title").attr('data');
+	
+	//走ajax
+	$.ajax({
+   		type:"post",
+   		async : true,//false表示同步，true表示异步
+   		url:"ajax.php?mod=download&act=save_download_info",
+   		data:{download_id:download_id,yourname:yourname,yourjob:yourjob,yourphone:yourphone,yourcompany:yourcompany},
+   		beforeSend: function(XMLHttpRequest){
+   			//让保存按扭的功能失郊
+   			$(t).val('提交中...');
+			btnclickattr = $(t).attr('onclick');
+			$(t).attr('onclick','');//让按钮失效。
+   		},
+   		success: function(data){//data是json格式
+   		    //让提交按钮恢复功能
+			$(t).val('提交');
+		    $(t).attr('onclick',btnclickattr);//让按钮恢复。
+		    
+   			data = jQuery.parseJSON( data );
+   			if(data.done)//成功
+   			{
+			    //显示下载链接、下载密码
+			    $("#show_download_url_pwd").show();
+   				return;
+   			}
+   			else//失败
+   			{
+   				$.jBox.tip(data.msg, 'error');
+   				return;
+   			}
+   		}
+   		});
+}
+</script>
+  
+  <div class="cf"></div>
+  </div>
+
+
+<div class="cf"></div>
+</div><!--mainwrap end-->
+
+
+<!--{template page_footer}-->

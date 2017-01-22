@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我爱鲜生</title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+		<!-- 禁止浏览器从本地缓存中调阅页面。--> 
+		<meta http-equiv="pragram" content="no-cache"> 
+		<!--网页不保存在缓存中，每次访问都刷新页面。--> 
+		<meta http-equiv="cache-control" content="no-cache, must-revalidate"> 
+		<!--同上面意思差不多，必须重新加载页面--> 
+		<meta http-equiv="expires" content="0"> 
+		<!-- Mobile Devices Support @begin -->
+		<meta content="telephone=no, address=no" name="format-detection">
+		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/jquery-2.2.0.js"></script>
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/basic.css">
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/style.css">
+	</head>
+	<body>
+		<div class="page1 page bg_1">
+			<div class="top-box">
+				<div class="logo-box">
+					<img src="templates/{TEMPLATE_NAME}/img/logo.png">
+				</div>
+				<div class="title-box">
+					<img src="templates/{TEMPLATE_NAME}/img/title_1.png">
+				</div>
+			</div>
+			<div class="content-box">
+				<div class="form-box">
+					<form id="tihuo_apply_form" action="index.php?mod=waxs_tihuo_apply&act=do_tihuo_apply" method="post" target="_self" >
+						<div class="input-box">
+							<label class="ticket-id"></label>
+							<input type="text" name="tihuoquanhao" class="input-ticketid"placeholder="提货券号">
+						</div>
+						<div class="input-box input-mgbtm">
+							<label class="ticket-code"></label>
+							<input type="text" name="tihuoma" class="input-ticketcode"placeholder="提货码">
+						</div>
+						<div class="btn-box">
+							<button type="button">提&nbsp;货</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="bottom-box line-box">
+				<p>
+					尊敬的顾客朋友<br/>
+您可以在2016年10月18日-2016年12月18日期间<br/>
+凭礼券背面的券号及提货码提货<br/>
+您预订的产品将第一时间到达您手中！<br/>
+				</p>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var bottomWidth = $('.bottom-box').width();
+			var leftPosition = '-'+bottomWidth/2+'px';
+			// $('.bottom-box').css({"margin-left":leftPosition})
+
+			var contentWidth = $('.content-box').width();
+			var leftContent = '-'+contentWidth/2+'px'
+			// $('.content-box').css({"margin-left":leftContent})
+
+			$('.btn-box button').bind('touchend',function(){
+				if(!$('.input-ticketid').val()){
+					alert('请输入提货券号');
+					return false;
+				}else if(!$('.input-ticketcode').val()){
+					alert('请输入提货码');
+					return false;
+				}
+				$('form').submit();
+			})
+			var height = $('body').height()
+			var width = $('body').width()
+			var size = width+'px '+height+'px';
+			$('input').bind('focus',function(){
+				$('.bottom-box').hide()
+				console.log(size)
+				// alert(1)
+
+				$('.page').css({'background-size':size})
+				// document.addEventListener("touchmove",function(e){
+
+				// 	e.preventDefault();
+				// 	e.stopPropagation();
+				// },false);
+
+			})
+		})
+
+
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

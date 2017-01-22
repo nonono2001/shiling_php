@@ -1,0 +1,34 @@
+/*************************发布框样式，对于jbox的修改************************************/
+div.jbox .jbox-title-icon {
+	background:none;
+}
+
+div.jbox .jbox-title-panel {
+	/*background: -webkit-gradient(linear, left top, left bottom, from(#F8F8F8), to(#DADEDF));
+	border-bottom: 1px solid #BDBDBD;
+	*/
+	/*background: -webkit-gradient(linear, left top, left bottom, from(#E77A32), to(#CC5C12));
+border-bottom: 1px solid #B44013;橙色*/
+	background: -webkit-gradient(linear, left top, left bottom, from(#A8C2DF), to(#3A7486));
+border-bottom: 1px solid #ADA0F1;/*蓝色*/
+	
+}
+
+
+
+div.jbox .jbox-title {
+	/*color: #666;*/
+	color:#fff;
+font-weight: normal;
+font-size: 14px;
+	margin-left: -8px;
+	font-family: microsoft yahei;
+	
+}
+div.jbox .jbox-button-panel {
+	display:none;
+}
+
+#jbox-content{
+	min-height:38px;
+}

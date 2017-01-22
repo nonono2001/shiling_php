@@ -1,0 +1,366 @@
+<style type="text/css">
+
+.nav_edit_ul{
+	float:left;
+	width:100%;
+}
+.nav_edit_ul li{
+	float:left;
+	text-align:left;
+	width:100%;
+	margin-top:10px;
+}
+
+.fill_name{
+	float:left;text-align:right;line-height:30px;height:30px;width:140px;margin-right:10px;
+}
+.fillnamechar{
+	color: #4372B0;
+font-weight: bold;
+}
+
+.fill_right{
+	float:left;
+	width:400px;
+}
+.fill_right input[type="radio"]{
+	margin:0px;
+}
+
+.nav_link_type{
+	float:left;
+	width:130px;
+	height:30px;
+	line-height:30px;
+}
+
+input[name=link_type]{
+	vertical-align: middle;
+}
+</style>
+
+<ul class="nav_edit_ul">
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">导航名称</span>
+    </div>
+    <div class="fill_right">
+      <input type="text" id="nav_name" name="nav_name" value="{$navrow[name]}" style="float:left;border-radius: 3px;width: 236px;margin-top:2px;"  onkeyup="changeTip_by_val('nav_name','nav_name_tip',1,10);"/>
+      <div style="float:left;line-height:30px;margin-left:10px;" id="nav_name_tip">1~10字</div>
+      <input type="hidden" name="cur_nav_id" value="{$navrow[nav_id]}" />
+    </div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">上级导航</span>
+    </div>
+    <div class="fill_right">
+      <span style="line-height: 30px;height: 30px;">{$p_navrow[name]}</span>
+      <input type="hidden" name="parent_nav_id" value="{$p_navrow[nav_id]}" />
+    </div>
+    
+  </li>
+  <li>
+    <div class="fill_name"  style="height:90px;line-height:90px;">
+      <span class="fillnamechar">导航类型</span>
+    </div>
+    <div class="fill_right">
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="product_category" style="vertical-align:middle;" onclick="nav_type_clicked('product_category');" />
+        <span>产品分类</span>
+        </label>
+      </div>
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="product_detail" style="vertical-align:middle;" onclick="nav_type_clicked('product_detail');" />
+        <span>产品详细</span>
+        </label>
+      </div>
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="homepage" style="vertical-align:middle;" onclick="nav_type_clicked('home_page');" />
+        <span>首页</span>
+        </label>
+      </div>
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="article_category" style="vertical-align:middle;" onclick="nav_type_clicked('article_category');" />
+        <span>文章分类</span>
+        </label>
+      </div>
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="article_detail" style="vertical-align:middle;" onclick="nav_type_clicked('article_detail');" />
+        <span>文章详细</span>
+        </label>
+      </div>
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="custom_page" style="vertical-align:middle;" onclick="nav_type_clicked('custom_page');" />
+        <span>自定义页</span>
+        </label>
+      </div>
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="advise" style="vertical-align:middle;" onclick="nav_type_clicked('advise');" />
+        <span>留言</span>
+        </label>
+      </div>
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="friendlink" style="vertical-align:middle;" onclick="nav_type_clicked('friendlink');" />
+        <span>友情链接</span>
+        </label>
+      </div>
+      <div class="nav_link_type">
+        <label>
+        <input type="radio" name="nav_content_type" id="" value="out_link" style="vertical-align:middle;" onclick="nav_type_clicked('out_link');" />
+        <span>外部链接</span>
+        </label>
+      </div>
+      
+    </div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">已选择内容</span>
+    </div>
+    <div class="fill_right">
+      <span id="nav_content_selected" style="line-height: 30px;height: 30px;">{$navrow[nav_content_selected]}</span>
+      <input type="hidden" id="nav_type_selected" name="nav_type_selected" value="{$navrow[nav_type]}" />
+      <input type="hidden" id="nav_detail_selected" name="nav_detail_selected" value="{$navrow[nav_content]}" />
+    </div>
+  </li>
+  
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">是否新窗口打开</span>
+    </div>
+    <div class="fill_right">
+      <!--{eval $new_window_class=$navrow[open_type]=='_blank'?'checked':'';}-->
+      <!--{eval $self_window_class=$navrow[open_type]=='_self'?'checked':'';}-->
+      <div class="nav_link_type"  style="width:50px;">
+        <label>
+        <input type="radio" name="open_style" id="" value="_blank" style="vertical-align:middle;" {$new_window_class} />
+        <span>是</span>
+        </label>
+      </div>
+      <div class="nav_link_type"  style="width:50px;">
+        <label>
+        <input type="radio" name="open_style" id="" value="_self" style="vertical-align:middle;" {$self_window_class} />
+        <span>否</span>
+        </label>
+      </div>
+    </div>
+  </li>
+  
+</ul>
+<div style="width:100%;float:left;">
+  <input type="button" value="取消" class="canlText" style="cursor:pointer;float:right;margin-right:40px;" onclick="close_dialog('nav_dialog_first');"/>
+  <!--{if $optype == 'new'}-->
+  <input type="button" value="保存" class="btnText" style="cursor:pointer;float:right;margin-right:20px;" onclick="save_nav_item('new',{$p_nav_id});"/>
+  <!--{elseif $optype == 'edit'}-->
+  <input type="button" value="保存" class="btnText" style="cursor:pointer;float:right;margin-right:20px;" onclick="save_nav_item('edit',{$nav_id});"/>
+  <!--{/if}-->
+</div>
+
+<script type="text/javascript">
+function save_nav_item(optype, nav_id)
+{
+	//optype可能是edit或者new。即“编辑”还是“新增”
+	//不管是新增还是编辑，都要做合格性检查。
+	
+	//检查导航名称
+	var nav_name = $.trim($("#nav_name").val());
+ 	var nav_name_len = nav_name.length;//导航名称长度。
+ 	if(nav_name_len>10 || nav_name_len<1)
+ 	{
+ 		$.jBox.tip('导航名称必填，长度为1~10个字符','error');
+ 		return false;
+ 	}
+	
+	//检查已选内容，也就是导航内容
+	var nav_type_selected = $.trim($("#nav_type_selected").val());//不能为空
+	if(!nav_type_selected)
+	{
+		$.jBox.tip('请选择导航类型','error');
+ 		return false;
+	}
+	var nav_detail_selected = $("#nav_detail_selected").val();//它是个数字，不用trim了。可能为空或0
+ 	
+	//检查窗口打开方式。
+	var open_style = $("input[name=open_style]:checked").val();
+	if(open_style != '_blank' && open_style != '_self')
+	{
+		$.jBox.tip('请选择窗口打开方式','error');
+ 		return false;
+	}
+
+	if(optype == 'new') //新增导航项
+	{
+		//nav_id就是父导航节点的id，nav_id可能为空（为空则新增顶级导航项）
+		//走ajax
+		$.ajax({
+        		type:"post",
+        		async : true,//false表示同步，true表示异步
+        		url:"ajax.php?mod=nav&act=save_nave&optype=new",
+        		data:{nav_id:nav_id,nav_name:nav_name,nav_type_selected:nav_type_selected,nav_detail_selected:nav_detail_selected,open_style:open_style},
+        		beforeSend: function(XMLHttpRequest){
+        			loadingbox();
+        		},
+        		success: function(data){//data是json格式
+        			data = jQuery.parseJSON( data );
+        			if(data.done)//成功
+        			{
+        				close_loadingbox();
+        				close_dialog('nav_dialog_first');
+        				$.jBox.tip('保存成功', 'success');
+        				
+        				setTimeout('location.reload();', 1000);//1秒后刷新页面
+        				return;
+        			}
+        			else//失败
+        			{
+        				close_loadingbox();
+        				$.jBox.tip(data.msg, 'error');
+        				return;
+        			}
+        		}
+        		});
+	}
+	else if(optype == 'edit') //编辑导航项
+	{
+		//编辑导航还需检查传入的参数nav_id，
+		//nav_id就是要编辑的导航节点id，nav_id不能为空
+		if(nav_id<=0 || !nav_id)
+		{
+			$.jBox.tip('要编辑的导航id出错','error');
+	 		return false;
+		}
+		//走ajax
+		$.ajax({
+    		type:"post",
+    		async : true,//false表示同步，true表示异步
+    		url:"ajax.php?mod=nav&act=save_nave&optype=edit",
+    		data:{nav_id:nav_id,nav_name:nav_name,nav_type_selected:nav_type_selected,nav_detail_selected:nav_detail_selected,open_style:open_style},
+    		beforeSend: function(XMLHttpRequest){
+    			loadingbox();
+    		},
+    		success: function(data){//data是json格式
+    			data = jQuery.parseJSON( data );
+    			if(data.done)//成功
+    			{
+    				close_loadingbox();
+    				$.jBox.tip('保存成功', 'success');
+    				
+    				setTimeout('location.reload();', 1000);//1秒后刷新页面
+    				return;
+    			}
+    			else//失败
+    			{
+    				close_loadingbox();
+    				$.jBox.tip(data.msg, 'error');
+    				return;
+    			}
+    		}
+    		});
+	}
+	else
+	{
+		return;
+	}
+	
+}
+
+
+//导航类型单选框被点击时触发。
+//参数nav_type_clicked即点击选择的导航类型
+function nav_type_clicked(nav_type_clicked)
+{
+	if(nav_type_clicked == 'product_category')
+	{
+		$("#nav_dialog_first").hide();
+		$.jBox("post:ajax.php?mod=nav&act=nav_type_click&type="+nav_type_clicked,{
+			id: 'nav_dialog_second',
+		    title: "选择导航内容 -- 产品分类",
+		    width: 600,
+		    height: 450
+		});
+	}
+	else if(nav_type_clicked == 'product_detail')
+	{
+		$("#nav_dialog_first").hide();
+		$.jBox("post:ajax.php?mod=nav&act=nav_type_click&type="+nav_type_clicked,{
+			id: 'nav_dialog_second',
+		    title: "选择导航内容 -- 产品详细",
+		    width: 600,
+		    height: 480
+		});
+	}
+	else if(nav_type_clicked == 'home_page')
+	{
+		$("#nav_type_selected").val('homepage');
+		$("#nav_detail_selected").val('');
+		$("#nav_content_selected").html('首页');
+	}
+	else if(nav_type_clicked == 'article_category')
+	{
+		$("#nav_dialog_first").hide();
+		$.jBox("post:ajax.php?mod=nav&act=nav_type_click&type="+nav_type_clicked,{
+			id: 'nav_dialog_second',
+		    title: "选择导航内容 -- 文章分类",
+		    width: 600,
+		    height: 450
+		});
+	}
+	else if(nav_type_clicked == 'article_detail')
+	{
+		$("#nav_dialog_first").hide();
+		$.jBox("post:ajax.php?mod=nav&act=nav_type_click&type="+nav_type_clicked,{
+			id: 'nav_dialog_second',
+		    title: "选择导航内容 -- 文章详细",
+		    width: 600,
+		    height: 480
+		});
+	}
+	else if(nav_type_clicked == 'custom_page')
+	{
+		$("#nav_dialog_first").hide();
+		$.jBox("post:ajax.php?mod=nav&act=nav_type_click&type="+nav_type_clicked,{
+			id: 'nav_dialog_second',
+		    title: "选择导航内容 -- 自定义页",
+		    width: 600,
+		    height: 480
+		});
+	}
+	else if(nav_type_clicked == 'advise')
+	{
+		$("#nav_type_selected").val('advise');
+		$("#nav_detail_selected").val('');
+		$("#nav_content_selected").html('留言');
+	}
+	else if(nav_type_clicked == 'friendlink')
+	{
+		$("#nav_type_selected").val('friendlink');
+		$("#nav_detail_selected").val('');
+		$("#nav_content_selected").html('友情链接');
+	}
+	else if(nav_type_clicked == 'out_link')
+	{
+		$("#nav_dialog_first").hide();
+		$.jBox("post:ajax.php?mod=nav&act=nav_type_click&type="+nav_type_clicked,{
+			id: 'nav_dialog_second',
+		    title: "选择导航内容 -- 外部链接",
+		    width: 600,
+		    height: 370
+		});
+	}
+	else
+	{
+		alert('nav type error!');
+	}
+
+}
+
+</script>

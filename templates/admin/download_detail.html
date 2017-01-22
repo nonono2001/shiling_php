@@ -1,0 +1,202 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>下载详情</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+  
+  <div style="width:100%;background-color:#EFECA1;padding: 10px 0px;margin-bottom: 20px;">
+    <div style="font-size: 14px;font-weight: bold;line-height: 26px;width: 100%;text-align: center;">下载资料基本信息</div>
+    <div style="width:100%;">
+      <div style="width:100%;text-align: center;font-size:14px;line-height:20px;">下载标题：{$downloadurlrow[download_title]}</div>
+      <div style="width:100%;text-align: center;font-size:14px;line-height:20px;">下载描述：{$downloadurlrow[download_des]}</div>
+      <div style="width:100%;text-align: center;font-size:14px;line-height:20px;">下载地址：{$downloadurlrow[url]}</div>
+      <div style="width:100%;text-align: center;font-size:14px;line-height:20px;">下载密码：{$downloadurlrow[password]}</div>
+    </div>
+  </div>
+  
+  <div style="font-size: 14px;font-weight: bold;line-height: 26px;width: 100%;text-align: center;margin-bottom:10px;">
+    下载者信息
+  </div>
+  
+  <script type="text/javascript">
+$(document).ready(function(){
+	 $(".stripe_tb tr").mouseover(function(){
+	 $(this).addClass("over");}).mouseout(function(){
+	 $(this).removeClass("over");})
+	 $(".stripe_tb tr:even").addClass("alt");
+});
+
+function all_select_click(t)
+{
+	//全选复选框被选中
+	if($(t).attr("checked")=="checked")//注意这里不能用true来判断。
+	{
+		//让下面每个条目的复选框都被选中
+		$("input[name=one_item_select]").attr("checked",true);
+	}
+	else//全选复选框被去掉
+	{
+		//让下面每个条目前的复选框都被去掉
+		$("input[name=one_item_select]").attr("checked",false);
+	}
+	
+}
+function one_select_click(t)
+{
+	if($(t).attr("checked")=="checked")//注意这里不能用true来判断。
+	{
+		
+	}
+	else
+	{
+		//让全选复选框去除勾选
+		$("#all_item_select").attr('checked',false);
+	}
+}
+
+</script>
+  <style type="text/css">
+.stripe_tb th {
+/*background: #B5CBE6;*/
+color: #333;
+line-height: 20px;
+height: 23px;
+padding: 0 8px;
+text-align: left;
+font-size: 12px;
+	font-weight:normal;
+	border-bottom: 1px #ccc solid;
+	border-right: 1px solid #ccc;
+}
+
+.stripe_tb tr td{
+	padding: 5px 8px;
+text-align: left;
+font-size: 12px;
+	vertical-align: top;
+}
+.stripe_tb tr.alt td {
+background: #ecf6fc;
+}
+.stripe_tb tr.over td {
+background: #FEF3D1;
+}
+
+.tb_geziimg img{
+	width:100px;
+	margin:0px 5px 5px 0px;
+}
+    </style>
+    
+    <table width="100%" border="0" class="stripe_tb" style="float:left;table-layout:fixed;border-spacing: 0px;">
+      
+      <thead style="background: url(templates/admin/images/tile_bg.png) 0 -100px;">
+      <tr class="">
+        <th style="width: 20%;border-left: 1px solid #ccc;">姓名</th>
+        <th style="width: 20%;">职位</th> 
+        <th style="width: 20%;">联系方式</th> 
+        <th style="width: 20%;">公司名称</th> 
+        <th style="width: 20%;">下载时间</th>
+      </tr> 
+      </thead>  
+      <tbody> 
+      
+      <!--{loop $downloadinfo $onedownload}-->
+      <tr class="">
+        <td>{$onedownload[name]}</td>
+        <td>{$onedownload[job]}</td> 
+        <td>{$onedownload[contactinfo]}</td>  
+        <td>{$onedownload[company]}</td>
+        <td>{$onedownload[time]}</td>
+        
+      </tr>
+      <!--{/loop}-->
+
+      </tbody>
+    </table>
+    
+    
+    <div style="float:left;width:100%;margin-top:30px;">
+    <!--{if !$page_arr[page]}-->
+      <div style="float:left;width:100%;text-align:center;">
+        <span style="color:red;">当前没有任何内容</span>
+      </div>
+    <!--{else}-->
+      <!--{template page_list}-->
+    <!--{/if}-->
+    </div>
+    
+  </div>
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+//批量删除被勾选的文章，或者只删除单个文章
+function delete_selected_article(aid)
+{
+	options = {
+            'onClickYes':function (){
+            	var aids = '';
+            	if(!aid)
+            	{
+            		//删除被勾选的文章。得到被勾选的文章的id，组成字符串传到ajax服务端。
+                	$("input[name=one_item_select]:checked").each(function(){
+                		aids = aids + $(this).val() + ",";
+                	});
+            	}
+            	else //aid不为空，说明只单独删除某一个文章
+            	{
+            		aids = aid;
+            	}
+            	
+            	$.ajax({
+            		type:"post",
+            		async : true,//false表示同步，true表示异步
+            		url:"ajax.php?mod=article&act=do_delete_articles",
+            		data:{aids:aids},
+            		beforeSend: function(XMLHttpRequest){
+            			
+            		},
+            		success: function(data){//data是json格式
+            			data = jQuery.parseJSON( data );
+            			if(data.done)//删除成功
+            			{
+            				$.jBox.tip('删除成功', 'success');
+            				setTimeout('location.reload();', 1000);//1秒后刷新页面
+            				
+            				return;
+            			}
+            			else//删除失败
+            			{
+            				$.jBox.tip(data.msg, 'error');
+            				return;
+            			}
+            		}
+            		});
+           }
+    };
+	MessageBox('warn','确定要删除产品吗?','提示', options);
+	
+}
+
+</script>
+
+
+</div>
+<!--{template page_footer}-->

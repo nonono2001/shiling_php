@@ -1,0 +1,221 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<style type="text/css">
+.fill_left {
+float: left;
+text-align: right;
+line-height: 30px;
+height: 30px;
+width: 140px;
+margin-right: 10px;
+}
+.fillnamechar {
+color: #4372B0;
+font-weight: bold;
+}
+</style>
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>轮播大图管理</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+  <div style="width:100%;margin-bottom:40px;">
+    <div style="width:49%;border-right:1px solid gray;min-height:200px;">
+      <div style="width:100%;text-align:center;">
+        <span class="fillnamechar" style="font-size:16px;">当前轮播大图</span>
+      </div>
+    
+      
+      <div style="width:100%;margin-top:20px;">
+        <div class="fill_left" style="width:74px;"><span class="fillnamechar">第一张：</span><br /><a href="javascript:void(0);" style="float:left;margin-left: 30px;" class="blue_a" onclick="delete_one_boardpic(0);">删除</a></div>
+        <div class="fill_right"><img src="{$currentpic[0]}" style="width:380px;" onerror="javascript:logoError(this);"/></div>
+      </div>
+      
+      <div style="width:100%;margin-top:20px;">
+        <div class="fill_left" style="width:74px;"><span class="fillnamechar">第二张：</span><br /><a href="javascript:void(0);" style="float:left;margin-left: 30px;" class="blue_a" onclick="delete_one_boardpic(1);">删除</a></div>
+        <div class="fill_right"><img src="{$currentpic[1]}" style="width:380px;" onerror="javascript:logoError(this);"/></div>
+      </div>
+      
+      <div style="width:100%;margin-top:20px;">
+        <div class="fill_left" style="width:74px;"><span class="fillnamechar">第三张：</span><br /><a href="javascript:void(0);" style="float:left;margin-left: 30px;" class="blue_a" onclick="delete_one_boardpic(2);">删除</a></div>
+        <div class="fill_right"><img src="{$currentpic[2]}" style="width:380px;" onerror="javascript:logoError(this);"/></div>
+      </div>
+      
+      <div style="width:100%;margin-top:20px;">
+        <div class="fill_left" style="width:74px;"><span class="fillnamechar">第四张：</span><br /><a href="javascript:void(0);" style="float:left;margin-left: 30px;" class="blue_a" onclick="delete_one_boardpic(3);">删除</a></div>
+        <div class="fill_right"><img src="{$currentpic[3]}" style="width:380px;" onerror="javascript:logoError(this);"/></div>
+      </div>
+      
+      <div style="width:100%;margin-top:20px;">
+        <div class="fill_left" style="width:74px;"><span class="fillnamechar">第五张：</span><br /><a href="javascript:void(0);" style="float:left;margin-left: 30px;" class="blue_a" onclick="delete_one_boardpic(4);">删除</a></div>
+        <div class="fill_right"><img src="{$currentpic[4]}" style="width:380px;" onerror="javascript:logoError(this);"/></div>
+      </div>
+      
+      <div style="width:100%;margin-top:20px;">
+        <div class="fill_left" style="width:74px;"><span class="fillnamechar">第六张：</span><br /><a href="javascript:void(0);" style="float:left;margin-left: 30px;" class="blue_a" onclick="delete_one_boardpic(5);">删除</a></div>
+        <div class="fill_right"><img src="{$currentpic[5]}" style="width:380px;" onerror="javascript:logoError(this);"/></div>
+      </div>
+      
+      <div style="width:100%;margin-top:20px;">
+        <div class="fill_left" style="width:74px;"><span class="fillnamechar">第七张：</span><br /><a href="javascript:void(0);" style="float:left;margin-left: 30px;" class="blue_a" onclick="delete_one_boardpic(6);">删除</a></div>
+        <div class="fill_right"><img src="{$currentpic[6]}" style="width:380px;" onerror="javascript:logoError(this);"/></div>
+      </div>
+      
+      <div style="width:100%;margin-top:20px;">
+        <div class="fill_left" style="width:74px;"><span class="fillnamechar">第八张：</span><br /><a href="javascript:void(0);" style="float:left;margin-left: 30px;" class="blue_a" onclick="delete_one_boardpic(7);">删除</a></div>
+        <div class="fill_right"><img src="{$currentpic[7]}" style="width:380px;" onerror="javascript:logoError(this);"/></div>
+      </div>
+    </div>
+    
+    <div style="width:50%;">
+      <div style="width:100%;text-align:center;">
+        <span class="fillnamechar" style="font-size:16px;">新轮播大图</span>
+      </div>
+      <div style="width:100%;text-align:center;line-height:30px;">上传图片格式支付jpg、png、gif；每张最多1M。</div>
+      <form id="boardpic_sub_form" action="ajax.php?mod=element&act=do_save_boardpic" method="post" enctype="multipart/form-data" target="form-target" >
+    	<div style="width:100%;margin-top:20px;">
+          <div class="fill_left" style=""><span class="fillnamechar">新图一：</span></div>
+          <div class="fill_right"><input type="file" name="board_pic[]"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+        </div>
+        
+        <div style="width:100%;margin-top:20px;">
+          <div class="fill_left" style=""><span class="fillnamechar">新图二：</span></div>
+          <div class="fill_right"><input type="file" name="board_pic[]"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+        </div>
+        
+        <div style="width:100%;margin-top:20px;">
+          <div class="fill_left" style=""><span class="fillnamechar">新图三：</span></div>
+          <div class="fill_right"><input type="file" name="board_pic[]"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+        </div>
+        
+        <div style="width:100%;margin-top:20px;">
+          <div class="fill_left" style=""><span class="fillnamechar">新图四：</span></div>
+          <div class="fill_right"><input type="file" name="board_pic[]"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+        </div>
+        
+        <div style="width:100%;margin-top:20px;">
+          <div class="fill_left" style=""><span class="fillnamechar">新图五：</span></div>
+          <div class="fill_right"><input type="file" name="board_pic[]"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+        </div>
+        
+        <div style="width:100%;margin-top:20px;">
+          <div class="fill_left" style=""><span class="fillnamechar">新图六：</span></div>
+          <div class="fill_right"><input type="file" name="board_pic[]"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+        </div>
+        
+        <div style="width:100%;margin-top:20px;">
+          <div class="fill_left" style=""><span class="fillnamechar">新图七：</span></div>
+          <div class="fill_right"><input type="file" name="board_pic[]"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+        </div>
+        
+        <div style="width:100%;margin-top:20px;">
+          <div class="fill_left" style=""><span class="fillnamechar">新图八：</span></div>
+          <div class="fill_right"><input type="file" name="board_pic[]"  style="margin-top: 3px;width: 170px; border: 1px solid #CECECF;" /></div>
+        </div>
+      </form>
+      <iframe style="display:none;" id="form-target" name="form-target"></iframe>
+    
+      <div style="float:left;margin-left: 200px;margin-top: 30px;">
+  		<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="save_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+  		</a>
+      </div>
+    </div>
+  
+  </div>
+    
+  </div>
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+function save_btn_click(t)
+{
+	if($(t).find('em').text() == '保存')
+	{
+		//让保存按钮暂时失效
+		$(t).find('em').text('保存中...');
+		$(t).addClass('W_btn_a_disable');
+
+    	$("#boardpic_sub_form").submit();
+	
+	}
+}
+
+//参数res为：err或者succ
+function afterupload(res, msg)
+{
+	//如果失败，则恢复保存按钮。给出错误提示
+	if(res == 'err')
+	{
+		$.jBox.tip(msg,'error');
+		//保存按钮恢复
+		$("#baocun_btn").find('em').text('保存');
+		$("#baocun_btn").removeClass('W_btn_a_disable');
+		return;
+	}
+	else //如果成功
+	{
+		setTimeout('location.reload();', 1000);//1秒后刷新页面
+	}
+	
+}
+
+//删除一张轮播大图
+function delete_one_boardpic(picindex)
+{
+	//走ajax
+	$.ajax({
+    		type:"post",
+    		async : true,//false表示同步，true表示异步
+    		url:"ajax.php?mod=element&act=delete_one_boardpic&picindex="+picindex,
+    		data:{picindex:picindex},
+    		beforeSend: function(XMLHttpRequest){
+    			loadingbox();
+    		},
+    		success: function(data){//data是json格式
+    			data = jQuery.parseJSON( data );
+    			if(data.done)//成功
+    			{
+    				close_loadingbox();
+    				
+    				$.jBox.tip('删除成功', 'success');
+    				
+    				setTimeout('location.reload();', 1000);//1秒后刷新页面
+    				return;
+    			}
+    			else//失败
+    			{
+    				close_loadingbox();
+    				$.jBox.tip(data.msg, 'error');
+    				return;
+    			}
+    		}
+    		});
+	
+	
+}
+
+
+</script>
+
+
+</div>
+<!--{template page_footer}-->

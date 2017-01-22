@@ -1,0 +1,95 @@
+<style type="text/css">
+.btnText{
+background: #4595e6;
+}
+.btnText:hover{
+    background: #2575C6;
+    }
+</style>
+<div style="width:100%;height: 30px;background: #4595e6;line-height: 30px;text-align:center;">
+<span style="font-family:microsoft yahei;color: #fff;font-size: 12px;font-weight: normal;">对比框</span>
+</div>
+<div id="product_compare_list_wrap">
+    <!--{loop $product_compare_list $oneproduct}-->
+    <div style="width:88px; padding:4px 10px 5px;position:relative;border:1px solid #efefef;border-bottom:none;" onmouseover="show_delete_btn(this);" onmouseout="hide_delete_btn(this);">
+      <a href="index.php?mod=product&pid={$oneproduct[product_id]}" target="_blank" style="text-align:center;">
+      <div style="width:88px;">
+        <!--{if $oneproduct[pic]}-->
+        <img style="width:60px;height:45px;padding: 4px 0;vertical-align: top;" src="{$oneproduct[pic]}" />
+        <!--{else}-->
+        <img style="width:60px;height:45px;padding: 4px 0;vertical-align: top;" src="templates/admin/images/default-compare-add.png" />
+        <!--{/if}-->
+      </div>
+      <div style="width:88px;"><span>{$oneproduct[prod_name]}</span></div>
+      </a>
+      <div name="delete_one_pro_from_compare_btn" style="display:none;position:absolute;
+    top: -1px;
+    right: -1px;
+    width: 17px;
+    height: 17px;
+    overflow: hidden;
+    background:url(templates/admin/images/compare-fixedbox-bg.png) no-repeat;
+    background-position: 0 -50px;
+    text-indent: -999em;
+    cursor: pointer;" onclick="delete_one_product_compare({$oneproduct[product_id]});"></div>
+    </div>
+    <!--{/loop}-->
+</div>
+<div style="width:108px;padding: 10px 0 12px;border: 1px solid #efefef;text-align: center;">
+    <div style="width:100%;margin-top:5px;"><a href="index.php?mod=product&act=compare" target="_blank" class="btnText" style="font-size:12px;line-height:26px;width:50px;margin-left:14px;">对比</a></div>
+    <div style="width:100%;margin-top:13px;"><a href="javascript:void(0);" style="color: #0a50a1;" onclick="empty_compare_list();">清空对比栏</a></div>
+</div>    
+    <script type="text/javascript">
+    //清空对比列表
+    function empty_compare_list()
+    {
+    	_delCookie('product_compare_list');
+    	//刷新挂件
+    	fresh_widget_productcompare();
+    }
+    
+    //删除一个产品，从对比列表中。即修改cookie，从cookie中删除该product_id。
+    function delete_one_product_compare(product_id)
+    {
+    	//该键的内容格式应是以英文逗号隔开的字符串，比如：20,22,43。每一个数字都是product_id。
+    	var product_compare_list = _getCookie('product_compare_list');//可能读出空。
+    	
+    	var arr = [];
+    	if(product_compare_list)
+    	{
+    		arr = product_compare_list.split(',');//将字符串转化为数组。当product_compare_list为空时，会报错Cannot read property 'split' of null。
+    	}
+    	else		
+    	{
+    		arr = [];
+    	}
+    	
+    	
+    	for(var i=0;i<arr.length;i++){
+    	    if(arr[i]==String(product_id)){
+    	        arr.splice(i,1);//从下标为i的元素开始，连续删除1个元素
+    	        i--;//因为删除下标为i的元素后，该位置又被新的元素所占据，所以要重新检测该位置
+    	    }
+    	}
+    	
+    	//JavaScript中数组是无法直接保存为Cookie的（PHP可以），那要将数组转存为字符串，再保存在Cookie
+    	var pids_str = arr.join(','); 
+    	//写cookie
+    	_setCookie('product_compare_list',pids_str,7);
+
+    	//刷新挂件
+    	fresh_widget_productcompare();
+    	
+    }
+    
+    //显示删除按钮。
+    function show_delete_btn(t)
+    {
+    	$(t).find('[name=delete_one_pro_from_compare_btn]').show();
+    }
+    //隐藏删除按钮。
+    function hide_delete_btn(t)
+    {
+    	$(t).find('[name=delete_one_pro_from_compare_btn]').hide();
+    }
+    </script>

@@ -1,0 +1,144 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>编辑产品对比的属性</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+    
+  
+  
+  <div>
+    <div style="width: 100%;font-family: microsoft yahei;font-size: 14px;margin-top:20px;">请输入产品对比的属性，比如“分辨率”、“电压”、“颜色”等。每个属性名称最多50字符。最后记得保存哦！</div>
+    <div id="compare_key_wrap" style="margin-top:30px;">
+      <!--{if !$property_name_list}-->
+      <div style="width: 100%;font-family: microsoft yahei;font-size: 14px;margin-bottom:20px;" id="no_property_tip">您还没有输入任何的产品对比属性名称，请点击下面的加号进行添加吧！</div>
+      <!--{else}-->
+      <!--{loop $property_name_list $onename}-->
+      <div style="width:100%;margin-bottom:20px;">
+        <input type="text" name="" value="{$onename}" style="width: 130px;height: 22px;float: left;box-shadow: none;">
+        <div style="height: 32px;line-height: 32px;margin-left: 20px;"><a href="javascript:void(0);" class="blue_a" onclick="removeoneproperty_click(this);">- 删除该属性</a></div>
+      </div>
+      <!--{/loop}-->
+      <!--{/if}-->
+      <div id="addoneproperty" style="width:100%;"><a href="javascript:void(0);" class="blue_a" onclick="addoneproperty_click();">+ 一个属性</a></div>
+    
+    </div>
+    <div style="float:left;width:100%;margin-left: 250px;margin-top:20px;margin-bottom:20px;">
+  		<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="baocun_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+  		</a>
+    </div>
+  </div>
+  
+  
+  </div>
+
+
+
+</div>
+
+</div>
+
+<div id="property_input_template" style="display:none;">
+  <div style="width:100%;margin-bottom:20px;">
+        <input type="text" name="" value="" style="width: 130px;height: 22px;float: left;box-shadow: none;">
+        <div style="height: 32px;line-height: 32px;margin-left: 20px;"><a href="javascript:void(0);" class="blue_a" onclick="removeoneproperty_click(this);">- 删除该属性</a></div>
+  </div>
+</div>
+<script type="text/javascript">
+//添加一个属性按钮被点击触发。
+function addoneproperty_click()
+{
+	//把提示语句去掉
+	$("#no_property_tip").remove();
+	
+	var onepropertyinput = $("#property_input_template").html();
+	$("#addoneproperty").before(onepropertyinput);
+}
+
+//删除一个属性按钮被点击触发。
+function removeoneproperty_click(t)
+{
+	$(t).parent().parent().remove();
+}
+
+//保存按钮点击
+function baocun_btn_click(t)
+{
+	if($(t).find('em').text() == '保存')
+	{
+		
+		//获取input的值。
+		var property_input = $("#compare_key_wrap input");
+		var property_name_str = '';//属性组成的字符串，用'@#'连接。
+		for(i=0;i<property_input.length;i++)
+		{
+			var onepro = property_input[i].value;
+			
+			
+			property_name_str += onepro + '@#';
+		}
+		property_name_str = $.trim(property_name_str);
+		
+
+		//让保存按钮暂时失效
+		$(t).find('em').text('保存中...');
+		$(t).addClass('W_btn_a_disable');
+		
+		
+		//传送门
+		  $.ajax({
+	           		type:"post",
+	           		async : true,//false表示同步，true表示异步
+	           		url:"ajax.php?mod=product&act=do_save_compare_property",
+	           		data:{compare_property:property_name_str},
+	           		beforeSend: function(XMLHttpRequest){
+	           			loadingbox();
+	           		},
+	           		success: function(data){//data是json格式
+	           			data = jQuery.parseJSON( data );
+	           			if(data.done)//成功
+	           			{
+	           				close_loadingbox();
+	           				$.jBox.tip('保存成功', 'success');
+	           				
+	           				setTimeout('location.reload();', 1000);//1秒后刷新页面
+	           				return;
+	           			}
+	           			else//失败
+	           			{
+	           				close_loadingbox();
+	           				$.jBox.tip(data.msg, 'error');
+	           				
+	           				//保存按钮恢复
+	           	    		$(t).find('em').text('保存');
+	           	    		$(t).removeClass('W_btn_a_disable');
+	           				return;
+	           			}
+	           		}
+	           		});
+	}
+	
+}
+
+
+
+</script>
+
+
+</div>
+<!--{template page_footer}-->

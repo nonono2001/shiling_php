@@ -1,0 +1,90 @@
+<!--{template page_header}-->
+
+<style type="text/css">
+.backlist{
+color:#0088D6;
+}
+
+.backlist:hover{
+color:#0261A1;
+
+}
+</style>
+
+<div class="mainwrap">
+
+  <div class="main">
+  
+  <div style="width:100%;margin-bottom:20px;">
+    
+    <div>
+    <!--{template leftside}-->    
+    </div>
+    
+    <div  class="main_right_wrap">
+      <div class="main_right_title">
+        <span>{$Breadcrumb}</span>
+        
+        <div style="float:right;margin-right: 10px;"><a href="index.php?mod=al&ac=14" class="backlist">&lt;&lt;返回列表</a></div>
+      </div>
+      
+      <div name="articledetail_wrap" style="width: 674px;margin-top: 20px;padding: 6px 8px 70px 8px;">
+        <div name="article_title" style="width:100%;text-align:center;"><span style="display: block;  padding: 3px 0;
+  line-height: 1.7em;
+  font-family: Microsoft YaHei;
+  font-size: 18px;
+  color: #5a5a5a;
+  font-weight: bold;
+  text-decoration: none;">{$articleinfo[title]}</span></div>
+        <div name="article_info" style="width:100%;  font-family: Microsoft YaHei;
+  font-size: 14px;
+  color: #666666;
+  font-weight: normal;text-align:center;  margin-bottom: 10px;  margin-top: 5px;">
+          <span style="margin-right:15px;"><span style="margin-right:5px;">原文出处:</span><span>{$articleinfo[from_where]}</span></span><br />
+          <span style="margin-right:15px;"><span style="margin-right:5px;">发布者:</span><span>{$articleinfo[author]}</span></span>
+          <span style="margin-right:15px;"><span style="margin-right:5px;">发布时间:</span><span>{$articleinfo[create_time]}</span></span>
+          <span><span style="margin-right:5px;">浏览次数:</span><span>{$articleinfo[visit_times]}</span></span>
+        </div>
+        
+        <div name="article_abstract" style="font-family: Microsoft YaHei;width:652px;
+  font-size: 12px;
+  color: #868686;
+  font-weight: normal;
+  text-decoration: none;
+  background-color: #F5F5F5;
+  border-style: solid solid solid solid;
+  border-color: #E5E5E5 #E5E5E5 #E5E5E5 #E5E5E5;
+  border-width: 1px 1px 1px 1px;
+  padding: 5px;
+    margin-left: 5px;
+  line-height: 1.7em;
+  border: #E5E5E5 1px solid;
+  margin-bottom: 10px;
+  text-indent: 24px;">
+        <span>{$articleinfo[abstract]}</span>
+        
+        
+        </div>
+        
+        <div class="richtext_show_area" style="text-indent: 28px;">
+        {$articleinfo[content]}		
+        </div>
+        
+      </div>
+      
+    
+    </div>
+    
+  </div>
+  
+  
+  
+  <div class="cf"></div>
+  </div>
+
+
+<div class="cf"></div>
+</div><!--mainwrap end-->
+
+
+<!--{template page_footer}-->

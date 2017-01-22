@@ -1,0 +1,195 @@
+<!--全局导航栏-->
+
+<style type="text/css">
+.top-nav{
+	width:100%;
+	
+}
+#top-nav-ul{
+	float:left;
+	height:31px;
+	width:100%;
+	background: url(templates/admin/images/tile_bg.png) 0 -40px repeat-x ;
+}
+
+#top-nav-ul .tab_l1{
+	float:left;
+	margin-right:2px;
+	position:relative;
+}
+
+.tab_l1_a{
+	background: url(templates/admin/images/sliding.png) no-repeat 0 0;
+color: #3F4D69;
+cursor: pointer;
+float: left;
+font-size: 14px;
+height: 27px;
+line-height: 28px;
+padding: 0 0 0 18px;
+}
+
+.tab_l1_a.current{
+	
+	background-position: 0 -40px;
+color: white;
+}
+
+.tab_l1_a span{
+	background: url(templates/admin/images/sliding.png) no-repeat right 0;
+float: left;
+padding: 0 18px 0 0;
+	font-weight:bold;
+}
+.tab_l1_a.current span{
+background-position: right -40px;
+}
+
+.l2l3_pop_up{
+display:none;
+position: absolute;
+top:28px;
+
+margin: 0;
+width: 496px;
+	padding: 2px;
+background: white;
+/*z-index: 65535;*/
+border: 1px solid #6a8aca;
+-moz-border-radius: 0 0 5px 5px;
+-webkit-border-radius: 0 0 5px 5px;
+-o-border-radius: 0 0 5px 5px;
+-ms-border-radius: 0 0 5px 5px;
+-khtml-border-radius: 0 0 5px 5px;
+border-radius: 0 0 5px 5px;
+-moz-box-shadow: 0 3px 7px #999;
+-webkit-box-shadow: 0 3px 7px #999;
+-o-box-shadow: 0 3px 7px #999;
+box-shadow: 0 3px 7px #999;
+}
+.abs_left{
+	left:0px;
+}
+.abs_right{
+	right:0px;
+}
+
+.l2l3_pop_up_ul{
+	width:100%;
+	float:left;
+}
+
+.l2_div_title{
+	width:100%;
+	text-align:left;
+	color: #222;
+	cursor: default;
+	font-weight: bold;
+	padding: 5px 0 0 7px;
+	line-height:20px;
+}
+.l4_menu_li{
+	min-width:94px;
+	text-align:left;
+}
+.l4_menu_li a{
+	color: #3F4D69;
+	padding: 1px 5px;
+	line-height: 20px;
+	float:left;
+}
+.l4_menu_li a:hover {
+background: #6a8aca;
+color: white;
+border: none;
+cursor: pointer;
+}
+
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	  $("#top-nav-ul li.tab_l1").mouseover(function(){
+		if($(this).find('a.tab_l1_a').hasClass('current'))
+		{
+			$(this).find('a.tab_l1_a').attr('iscur','true')
+    	}
+		else
+		{
+			$(this).find('a.tab_l1_a').addClass('current');
+		}
+	  }).mouseout(function(){
+		if($(this).find('a.tab_l1_a').attr('iscur') == 'true')
+	    {
+			  
+		}
+		else
+		{
+			$(this).find('a.tab_l1_a').removeClass('current');
+		}
+		
+		  
+		  
+	  });
+});
+
+$(document).ready(function(){
+	$(".tab_l1").mouseover(function(){
+		var popup = $(this).find(".l2l3_pop_up");
+		var ele_offset=$(this).offset();
+		//var top = ele_offset.top;
+		var left = ele_offset.left;
+		var right= $(window).width()-left;
+		if(right < 510 && left >= 500)
+		{
+			popup.removeClass('abs_left');
+			popup.addClass('abs_right');
+		}
+		else
+		{
+			popup.removeClass('abs_right');
+			popup.addClass('abs_left');
+		}
+		
+		popup.show();
+		
+	}).mouseout(function(){
+		$(this).find(".l2l3_pop_up").hide();
+		
+	});
+});
+
+</script>
+
+<div class="top-nav">
+  <ul id='top-nav-ul'>
+<!--{eval $admin_menu = getSetting('admin_menu');}-->
+<!--{loop $admin_menu $l1menu_key $onel1menu}-->
+      <!--{eval $iscurrent = $menu_level_1==$l1menu_key?'current':'';}-->
+      <li class="tab_l1" style="">
+          <div>
+              <a href="{$onel1menu[url]}" class="tab_l1_a {$iscurrent}"><span>{$onel1menu[name]}</span></a>
+          </div>
+          <div class="l2l3_pop_up">
+              <ul class="l2l3_pop_up_ul">
+  <!--{loop $onel1menu[level2] $onel2menu}-->
+                  <li style="width:100%;border-bottom: 1px solid #ccc;">
+                      <div class="l2_div_title">
+                          <span>{$onel2menu[name]}</span>
+                      </div>
+                      <ul style="padding:2px;float:left;">
+    <!--{loop $onel2menu[level3] $l3menu_key $onel3menu}-->
+                          <li style="" class="l4_menu_li">
+                              <a href="{$onel3menu[url]}" target="_self"><span>{$onel3menu[name]}</span></a>
+                          </li>
+    <!--{/loop}-->
+                      </ul>
+                  </li>
+  <!--{/loop}-->
+              </ul>
+          </div>
+      </li>
+<!--{/loop}-->
+  </ul>
+
+</div>
+

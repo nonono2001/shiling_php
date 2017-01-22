@@ -1,0 +1,395 @@
+/*
+ * 一个模板的主样式，一个模板的几乎所有网页都会包含该样式文件
+ * 2014-11-4
+ */
+
+
+/******************************************全局*************************************************/
+body{
+	margin:0; padding:0;color:#333; 
+	font-size:12px;
+	font-family: Tahoma, Helvetica, Arial, sans-serif; /*字体样式参考 人人逛街网*/
+	text-align:left; 
+    /*background: #e3e3e3;*/
+	background: url(../images/for_jzlit/bg.jpg) center top no-repeat #def2fb;
+	word-break:break-all;
+}
+
+.layout{
+width:100%;
+	float:left;
+	
+}
+
+div,form,img,ul,ol,li,dl,dt,dd,p {border: 0; margin:0; padding:0;}
+
+a{
+text-decoration: none;
+/*color:#7594B3;*/
+color:#333;
+}
+
+.blue_a{
+	color: #7594B3;
+}
+
+.black_a{
+	color:#3c3c3c;
+}
+.changecolor_a:hover{
+	color:#f40;
+}
+
+.sep{
+float:left;
+width:100%;
+height:10px;
+clear:both;/*让它不挨着任何浮动区块*/
+}
+
+.cf{
+float:none;
+clear:both;
+}/*相当于一个回车*/
+
+.disblo{
+display:block;
+}
+
+.disnon{
+display:none;
+}
+
+ul{
+margin:0px;
+padding:0px;
+list-style:none;
+}/*对于不需要absolute定位的ul，这个样式已经够了*/
+
+li{
+float:left;
+list-style-type:none;
+text-align:center;
+}
+
+div{float:left;}
+
+textarea{resize:none;}
+
+input[type="password"], input[type="text"] {
+border: 1px solid #CECECF;
+line-height: 18px;
+color: #555;
+background: white;
+padding: 4px;
+vertical-align: middle;
+box-shadow: 2px 2px 2px #F0F0F0 inset;
+}
+
+
+
+/*********************************page header*****************************************/
+.header{
+	width:100%;
+	
+}
+
+.top-nav{
+	width:100%;
+
+
+}
+
+.top-nav-middle{
+	margin:0 auto;
+	width:970px;
+	min-height:81px;
+	line-height:30px;
+	float:none;
+}
+
+
+
+.navigation{
+	width:100%;
+	/*background-color: #FEFEFE;
+	box-shadow: 0 3px 3px #9a9a9a;
+	-webkit-box-shadow: 0 3px 3px #9a9a9a;
+min-width: 1190px;
+	background-image: -webkit-linear-gradient(top, #FEFEFE, #F5F5F6);
+	*/
+	
+}
+
+.nav-middle{
+	width:850px;
+	margin:0 auto;
+	height:27px;
+	float:none;
+}
+
+#mainnav{
+	float:left;
+	width:970px;
+
+	/*background:black;
+	margin-top:23px;*/
+}
+#mainnav li{
+	float:left;
+	padding: 0px;
+text-align: center;
+	width: 120px;
+height: 27px;
+line-height: 27px;
+	  position: relative;
+	 z-index: 5;
+    /*background: url(../images/for_yuusei/nav_line.gif) no-repeat right;*/
+	
+}
+
+#mainnav li a:hover{
+    
+    text-decoration: none;
+    /*background: url(../images/for_yuusei/menu_hover.gif) no-repeat center;*/
+        color: #FFFFFF;
+    background-color: #003B6E;
+    text-shadow: none;
+    
+}
+#mainnav li a{
+	white-space: nowrap;
+display: block;
+padding: 0px;
+	font-size: 14px;
+font-weight:bold;
+font-family: "Microsoft Yahei";
+color: white;
+text-align: center;
+font-style: normal;
+overflow: hidden;
+text-decoration: none;
+transition: all 0.2s linear 0s;
+}
+
+#mainnav li ul{
+	  position: absolute;
+}
+
+#mainnav .level2_popup{
+	    left: 0px;
+    top: 27px;
+	
+	 /* background-image: url(../images/xx1_mckx222.png);
+  background-color: transparent;
+  background-position: 50% 100%;
+  background-repeat: no-repeat;*/
+
+}
+
+#mainnav .level2_popup li{
+	width:120px;
+	height:25px;
+	line-height:25px;
+	background:none;
+	text-align:center;
+}
+
+#mainnav .level2_popup li a{
+	font-size:12px;
+
+	    color: #444;
+    background: #eaeaea;
+	font-weight:normal;
+	
+	    text-shadow: none;
+
+}
+
+#mainnav .level2_popup li a:hover{
+    color: #FFF;/*#444;*/
+    background-image: none;
+    background:#005CA6; /*#fff;*/
+}
+
+#mainnav .level3_popup{
+	left:120px;
+	top:0px;
+	 /* background-image: url(../images/xx1_mckx222.png);
+  background-color: transparent;
+  background-position: 50% 100%;
+  background-repeat: no-repeat;*/
+	width:120px;
+}
+
+#mainnav .level4_popup{
+	left:120px;
+	top:0px;
+	/*  background-image: url(../images/xx1_mckx222.png);
+  background-color: transparent;
+  background-position: 50% 100%;
+  background-repeat: no-repeat;*/
+	width:120px;
+}
+
+.big_pic{
+	width:100%;
+	background-image: url(../images/bg_F8CegeQC.jpg);
+	margin-top: -67px;
+position: relative;
+z-index: -1;
+	height:417px;
+}
+
+.big_pic-middle{
+	width:960px;
+	margin:0 auto;
+
+	float:none;
+	
+}
+
+
+
+.mainwrap{
+width:100%;
+
+
+}
+.main{
+	margin:auto; 
+	width:970px;
+	min-height:400px;
+	float:none;
+/*	background:#FFF;*/
+/*	padding-top:20px;*/
+}
+
+
+/************************************页面主体右侧样式**************************************/
+.main_right_wrap{
+	width:690px;
+	float:right;
+	min-height:200px;
+	overflow: hidden;
+	background: #fff;
+	
+}
+.main_right_title {
+    font-size: 13px;
+    height: 36px;
+    width: 100%;
+    line-height: 33px;
+    background: url(../images/for_jzlit/left_class_bg.gif) no-repeat;
+    text-indent: 10px;
+    color: #048ebc;
+    font-weight: normal;
+    font-family: "Microsoft Yahei";
+    overflow: hidden;
+}
+.list_bot{
+	height: 31px;
+	width:100%;
+    background: url(../images/for_jzlit/right_class_bg1.gif) top no-repeat #fff;
+    overflow: hidden;
+    clear: both;
+}
+/************************************page footer页脚样式**************************************/
+.footer{
+	
+    /*background: url(../images/for_yuusei/footer_bg.gif) repeat-x top;*/
+	background-color:#048ebc;
+	border-top: solid #129BC8 4px;
+	width:100%;
+	min-height:92px;
+	
+}
+
+.footer .footer_mid li{
+	font: 14px/20px Microsoft Yahei;
+	height: 20px;
+line-height: 20px;
+margin-right: 20px;
+display: inline-block;
+	
+}
+.footer  a{
+	color: #333;
+}
+
+
+
+
+/******************小组件，淘宝首页右侧橙色按钮**********************************/
+.btnText{
+float: left;
+/*height: 35px;*/
+height:26px;
+font-size:14px;
+font-family:microsoft yahei;
+line-height: 26px;
+overflow: hidden;
+/*width: 75px;*/
+padding: 0 15px;	
+margin-left: 5px;
+text-align: center;
+color: #fff;
+cursor: pointer;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+-ms-border-radius: 2px;
+-o-border-radius: 2px;
+border-radius: 2px;
+-webkit-box-shadow: #ddd 0 1px 1px;
+-moz-box-shadow: #ddd 0 1px 1px;
+box-shadow: #ddd 0 1px 1px;
+background: #f40;/*晒格子用的橙色*/
+/*background: #646AF3;蓝色*/
+border:none;
+/*	
+*padding:0px;*/
+}
+.btnText:hover{
+/*background: #f22d00;淘宝的值，感觉有些淡*/
+	/*background:#F50808;这个值也有些淡*/
+	background:#CC3215;/*晒格子用的，橙色*/
+	/*background:#575CDA;蓝色*/
+}
+
+.canlText {
+height: 26px;
+line-height: 26px;
+background-color: #cacaca;
+border: none;
+cursor: pointer;
+color: #333;
+border-radius: 2px;
+padding: 0 15px;
+margin: 0;
+box-shadow: none;
+font-size: 12px;
+font-weight: normal;
+}
+.canlText:hover {
+background-color: #d5d5d5;
+}
+
+
+.qkbox_shadow{
+	margin-right:20px;
+	width:228px;
+	padding:10px;
+	background:#fff;
+	border-radius:3px;
+	box-shadow:3px 4px 2px #DDD;  
+	border: 1px solid #F2F1F1;
+}
+
+.richtext_show_area{
+	width:100%;
+	font-size: 14px;
+	line-height: 24px;
+	font-family: 'Microsoft YaHei';
+}
+
+

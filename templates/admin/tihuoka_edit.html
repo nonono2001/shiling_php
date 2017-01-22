@@ -1,0 +1,221 @@
+<!--{template page_header}-->
+
+
+<div class="main">
+
+	<!--{template top_menu}-->
+
+	<div class="main_middle" style="width:100%;">
+		<!--{template left_menu}-->
+
+		<div class="workground">
+			<div class="workground-title">
+				<h2>
+					<span>提货卡券编辑</span>
+				</h2>
+			</div>
+
+			<style type="text/css">
+				.bianji_ul li{
+					float: left;
+					text-align: left;
+					width: 100%;
+					margin-top: 10px;
+				}
+
+				.bianji_ul .fill_left{
+					float: left;
+					text-align: right;
+					line-height: 30px;
+					height: 30px;
+					width: 140px;
+					margin-right: 10px;
+				}
+
+				.bianji_ul .fill_right{
+					float: left;
+					width: 400px;
+				}
+				.fillnamechar{
+					color: #4372B0;
+					font-weight: bold;
+				}
+				textarea{
+					border: 1px solid #CECECF;
+					line-height: 18px;
+					color: #555;
+					background: white;
+					padding: 4px;
+					vertical-align: middle;
+					box-shadow: 2px 2px 2px #F0F0F0 inset;
+					margin: 0px;
+				}
+			</style>
+			<div class="workground-content scroll-div">
+				<form id="p_add_form" action="ajax.php?mod=waxs_tihuo_card&act=do_edit_card" method="post" enctype="multipart/form-data" target="form-target" >
+					<input type="hidden" name="thcard_id" value="{$onecardinfo[id]}" />
+					<ul style="float:left;width:100%;margin-bottom:50px;" class="bianji_ul">
+						<li>
+							<div class="fill_left"><span class="fillnamechar">提货券号</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="tihuoquanhao" name="tihuoquanhao"  readonly="readonly" value="{$onecardinfo[tihuoquanhao]}" style="float:left;border-radius: 3px;width: 180px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">提货码</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="tihuoma" name="tihuoma" readonly="readonly" value="{$onecardinfo[tihuoma]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">有效期开始日期</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="validity_start_date" name="validity_start_date" readonly="readonly" value="{$onecardinfo[validity_start_date]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">有效期结束日期</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="validity_end_date" name="validity_end_date" readonly="readonly" value="{$onecardinfo[validity_end_date]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">是否已要求提货</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="is_ask_tihuo" name="is_ask_tihuo" readonly="readonly" value="{$onecardinfo[is_ask_tihuo]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">发出请求的时间</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="last_ask_tihuo_time" name="last_ask_tihuo_time" readonly="readonly" value="{$onecardinfo[last_ask_tihuo_time]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">收货人姓名</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="shouhuoren_name" name="shouhuoren_name" readonly="readonly" value="{$onecardinfo[shouhuoren_name]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">收货人电话</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="shouhuoren_phone" name="shouhuoren_phone" readonly="readonly" value="{$onecardinfo[shouhuoren_phone]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">收货人地址</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="shouhuoren_address" name="shouhuoren_address" readonly="readonly" value="{$onecardinfo[shouhuoren_address]}" style="float:left;border-radius: 3px;width: 650px;margin-top:2px;border:none;box-shadow:none;" /></div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">发货状态</span></div>
+							<div class="fill_right" style="width: 200px;">
+								<div style="line-height:30px;margin-right:10px;">
+									<!--{if $onecardinfo[ship_status]=='shipped'}-->
+									<!--{eval $shippedchecked='checked';}-->
+									<!--{else}-->
+									<!--{eval $unshippedchecked='checked';}-->
+									<!--{/if}-->
+									<input {$shippedchecked} type="radio" name="is_shipped" value="shipped" style="margin-top: 10px;float: left;"/><span>已发货</span>
+								</div>
+								<div style="line-height:30px;">
+									<input {$unshippedchecked} type="radio" name="is_shipped" value="unshipped"  style="margin-top: 10px;float: left;"/><span>未发货</span>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="fill_left"><span class="fillnamechar">物流公司</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="wuliu_company" name="wuliu_company" value="{$onecardinfo[wuliu_company]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('wuliu_company','wuliu_company_tip',1,20);" /></div>
+							<div style="line-height:30px;" id="wuliu_company_tip">1~20字</div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">物流单号</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="wuliu_danhao" name="wuliu_danhao" value="{$onecardinfo[wuliu_danhao]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('wuliu_danhao','wuliu_danhao_tip',1,20);" /></div>
+							<div style="line-height:30px;" id="wuliu_danhao_tip">1~20字</div>
+						</li>
+						<li>
+							<div class="fill_left"><span class="fillnamechar">发货时间</span></div>
+							<div class="fill_right" style="width: 170px;"><input type="text" id="ship_time" name="ship_time" value="{$onecardinfo[ship_time]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;"  /></div>
+							<div style="line-height:30px;" id="ship_time_tip">请按照：2016-08-11 12:04:19 这种格式来填入时间，否则不识别。</div>
+						</li>
+
+						<li>
+							<div class="fill_left"><span class="fillnamechar">管理员备注</span></div>
+							<div class="fill_right" style="width:220px;"><textarea  name="remarks" id="remarks" style="float:left;border-radius: 3px;width: 200px;height:50px;dmargin-top:2px;" onkeyup="changeTip_by_val('remarks','remarks_tip',1,50);">{$onecardinfo[remarks]}</textarea></div>
+							<div style="line-height:60px;" id="remarks_tip">1~50字</div><div style="line-height: 60px;"><span>，中英文都算1个字符</span></div>
+						</li>
+
+
+
+						<li>
+							<div style="float:left;margin-left: 250px;margin-top:20px;">
+								<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="save_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+								</a>
+							</div>
+						</li>
+
+
+					</ul>
+				</form>
+				<iframe style="display:none;" id="form-target" name="form-target"></iframe>
+
+				<script type="text/javascript">
+					//检查各项所填值长度、格式等正不正确
+					//返回值true或false
+					function check_input_info()
+					{
+						//检查发货状态
+						var is_shipped = $("input[name=is_shipped]:checked").val();
+						if(is_shipped != 'shipped' && is_shipped != 'unshipped')
+						{
+							$.jBox.tip('发货状态错误！请重新编辑。','error');
+							return false;
+						}
+
+
+
+						return true;
+					}
+					function save_btn_click(t)
+					{
+						if($(t).find('em').text() == '保存')
+						{
+							//让保存按钮暂时失效
+							$(t).find('em').text('保存中...');
+							$(t).addClass('W_btn_a_disable');
+
+							var res = check_input_info();
+							if(res)
+							{
+								$("#p_add_form").submit();
+							}
+							else
+							{
+								//保存按钮恢复
+								$(t).find('em').text('保存');
+								$(t).removeClass('W_btn_a_disable');
+							}
+						}
+					}
+
+					//参数res为：err或者succ
+					function afterupload(res, msg)
+					{
+						//如果失败，则恢复保存按钮。给出错误提示
+						if(res == 'err')
+						{
+							$.jBox.tip(msg,'error');
+							//保存按钮恢复
+							$("#baocun_btn").find('em').text('保存');
+							$("#baocun_btn").removeClass('W_btn_a_disable');
+							return;
+						}
+						else //如果成功，则跳转到卡券列表页。
+						{
+							window.location.href="admin.php?mod=thcard&page={$topage}";
+						}
+
+					}
+
+
+
+
+				</script>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+<!--{template page_footer}-->

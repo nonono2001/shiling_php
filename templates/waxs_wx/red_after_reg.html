@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我爱鲜生</title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+		<!-- 禁止浏览器从本地缓存中调阅页面。--> 
+		<meta http-equiv="pragram" content="no-cache"> 
+		<!--网页不保存在缓存中，每次访问都刷新页面。--> 
+		<meta http-equiv="cache-control" content="no-cache, must-revalidate"> 
+		<!--同上面意思差不多，必须重新加载页面--> 
+		<meta http-equiv="expires" content="0"> 
+		<!-- Mobile Devices Support @begin -->
+		<meta content="telephone=no, address=no" name="format-detection">
+		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/jquery-2.2.0.js"></script>
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/basic.css">
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/style.css">
+	</head>
+	<body>
+		<div class="page5 page bg_2">
+			<div class="top-box">
+				<div class="logo-box">
+					<img src="templates/{TEMPLATE_NAME}/img/logo.png">
+				</div>
+				<div class="title-box" style="padding-bottom:16%;width:47%">
+					<img src="templates/{TEMPLATE_NAME}/img/title7.png">
+				</div>
+			</div>
+			<div class="content-box">
+				<div class="red-package">
+					<img src="templates/{TEMPLATE_NAME}/img/key3.png"  style="top:49%;">
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var bottomWidth = $('.bottom-box').width();
+			var leftPosition = '-'+bottomWidth/2+'px';
+			// $('.bottom-box').css({"margin-left":leftPosition})
+
+			var contentWidth = $('.content-box').width();
+			var leftContent = '-'+contentWidth/2+'px'
+			// $('.content-box').css({"margin-left":leftContent})
+			var contentImgWidth = $('.content-box img').width();
+			var leftContentImg = '-'+contentImgWidth/2+'px'
+			$('.content-box img').css({"margin-left":leftContentImg})
+
+			var formWidth = $('.form-box').width();
+			var leftForm = '-'+formWidth/2+'px'
+			$('.form-box').css({"margin-left":leftForm})
+		})
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

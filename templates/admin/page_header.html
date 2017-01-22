@@ -1,0 +1,70 @@
+<!--{template common_header}-->
+
+
+<div class="header">
+
+<div class="mid-nav" style="">
+  <div class="mid-nav-middle" style="">
+    <div class="logo-font">
+      <!--{if SHOP_NAME}-->
+      <span>{SHOP_NAME}</span>
+      <!--{else}-->
+      <span>您的店铺名称</span><a href="admin.php?mod=system&act=shopname" class="blue_a" style="font-size: 12px;margin-left: 10px;vertical-align:middle;">设置</a>
+      <!--{/if}-->
+    </div>
+    
+    <div class="logo-small-font">
+      <span>亲客店铺管理系统V2.3</span>
+    </div>
+    
+    <!--{if MEMBER_ID>0}-->
+    <div class="top-bar">
+      <div style="float: left;min-width:30px;text-align: right;height: 30px;line-height: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+        <span>{MEMBER_NICKNAME}</span>
+      </div>
+      <div style="float:right;height: 30px;line-height: 30px;margin-left:5px;">
+        <a class="blue_a" href="admin.php?mod=login&act=dologout">[退出]</a>
+      </div>
+    </div>
+    <!--{/if}-->
+  </div>
+
+</div>
+
+
+
+
+
+</div>
+
+<div class="mainwrap">
+
+<script type="text/javascript">
+$(document).ready(function(){
+	changeDivHeight();
+	
+	$(window).resize(function() {
+	    //var width = $(this).width();
+	    //var height = $(this).height();
+	    
+	    changeDivHeight();
+	});
+	
+	
+});
+
+
+function changeDivHeight(){
+   //var h = document.documentElement.clientHeight;//获取页面可见高度，也是正确的。
+   var h = $(window).height();//浏览器可见高度，也就是中间正文的高度。
+   var header_h = $(".header").height();//header元素的高度
+   var topnav_h = $(".top-nav").height(); //导航栏的高度 
+   var main_middle_h = h - header_h - 10 - topnav_h; //5px是main的margin-top
+   
+   $(".main_middle").height(main_middle_h);
+   $(".workground-content").height(main_middle_h-34); //34px是workground-title的高度
+
+}
+
+</script>
+

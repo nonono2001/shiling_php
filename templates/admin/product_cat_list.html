@@ -1,0 +1,294 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <span>产品分类</span>
+    </h2>
+  </div>
+  
+  <div class="workground-content scroll-div">
+    
+  <style type="text/css">
+.biaotou{
+	background: url(templates/admin/images/tile_bg.png) 0 -100px;
+color: #4e4e4e;
+height: 22px;
+line-height: 22px;
+border-left: 1px solid #D5DFE3;
+border-right: 1px solid #D5DFE3;
+color: #222;
+border-bottom: 1px #ccc solid;
+  }
+  
+  .biaotou_item{
+	text-align: center;
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #fff;
+	border-collapse: collapse;
+  }
+  
+  .tab_line{
+	width:1006px;
+	border: 1px solid #e8e8e8;
+border-bottom:none;
+clear: both;
+overflow: hidden;
+line-height:27px;
+  }
+  .cat_item_name{
+	width:340px;
+	word-wrap: break-word;
+	word-break: break-all;
+	white-space: normal;
+	text-align:left;
+  }
+  
+  .cat_item_level{
+	width:200px;
+	text-align:left;
+  }
+  
+  .cat_item_paixu{
+	width:120px;
+	text-align:center;
+  }
+  .cat_item_paixu input{
+	width:30px;
+	padding:0px;
+	margin-top:3px;
+	margin-left:4px;
+  }
+  </style>
+  <script type="text/javascript">
+  //“保存顺序”按钮点击触发。
+  function save_paixu_num()
+  {
+	  //找到所有name=cat_item_paixu的input
+	  var paixu_obj = new Array();
+	  var i = 0;
+	  $("input[name='cat_item_paixu']").each(function(){
+		paixu_obj[i] = new Array();
+		paixu_obj[i] = {cat_id:$(this).attr('data'), paixu_num:$(this).val()};
+		i++;
+		
+	  });
+	  if(!paixu_obj[0])
+	  {
+		alert('请新建分类！'); 
+		return;
+	  }
+	  //paixu_obj这个变量，也可以这样定义：var paixu_obj = [{cat_id : '7', paixu_num:'1'},{cat_id:"8", paixu_num:"2"}];
+	  
+	  //传送门
+	  $.ajax({
+           		type:"post",
+           		async : true,//false表示同步，true表示异步
+           		url:"ajax.php?mod=product&act=save_cat_paixu",
+           		data:{cat_paixu:paixu_obj},
+           		beforeSend: function(XMLHttpRequest){
+           			loadingbox();
+           		},
+           		success: function(data){//data是json格式
+           			data = jQuery.parseJSON( data );
+           			if(data.done)//删除成功
+           			{
+           				close_loadingbox();
+           				$.jBox.tip('保存成功', 'success');
+           				
+           				setTimeout('location.reload();', 1000);//1秒后刷新页面
+           				return;
+           			}
+           			else//删除失败
+           			{
+           				close_loadingbox();
+           				$.jBox.tip(data.msg, 'error');
+           				return;
+           			}
+           		}
+           		});
+	  
+	  //刷新本页面
+  }
+  
+  //新增产品分类，p_cat_id是父分类id。当为0时，表示添加一个顶级分类
+  function show_cat_new(p_cat_id)
+  {
+  	$.jBox("post:ajax.php?mod=product&act=dialog_cat_new&p_cat_id="+p_cat_id,{
+  		id: 'cat_dialog_first',
+  	    title: "产品分类添加",
+  	    width: 400,
+  	    height: 230
+  	});
+
+  }
+  
+  //编辑产品分类，cat_id是要编辑的产品分类id
+  function show_cat_edit(cat_id)
+  {
+  	$.jBox("post:ajax.php?mod=product&act=dialog_cat_edit&cat_id="+cat_id,{
+  		id: 'cat_dialog_first',
+  	    title: "产品分类编辑",
+  	    width: 400,
+  	    height: 230
+  	});
+
+  }
+  
+  //删除产品分类提示确认
+  function delete_cat_item(cat_id)
+  {
+  	var options = {
+              'onClickYes':function (){
+              	$.ajax({
+              		type:"post",
+              		async : true,//false表示同步，true表示异步
+              		url:"ajax.php?mod=product&act=delete_cat",
+              		data:{cat_id:cat_id},
+              		beforeSend: function(XMLHttpRequest){
+              			
+              		},
+              		success: function(data){//data是json格式
+              			
+              			data = jQuery.parseJSON( data );
+              			if(data.done)//删除成功
+              			{
+              				$.jBox.tip('删除成功', 'success');
+              				
+              				setTimeout('location.reload();', 1000);//1秒后刷新页面
+              				return;
+              			}
+              			else//删除失败
+              			{				
+              				$.jBox.tip(data.msg, 'error');
+              				return;
+              			}
+              		}
+              		});
+             }
+       };
+  	
+  	MessageBox('warn','确定删除？如果有子分类，子分类同时会被删除。属于这些分类的产品，都将变成未分类。','提示', options);
+  }
+  </script>
+  <div style="float:left;margin-top: 5px;">
+    <a href="javascript:void(0);" class="addwatch" onclick="show_cat_new(0);">
+      <span><em style="">+</em>添加一个顶级分类</span>
+    </a>
+  </div>
+  <div style="line-height:30px;">（最多四级分类）</div>
+  <div style="margin-left: 331px;"><input type="button" value="保存顺序" class="btnText" style="cursor:pointer;float:right;" onclick="save_paixu_num();"></div>
+  
+  <div style="width:100%;">
+    <div class="biaotou">
+      <div class="biaotou_item" style="width:200px;"><span>分类层级</span></div>
+      <div class="biaotou_item" style="width:340px;"><span>分类名称</span></div>
+      <div class="biaotou_item" style="width:120px;" title="只有相同层级，并且拥有相同父节点的元素之间，才会进行排序，它们之间的排序数最好不同。排序时如发现顺序相同，则随机排序。不填默认为1。"><span>顺序</span></div>
+      <div class="biaotou_item" style="width:340px;"><span>操作</span></div>
+    </div>
+    
+    <div style="width:1008px;border-bottom:1px solid #e8e8e8;">
+      <!--{if $catlevel1}-->
+      <!--{loop $catlevel1 $onecat_l1}-->
+      <div style="width:100%;" name="catl1">
+        <div class="tab_line" style="background-color: #FFFFD4;">
+        <div class="cat_item_level"><span style="margin-left:70px;">{$onecat_l1[level]}级</span></div>
+        <div class="cat_item_name"><span style="margin-left:75px;">{$onecat_l1[name]}</span></div>
+        <div class="cat_item_paixu"><input type="text" name="cat_item_paixu" data="{$onecat_l1[cat_id]}" value="{$onecat_l1[paixu_num]}" /></div>
+        <div style="width:340px;">
+          <div style="width:100%;text-align:center;">
+	        <a href="javascript:void(0);" class="blue_a" onclick="show_cat_edit({$onecat_l1[cat_id]});">编辑</a>
+	        <a href="javascript:void(0);" class="blue_a" onclick="delete_cat_item({$onecat_l1[cat_id]});">删除</a>
+	        <a href="javascript:void(0);" class="blue_a" onclick="show_cat_new({$onecat_l1[cat_id]});">添加子分类</a>
+          </div>
+        </div>
+        </div>
+        <!--{loop $catlevel2 $onecat_l2}-->
+        <!--{if $onecat_l2[parent_id] == $onecat_l1[cat_id]}-->
+        <div style="width:100%;" name="catl2">
+          <div class="tab_line" style="background-color: #C4CEDF;">
+            <div class="cat_item_level"><span style="margin-left:85px;">--{$onecat_l2[level]}级</span></div>
+            <div class="cat_item_name"><span style="margin-left:90px;">{$onecat_l2[name]}</span></div>
+            <div class="cat_item_paixu"><input type="text" name="cat_item_paixu" data="{$onecat_l2[cat_id]}" value="{$onecat_l2[paixu_num]}" /></div>
+            <div style="width:340px;">
+              <div style="width:100%;text-align:center;">
+	            <a href="javascript:void(0);" class="blue_a" onclick="show_cat_edit({$onecat_l2[cat_id]});">编辑</a>
+	            <a href="javascript:void(0);" class="blue_a" onclick="delete_cat_item({$onecat_l2[cat_id]});">删除</a>
+	            <a href="javascript:void(0);" class="blue_a" onclick="show_cat_new({$onecat_l2[cat_id]});">添加子分类</a>
+              </div>
+            </div>
+          </div>
+          
+          <!--{loop $catlevel3 $onecat_l3}-->
+          <!--{if $onecat_l3[parent_id] == $onecat_l2[cat_id]}-->
+          <div style="width:100%;" name="catl3">
+	          <div class="tab_line" style="background-color: #B7E9CD;">
+	            <div class="cat_item_level"><span style="margin-left:100px;">----{$onecat_l3[level]}级</span></div>
+	            <div class="cat_item_name"><span style="margin-left:105px;">{$onecat_l3[name]}</span></div>
+	            <div class="cat_item_paixu"><input type="text" name="cat_item_paixu" data="{$onecat_l3[cat_id]}" value="{$onecat_l3[paixu_num]}" /></div>
+	            <div style="width:340px;">
+	              <div style="width:100%;text-align:center;">
+		            <a href="javascript:void(0);" class="blue_a" onclick="show_cat_edit({$onecat_l3[cat_id]});">编辑</a>
+		            <a href="javascript:void(0);" class="blue_a" onclick="delete_cat_item({$onecat_l3[cat_id]});">删除</a>
+		            <a href="javascript:void(0);" class="blue_a" onclick="show_cat_new({$onecat_l3[cat_id]});">添加子分类</a>
+	              </div>
+	            </div>
+	          </div>
+	          
+	          <!--{loop $catlevel4 $onecat_l4}-->
+	          <!--{if $onecat_l4[parent_id] == $onecat_l3[cat_id]}-->
+	          <div style="width:100%;" name="catl4">
+	          <div class="tab_line" style="background-color: #E6B7E9;">
+	            <div class="cat_item_level"><span style="margin-left:115px;">----{$onecat_l4[level]}级</span></div>
+	            <div class="cat_item_name"><span style="margin-left:120px;">{$onecat_l4[name]}</span></div>
+	            <div class="cat_item_paixu"><input type="text" name="cat_item_paixu" data="{$onecat_l4[cat_id]}" value="{$onecat_l4[paixu_num]}" /></div>
+	            <div style="width:340px;">
+	              <div style="width:100%;text-align:center;">
+		            <a href="javascript:void(0);" class="blue_a" onclick="show_cat_edit({$onecat_l4[cat_id]});">编辑</a>
+		            <a href="javascript:void(0);" class="blue_a" onclick="delete_cat_item({$onecat_l4[cat_id]});">删除</a>
+	              </div>
+	            </div>
+	          </div>
+	          </div>
+	          <!--{/if}-->
+	          <!--{/loop}-->
+          
+          </div>
+          <!--{/if}-->
+          <!--{/loop}-->
+          
+        </div>
+        <!--{/if}-->
+        <!--{/loop}-->
+      </div>
+      <!--{/loop}-->
+      <!--{else}-->
+      <div style="float:left;width:100%;text-align:center;margin:10px 0px 10px 0px;">
+        <span style="color:red;">当前没有任何分类，请添加新分类！</span>
+      </div>
+      <!--{/if}-->
+      
+    </div>
+  
+  </div>
+  
+  </div>
+
+
+
+</div>
+
+</div>
+
+
+
+
+</div>
+<!--{template page_footer}-->

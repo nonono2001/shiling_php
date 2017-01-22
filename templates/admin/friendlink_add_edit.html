@@ -1,0 +1,176 @@
+<!--{template page_header}-->
+
+<div class="main">
+
+<!--{template top_menu}-->
+
+<div class="main_middle" style="width:100%;">
+<!--{template left_menu}-->
+
+<div class="workground">
+  <div class="workground-title">
+    <h2>
+        <!--{if $friendlink_id>0}-->
+        <span>友链编辑</span>
+        <!--{else}-->
+        <span>友链添加</span>
+        <!--{/if}-->
+        <span style="font-size:12px;">（有<span style="color:red">*</span>为必填项）</span>
+    </h2>
+  </div>
+  
+  <style type="text/css">
+  .bianji_ul li{
+  	float: left;
+text-align: left;
+width: 100%;
+margin-top: 10px;
+  }
+  
+  .bianji_ul .fill_left{
+	float: left;
+text-align: right;
+line-height: 30px;
+height: 30px;
+width: 140px;
+margin-right: 10px;
+  }
+  
+  .bianji_ul .fill_right{
+	float: left;
+width: 400px;
+  }
+.fillnamechar{
+	color: #4372B0;
+font-weight: bold;
+}
+  textarea{
+	border: 1px solid #CECECF;
+line-height: 18px;
+color: #555;
+background: white;
+padding: 4px;
+vertical-align: middle;
+box-shadow: 2px 2px 2px #F0F0F0 inset;
+margin: 0px;
+  }
+  </style>
+  <div class="workground-content scroll-div">
+    <!--{if $friendlink_id>0}-->
+    <form id="a_add_form" action="ajax.php?mod=friendlink&act=do_edit_friendlink" method="post" enctype="multipart/form-data" target="form-target" >
+    <input type="hidden" name="flid" value="{$friendlink_id}" />
+    <!--{else}-->
+    <form id="a_add_form" action="ajax.php?mod=friendlink&act=do_add_friendlink" method="post" enctype="multipart/form-data" target="form-target" >
+    <!--{/if}-->
+    <ul style="float:left;width:100%;margin-bottom:50px;" class="bianji_ul">
+      <li>
+        <div class="fill_left"><span class="fillnamechar">名称</span></div>
+        <div class="fill_right" style="width: 170px;"><input type="text" id="friendlink_name" name="friendlink_name" value="{$friendlinkrow[friendlink_name]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('friendlink_name','friendlink_name_tip',1,20);" /></div>
+        <div style="line-height:25px;color:red;font-weight:bold;margin-top:5px;margin-right:3px;font-size:14px;">*</div><div style="line-height:30px;" id="friendlink_name_tip">1~20字</div><div style="line-height:30px;">，中英文都算1个字符</div>
+      </li>
+      
+      <li>
+        <div class="fill_left"><span class="fillnamechar">链接地址 http://</span></div>
+        <div class="fill_right" style="width: 170px;"><input type="text" id="friendlink_url" name="friendlink_url" value="{$friendlinkrow[friendlink_url]}" style="float:left;border-radius: 3px;width: 150px;margin-top:2px;" onkeyup="changeTip_by_val('friendlink_url','friendlink_url_tip',1,90);" /></div>
+        <div style="line-height:25px;color:red;font-weight:bold;margin-top:5px;margin-right:3px;font-size:14px;">*</div><div style="line-height:30px;" id="friendlink_url_tip">1~90字</div><div style="line-height:30px;">，中英文都算1个字符。</div>
+        <div style="line-height:30px;">请不要填写“http://”，系统将为您自动加上。</div>
+      </li>
+      
+      
+      <li>
+      <div style="float:left;margin-left: 250px;margin-top:20px;">
+  		<a class="W_btn_a" href="javascript:void(0);" id="baocun_btn" onclick="save_friendlink_btn_click(this);">
+  		  <span style="height: 28px;line-height: 26px;font-size: 16px;font-family: microsoft yahei;text-align: center;">
+  		    <b></b>
+  		    <em style="font-style: normal;" id="btn_text" >保存</em>
+  		  </span>
+  		</a>
+      </div>
+      </li>
+      
+      
+    </ul>
+    </form>
+    <iframe style="display:none;" id="form-target" name="form-target"></iframe>
+    
+    <script type="text/javascript">
+    //检查各项所填值长度、格式等正不正确
+    //返回值true或false
+    function check_friendlink_info()
+    {	
+		//得到友链名称。必填
+   		var friendlink_name = $.trim($("#friendlink_name").val());
+   		var name_len = friendlink_name.length;//名称长度。
+   		if(name_len>20 || name_len<1)
+   		{
+   			$.jBox.tip('名称必填，长度为1~20个字符','error');
+   			return false;
+   		}
+   		//名称的格式没有特殊要求。任何字符都可以。
+    	
+   		//检查友链地址，必填，最多90字符
+   		var friendlink_url = $.trim($("#friendlink_url").val());
+   		var friendlink_url_len = friendlink_url.length;
+   		if(friendlink_url_len>90 || friendlink_url_len<1)
+		{
+			$.jBox.tip('链接地址必填，长度为1~90个字符','error');
+			return false;
+		}
+    	
+   		
+   		return true;
+    }
+    function save_friendlink_btn_click(t)
+    {
+    	if($(t).find('em').text() == '保存')
+    	{
+    		//让保存按钮暂时失效
+    		$(t).find('em').text('保存中...');
+    		$(t).addClass('W_btn_a_disable');
+    		
+    		var res = check_friendlink_info();
+    		if(res)
+    		{
+        		$("#a_add_form").submit();
+    		}
+    		else
+    		{
+    			//保存按钮恢复
+        		$(t).find('em').text('保存');
+        		$(t).removeClass('W_btn_a_disable');
+    		}
+    	}
+    }
+    
+    //参数res为：err或者succ
+    function afterupload(res, msg)
+    {
+    	//如果失败，则恢复保存按钮。给出错误提示
+    	if(res == 'err')
+    	{
+    		$.jBox.tip(msg,'error');
+    		//保存按钮恢复
+    		$("#baocun_btn").find('em').text('保存');
+    		$("#baocun_btn").removeClass('W_btn_a_disable');
+			return;
+    	}
+    	else //如果成功，则跳转到文章列表页。
+    	{
+    		window.location.href="admin.php?mod=fll";
+    	}
+    	
+    }
+    
+    
+    
+    
+    </script>
+    
+  </div>
+
+</div>
+
+</div>
+
+</div>
+<!--{template page_footer}-->

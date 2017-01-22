@@ -1,0 +1,86 @@
+<style type="text/css">
+
+.nav_edit_ul{
+	float:left;
+	width:100%;
+}
+.nav_edit_ul li{
+	float:left;
+	text-align:left;
+	width:100%;
+	margin-top:10px;
+}
+
+.fill_name{
+	float:left;text-align:right;line-height:30px;height:30px;width:100px;margin-right:10px;
+}
+.fillnamechar{
+	color: #4372B0;
+font-weight: bold;
+}
+
+.fill_right{
+	float:left;
+	width:350px;
+}
+.fill_right input[type="radio"]{
+	margin:0px;
+}
+
+.nav_link_type{
+	float:left;
+	width:130px;
+	height:30px;
+	line-height:30px;
+}
+</style>
+
+<ul class="nav_edit_ul" style="margin-top:5px;">
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">昵称</span>
+    </div>
+    <div class="fill_right">
+      <span style="line-height: 30px;height: 30px;">{$adviserow[nickname]}</span>
+    </div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">电子邮箱</span>
+    </div>
+    <div class="fill_right">
+      <span style="line-height: 30px;height: 30px;">{$adviserow[email]}</span>
+    </div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">电话</span>
+    </div>
+    <div class="fill_right">
+      <span style="line-height: 30px;height: 30px;">{$adviserow[phone]}</span>
+    </div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">创建时间</span>
+    </div>
+    <div class="fill_right">
+      <span style="line-height: 30px;height: 30px;">{$adviserow[createtime]}</span>
+    </div>
+  </li>
+  <li>
+    <div class="fill_name">
+      <span class="fillnamechar">内容</span>
+    </div>
+    <div class="fill_right">
+      <span style="line-height: 30px;height: 30px;">{$adviserow[content]}</span>
+    </div>
+  </li>
+  
+  
+</ul>
+<div style="width:100%;float:left;margin-top: 20px;margin-bottom:20px;text-align:center;">
+  <input type="button" value="知道了" class="btnText" style="cursor:pointer;float:none;margin-right:40px;" onclick="close_dialog('show_advise');"/>
+</div>
+
+

@@ -1,0 +1,147 @@
+<script type="text/javascript">
+function pageScroll(){
+    //把内容滚动指定的像素数（第一个参数是向右滚动的像素数，第二个参数是向下滚动的像素数）
+    window.scrollBy(0,-1000);
+    //延时递归调用，模拟滚动向上效果
+    scrolldelay = setTimeout('pageScroll()',100);
+    //获取scrollTop值，声明了DTD的标准网页取document.documentElement.scrollTop，否则取document.body.scrollTop；因为二者只有一个会生效，另一个就恒为0，所以取和值可以得到网页的真正的scrollTop值
+    var sTop=document.documentElement.scrollTop+document.body.scrollTop;
+    //判断当页面到达顶部，取消延时代码（否则页面滚动到顶部会无法再向下正常浏览页面）
+    if(sTop==0) clearTimeout(scrolldelay);
+}
+</script>
+<style type="text/css">
+.gotop {
+    overflow: hidden;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    background: url(templates/{TEMPLATE_NAME}/images/top.png) 0 0 no-repeat;
+    /*background: url(http://pic.sogou.com/search_result/images/top.png) 0 0 no-repeat;*/
+    line-height: 99em;
+}
+</style>
+<a href="javascript:void(0);" class="gotop" onclick="pageScroll()"></a>
+
+
+<!-- 页面右侧，可展开收起的客服列表 -->
+<style type="text/css">
+#onlineservice_wrap div{
+float:none;
+}
+
+#onlineservice_wrap .content_list .qqserver p {
+    text-align: left;
+    padding: 6px 0px 6px 15px;
+}
+</style>
+<div id="onlineservice_wrap">
+<link rel="stylesheet" type="text/css" href="templates/{TEMPLATE_NAME}/js/onlineservice/css/service.css"/>
+<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/onlineservice/js/jquery.fixed.1.5.1.js"></script>
+
+<script language="javascript">
+//must window loading,don't use the document loading
+$(window).load(function(){
+	
+	//悬浮客服
+	$("#fixedBox").fix({
+		position 		: "right",	//悬浮位置 - left或right
+		horizontal  	: 0,		//水平方向的位置 - 默认为数字
+		vertical    	: 100,      //垂直方向的位置 - 默认为null
+		halfTop     	: true,	    //是否垂直居中位置
+		minStatue 		: true,	//是否最小化
+		hideCloseBtn 	: false,	//是否隐藏关闭按钮
+		skin 			: "blue",	//皮肤
+		showBtnWidth 	: 28,       //show_btn_width
+		contentBoxWidth : 154, 		//side_content_width
+		durationTime 	: 100		//完成时间
+	});
+	
+});
+</script>
+
+<!-- S 客服 -->
+<div class="fixed_box" id="fixedBox">
+    <div class="content_box">
+        <div class="content_inner">
+        	<div class="close_btn"><a title="关闭"><span>关闭</span></a></div>
+            <div class="content_title"><span>客服中心</span></div>
+            <div class="content_list">            	
+                <div class="qqserver" style="margin-top:6px;">
+                    <p>                              
+                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=429179763&amp;site=qq&amp;menu=yes">
+                          <img border="0" src="http://wpa.qq.com/pa?p=2:429179763:41" alt="点击这里给我发消息" title="点击这里给我发消息">
+                          <span>游德华</span>
+                    	</a>
+                    </p>
+                    
+                    <p>                        
+                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=414297472&site=qq&menu=yes">
+                          <img border="0" src="http://wpa.qq.com/pa?p=2:414297472:41" alt="点击这里给我发消息" title="点击这里给我发消息">
+                          <span>姚工</span>
+                    	</a>
+                    </p>
+                    
+                    <p>
+                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=7721735&site=qq&menu=yes">
+                          <img border="0" src="http://wpa.qq.com/pa?p=2:7721735:41" alt="点击这里给我发消息" title="点击这里给我发消息">
+                          <span>徐卓刚</span>
+                    	</a>
+                    </p>
+                    <p>
+                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=445389255&site=qq&menu=yes">
+                          <img border="0" src="http://wpa.qq.com/pa?p=2:445389255:41" alt="点击这里给我发消息" title="点击这里给我发消息">
+                          <span>李工</span>
+                    	</a>
+                    </p>       
+                    
+                                
+                </div>               
+                <!--hr>
+                <div class="phoneserver">
+                    <h5>客户服务热线</h5>
+                    <p>请直接QQ联系！</p>
+                </div>
+                <hr>
+                <div class="msgserver">
+                    <p><a href="http://qihudong.chinagdcj.cn/feedback/language_zh-CN?jsResource">给我们留言</a></p>
+                </div-->
+            </div>
+            <div class="content_bottom"></div>
+        </div>
+    </div>
+    <div class="show_btn"><span>展开客服</span></div>
+</div>
+<!-- E 客服 -->
+</div>
+
+<div class="footer" style="color:white;position:relative;">
+  
+
+
+
+  <div style="width:1190px;margin:auto;float:none;text-align:center;padding-top:20px;line-height: 1.5em;">
+	<a href="http://218.242.124.22:8081/businessCheck/verifKey.do?showType=extShow&serial=9031000020160629102121000000991844-SAIC_SHOW_310000-20120618113312718231&signData=MEUCIGNmiMa++gliMCS6Z3aEMEveKekuZaWJBiS0fR9Zc+igAiEAyMv3NA4ATLC4jrXNiW7lbag+ek3+3OKiFAYEJxeZRo0=">
+	  <img src="templates/{TEMPLATE_NAME}/images/for_jzlit/icon.gif" border="0" style="height: 47px;">
+	</a>
+	<br />
+	<span style="display:inline-block;">上海聚众力信息技术有限公司　&nbsp; 版权所有　&nbsp; 严禁复制　&nbsp; 2000-2011 网站备案号：沪ICP备05048846号</span>
+	<br />
+	<span style="display:inline-block;">上海总部地址：上海市浦东新区郭守敬路498号1518~1526室&nbsp; &nbsp;电话：021-50809661/50809531/50276348</span>
+    <br />
+    <span style="display:inline-block;">北京办事处：北京市海淀区安宁庄西路西三条宜品尚城607室&nbsp;&nbsp;&nbsp; 电话：010-82435377</span>
+    <br />
+    <span style="display:inline-block;">深圳办事处：深圳市福田区竹子林求是大厦819-820&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;电话：0755-21517159</span>
+    <br />
+    <span style="display:inline-block;">成都办事处：成都市青羊区顺城大街306号凯乐广场905A &nbsp;&nbsp;&nbsp;&nbsp;电话：028-86785582</span>
+    <br />
+    <span style="display:inline-block;color:#999;">建议使用chrome、IE8+浏览器，或者双核浏览器的极速（或高速）模式</span>
+  </div>
+  
+</div>
+
+
+<!--{template common_footer}-->

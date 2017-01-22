@@ -1,0 +1,200 @@
+<style type="text/css">
+.jzlit_left_side{
+	width:263px;
+	background:#FFF;
+}
+
+.jzlit_left_side_box{
+	width:263px;
+	
+}
+.side_box_title{
+	font-size: 13px;
+	width:100%;
+    background: url(templates/{TEMPLATE_NAME}/images/for_jzlit/right_class_bg.gif) no-repeat;
+    overflow: hidden;
+    height: 25px;
+    line-height: 23px;
+    text-indent: 25px;
+    color: #048ebc;
+    font-weight: normal;
+    font-family: "Microsoft Yahei";
+}
+
+.side_box_content{
+	width:234px;
+	min-height:20px;
+	margin-bottom: 6px;
+    zoom: 1;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 5px 14px 5px 14px;
+
+}
+
+.side_box_content_ul{
+	float:left;
+	width:100%;
+	
+}
+.side_box_content_ul li{
+	width:100%;
+	float:left;
+	text-align:left;
+	margin-bottom:5px;
+	height:21px;
+}
+
+#right_1 {
+    background: url(templates/{TEMPLATE_NAME}/images/for_jzlit/right_1.gif) no-repeat top;
+    width:263px;
+    height: 7px;
+    line-height: 7px;
+}
+#right_2 {
+    background: url(templates/{TEMPLATE_NAME}/images/for_jzlit/right_2.gif) no-repeat top;
+    width:263px;
+    height: 7px;
+    line-height: 7px;
+}
+</style>
+<div class="jzlit_left_side">
+<div id="right_1"></div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+	  //该ajax是为了加载一个widget
+	  $.ajax({
+  		type:"post",
+  		async : true,//false表示同步，true表示异步
+  		url:"ajax.php?mod=frontsite_widget&act=get_widget_leftsidenewsbox",
+  		data:{},
+  		beforeSend: function(XMLHttpRequest){
+
+  		},
+  		success: function(data){//data就是widget的html
+  			
+  			if(data)//widget获取成功
+  			{
+  				//把data放在#newsbar_wrap下面
+  				$('#company_news_container ul').html(data);
+  				return;
+  			}
+  			else//widget获取成功失败
+  			{				
+  				return;
+  			}
+  		}
+  		});
+  });
+  </script>
+<div class="jzlit_left_side_box">
+    <div class="side_box_title">
+      <span>公司新闻</span>
+    </div>
+  
+    <div id="company_news_container" class="side_box_content">
+      <ul class="side_box_content_ul">
+            
+      </ul>
+      <div style="width:100%;text-align: right;"><a href="index.php?mod=al&ac=14"><img src="templates/{TEMPLATE_NAME}/images/for_jzlit/more_37.jpg" width="32" height="9" border="0" style="margin-right:9px;"></a></div>
+    </div>
+</div>
+
+
+<div class="jzlit_left_side_box">
+    <div class="side_box_title">
+      <span>技术支持</span>
+    </div>
+  
+    <div class="side_box_content">
+      <ul class="side_box_content_ul">
+        <li style="margin-top:3px;"><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=429179763&amp;site=qq&amp;Menu=yes" target="blank"><img src="http://wpa.qq.com/pa?p=4:429179763:4" align="absMiddle" border="0">游德华(429179763)</a></li>
+        <li><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=414297472&amp;site=qq&amp;Menu=yes" target="blank"><img src="http://wpa.qq.com/pa?p=4:414297472:4" align="absMiddle" border="0">姚工(414297472)</a></li>
+        <li><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=7721735&amp;site=qq&amp;Menu=yes" target="blank"><img src="http://wpa.qq.com/pa?p=4:7721735:4" align="absMiddle" border="0">徐卓刚(7721735)</a></li>
+        <li><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=445389255&amp;site=qq&amp;Menu=yes" target="blank"><img src="http://wpa.qq.com/pa?p=4:445389255:4" align="absMiddle" border="0">李工(445389255)</a></li>
+      </ul>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+	  //该ajax是为了加载一个widget，左侧产品中心
+	  $.ajax({
+  		type:"post",
+  		async : true,//false表示同步，true表示异步
+  		url:"ajax.php?mod=frontsite_widget&act=get_widget_leftside_productcenter",
+  		data:{},
+  		beforeSend: function(XMLHttpRequest){
+
+  		},
+  		success: function(data){//data就是widget的html
+  			
+  			if(data)//widget获取成功
+  			{
+  				//把data放在#newsbar_wrap下面
+  				$('#product_center_container').html(data);
+  				return;
+  			}
+  			else//widget获取成功失败
+  			{				
+  				return;
+  			}
+  		}
+  		});
+  });
+  </script>
+<div class="jzlit_left_side_box">
+    <div class="side_box_title">
+      <span>产品中心</span>
+    </div>
+  
+    <div class="side_box_content" id="product_center_container" style="padding:5px 0px 5px 0px;width:width:254px;">
+      
+    </div>
+</div>
+
+<div style="width:263px;overflow:hidden;">
+<a href="http://mail.jzlit.com" target="_self">
+<img src="templates/{TEMPLATE_NAME}/images/for_jzlit/email.jpg" style="width:262px;margin-left:5px;" />
+</a>
+</div>
+
+<div class="jzlit_left_side_box">
+    <div class="side_box_title">
+      <span>关联企业</span>
+    </div>
+  
+    <div class="side_box_content">
+      <a href="http://www.cbyt.com.cn" target="_blank" title="长春博益科技" style="float: left;    margin-bottom: 17px;margin-left: 15px; margin-top: 5px;">长春博益科技</a>
+    </div>
+</div>
+
+
+<div class="jzlit_left_side_box">
+    <div class="side_box_title">
+      <span>聚众力日本窗口</span>
+    </div>
+  
+    <div class="side_box_content">
+    
+	<p style="    font-family:Arial;padding:5px;    line-height: 24px;">今田　清<br>
+E-mail: kumakuma_3639@yahoo.co.jp<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;imada@yuusei.cn <br>
+住所：熊本県玉名市小野尻229-15<br>
+電話：0081-90-9597-3136 （日本）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0086-15021467177 （中国）
+</p>
+<p>
+	<br>
+</p>
+      
+    </div>
+</div>
+
+<div id="right_2"></div>
+</div>
+
+
