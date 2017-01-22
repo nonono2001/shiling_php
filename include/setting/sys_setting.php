@@ -7,11 +7,11 @@ return array (
  		
 //	'db_host' => '54.251.82.112',
 	'db_host' => '127.0.0.1',
- 	'db_user' => 'root',
+ 	'db_user' => 'shiling',
 //  	'db_pass' =>  'sgezi50602', //阿里云DB的密码
 //     'db_pass' =>  'mysqlweiyang123',//亚马逊EC2的DB密码
- 	'db_pass' =>  '123',  //本机三星DB密码
-// 	'db_name' => 'qinke_site',//测试用db
+ 	'db_pass' =>  'Shiling123!',  //本机三星DB密码
+	'db_name' => 'tt_shiling',//测试用db
 //     'db_name' => 'qinke_offical_web',//亲客官网三星机测试对应的db
 //  	'db_name' => 'offical_qinke_web',//亲客官网在亚马逊上的db名
 //		'db_name' => 'qinke_site',   //亚马逊上聚众力中文版（建站之星蓝色主题，结诚不用）的db名
@@ -50,6 +50,9 @@ return array (
 //  				  'M' => '他',
 //  				  'F' => '她',			
 //  	),
+
+	'appid'=>'wxbf4eea839f0b7aba',
+	'appsecret'=>'a4c3e102e98eefac4ef2fe0af7ba9da9',
  		
  	'admin_uid' => array('15',
  				  

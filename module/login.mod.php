@@ -11,6 +11,10 @@ class ModuleObject extends MasterObject
 	
 		$this->Execute();
 		
+
+		$config = getSetting( 'sys_setting' );
+		$this->appid = $congif['appid'];
+		$this->secret = $congif['appsecret'];
 	}
 	
 	
@@ -70,17 +74,34 @@ class ModuleObject extends MasterObject
 //		include(template('login'));
 		
 		
-		if(MEMBER_ID>0)//说明用户已登录，已登录时不能进入登录页
-		{
-			//跳回到首页
-			header('Location: index.php');
-			exit();
-		}
-		$page_title="登录";
-		$redirect = getPG("redirect");//登录成功后重定向的目标url
-		include(template('login'));
+		// if(MEMBER_ID>0)//说明用户已登录，已登录时不能进入登录页
+		// {
+		// 	//跳回到首页
+		// 	header('Location: index.php');
+		// 	exit();
+		// }
+		// $page_title="登录";
+		// $redirect = getPG("redirect");//登录成功后重定向的目标url
+		// include(template('login'));
+
+		$code = $_REQUEST['code'];
+		$session_array = $this->getKey($code);
+
 	}
 	
+	function getKey($code){
+    	$url = 'https://api.weixin.qq.com/sns/jscode2session';
+    	$params  = array(
+    		'appid'=>$this->appid,
+    		'secret'=>$this->secret,
+    		'js_code'=>$code,
+    		'grant_type'=>'authorization_code'
+
+    		);
+    	return $this->http($url,$params,'POST');
+    }
+
+
 	function Error_tip()
 	{
 		$page_title="登录";
