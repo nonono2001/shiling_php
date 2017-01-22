@@ -12,6 +12,7 @@ return array (
 //     'db_pass' =>  'mysqlweiyang123',//亚马逊EC2的DB密码
  	'db_pass' =>  'Shiling123!',  //本机三星DB密码
 	'db_name' => 'tt_shiling',//测试用db
+// 	'db_name' => 'qinke_site',//测试用db
 //     'db_name' => 'qinke_offical_web',//亲客官网三星机测试对应的db
 //  	'db_name' => 'offical_qinke_web',//亲客官网在亚马逊上的db名
 //		'db_name' => 'qinke_site',   //亚马逊上聚众力中文版（建站之星蓝色主题，结诚不用）的db名
@@ -28,7 +29,7 @@ return array (
 
 // 		'db_name' => 'qinke_site_jiecheng_cn',//结诚电子对应的数据库。
 // 		'db_name' => 'qinke_site_jiecheng_jp',//结诚电子对应的数据库，日文版。
-	    'db_name' => 'tt',
+	    'db_name' => 'tt_shiling',
 
 //	'db_host' => '192.168.0.114',
 // 	'db_user' => 'root',
