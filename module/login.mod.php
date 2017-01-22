@@ -8,7 +8,7 @@ class ModuleObject extends MasterObject
 
 	function __construct(){
 		$config = getSetting( 'sys_setting' );
-		var_dump($config);
+
 		$this->appid = $config['appid'];
 		$this->secret = $config['appsecret'];
 	}
@@ -105,6 +105,7 @@ class ModuleObject extends MasterObject
     		'grant_type'=>'authorization_code'
 
     		);
+    	var_dump($params);
     	return $this->http($url,$params,'POST');
     }
 
