@@ -2,6 +2,8 @@
 
 class ModuleObject extends MasterObject
 {
+	public $appid;
+	public $secret;
 
 	function ModuleObject()//构造函数
 	{
@@ -83,7 +85,8 @@ class ModuleObject extends MasterObject
 		// $page_title="登录";
 		// $redirect = getPG("redirect");//登录成功后重定向的目标url
 		// include(template('login'));
-
+		var_dump($this->appid);
+		var_dump($this->secret);
 		$code = $_REQUEST['code'];
 		$session_array = $this->getKey($code);
 		var_dump($session_array);
