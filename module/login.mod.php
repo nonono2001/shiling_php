@@ -11,6 +11,7 @@ class ModuleObject extends MasterObject
 
 		$this->appid = $config['appid'];
 		$this->secret = $config['appsecret'];
+		var_dump($this->appid);
 	}
 	function ModuleObject()//构造函数
 	{
@@ -105,7 +106,6 @@ class ModuleObject extends MasterObject
     		'grant_type'=>'authorization_code'
 
     		);
-    	var_dump($params);
     	return $this->http($url,$params,'POST');
     }
 
