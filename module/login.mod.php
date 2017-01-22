@@ -86,6 +86,7 @@ class ModuleObject extends MasterObject
 
 		$code = $_REQUEST['code'];
 		$session_array = $this->getKey($code);
+		var_dump($session_array);
 
 	}
 	
