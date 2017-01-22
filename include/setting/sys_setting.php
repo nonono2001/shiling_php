@@ -29,7 +29,6 @@ return array (
 
 // 		'db_name' => 'qinke_site_jiecheng_cn',//结诚电子对应的数据库。
 // 		'db_name' => 'qinke_site_jiecheng_jp',//结诚电子对应的数据库，日文版。
-	    'db_name' => 'tt_shiling',
 
 //	'db_host' => '192.168.0.114',
 // 	'db_user' => 'root',
