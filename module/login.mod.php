@@ -13,8 +13,8 @@ class ModuleObject extends MasterObject
 		
 
 		$config = getSetting( 'sys_setting' );
-		$this->appid = $congif['appid'];
-		$this->secret = $congif['appsecret'];
+		$this->appid = $config['appid'];
+		$this->secret = $config['appsecret'];
 	}
 	
 	
