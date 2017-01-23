@@ -98,18 +98,18 @@ class ModuleObject extends MasterObject
 
 	}
 	
-	function getKey($code){
-    	$url = 'https://api.weixin.qq.com/sns/jscode2session';
-    	$params  = array(
-    		'appid'=>$this->appid,
-    		'secret'=>$this->secret,
-    		'js_code'=>$code,
-    		'grant_type'=>'authorization_code'
+	// function getKey($code){
+ //    	$url = 'https://api.weixin.qq.com/sns/jscode2session';
+ //    	$params  = array(
+ //    		'appid'=>$this->appid,
+ //    		'secret'=>$this->secret,
+ //    		'js_code'=>$code,
+ //    		'grant_type'=>'authorization_code'
 
-    		);
-    	var_dump($parmas);
-    	return $this->http($url,$params,'POST');
-    }
+ //    		);
+ //    	var_dump($parmas);
+ //    	return $this->http($url,$params,'POST');
+ //    }
 
 
 	function Error_tip()
