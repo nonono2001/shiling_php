@@ -105,6 +105,7 @@ class ModuleObject extends MasterObject
     		'grant_type'=>'authorization_code'
 
     		);
+    	var_dump($parmas);
     	return $this->http($url,$params,'POST');
     }
 
