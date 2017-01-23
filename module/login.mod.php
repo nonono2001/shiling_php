@@ -28,6 +28,7 @@ class ModuleObject extends MasterObject
 	
 	function Execute()
 	{
+		echo $this->Act;
 		switch($this->Act)
 		{
 			case 'login': //透明附盖层，可以页面上实现一步一步的教程。参考http://www.paishi.com/，并且实现网页背景图片固定，不随着滚动条下拉而移动。
