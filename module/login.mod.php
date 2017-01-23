@@ -8,8 +8,8 @@ class ModuleObject extends MasterObject
 	function __construct(){
 		$config = getSetting( 'sys_setting' );
 
-		$this->appid = $config['appid'];
-		$this->secret = $config['appsecret'];
+		// $this->appid = $config['appid'];
+		// $this->secret = $config['appsecret'];
 		echo 1;
 		
 	}
@@ -94,7 +94,7 @@ class ModuleObject extends MasterObject
 		// $code = $_POST;
 		// $session_array = $this->getKey($code);
 		// var_dump($code);
-		var_dump(1);
+		echo 1;
 		
 
 	}
