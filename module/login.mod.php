@@ -97,23 +97,23 @@ class ModuleObject extends MasterObject
 		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'];
 		echo $rand;
 
-
-		// $pc = new WXBizDataCrypt($this->appid, $session_array['session_key']);
-		
-
-		// $errCode = $pc->decryptData($encryptedData, $iv, $data );
-
-		// if ($errCode == 0) {
-		//     print($data . "\n");
-		// } else {
-		//     print($errCode . "\n");
-		// }
-		// echo json_encode($pc);
 	}
 	
 	function Userinfo(){
 		$post = $_POST;
-		var_dump($post);
+		$session = $_SESSION[md5($post['rand']+$this->token_key)]
+		echo $session;
+		$pc = new WXBizDataCrypt($this->appid, $session);
+		
+
+		$errCode = $pc->decryptData($encryptedData, $iv, $data );
+
+		if ($errCode == 0) {
+		    print($data . "\n");
+		} else {
+		    print($errCode . "\n");
+		}
+		// echo json_encode($pc);
 	}
 
 
