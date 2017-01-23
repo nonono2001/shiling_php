@@ -10,7 +10,7 @@ class ModuleObject extends MasterObject
 
 		// $this->appid = $config['appid'];
 		// $this->secret = $config['appsecret'];
-		
+		$this->Execute();
 		
 	}
 	function ModuleObject()//构造函数
@@ -19,7 +19,7 @@ class ModuleObject extends MasterObject
 		
 		
 	
-		$this->Execute();
+		
 		
 
 		
