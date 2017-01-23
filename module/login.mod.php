@@ -88,9 +88,9 @@ class ModuleObject extends MasterObject
 		// include(template('login'));
 		$code = $_GET['code'];
 		$session = $this->get_key($code);
-		$session_array = print_r($session,true);
+		$session_array = json_decode($session,true);
 		// var_dump($session_array,true);
-		echo $session_array['session_key'];
+		
 		$pc = new WXBizDataCrypt($this->appid, $session_array['session_key']);
 		$errCode = $pc->decryptData($encryptedData, $iv, $data );
 
