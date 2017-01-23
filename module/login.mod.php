@@ -95,9 +95,9 @@ class ModuleObject extends MasterObject
 		// var_dump($session_array,true);
 		$rand = md5(time()+rand(100,999));
 		session_start();
-		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'];
+		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'].'/'.$session_array['openid'];
 		$array = array('rand'=>$rand,'session_id'=>session_id());
-		echo json_encode($array);
+		return $array;
 
 	}
 	
