@@ -38,22 +38,22 @@ class WXBizDataCrypt
 	 */
 	public function decryptData( $encryptedData, $iv, &$data )
 	{
-		// if (strlen($this->sessionKey) != 24) {
-		// 	return ErrorCode::$IllegalAesKey;
-		// }
-		// $aesKey=base64_decode($this->sessionKey);
+		if (strlen($this->sessionKey) != 24) {
+			return ErrorCode::$IllegalAesKey;
+		}
+		$aesKey=base64_decode($this->sessionKey);
 
         
-		// if (strlen($iv) != 24) {
-		// 	return ErrorCode::$IllegalIv;
-		// }
-		// $aesIV=base64_decode($iv);
+		if (strlen($iv) != 24) {
+			return ErrorCode::$IllegalIv;
+		}
+		$aesIV=base64_decode($iv);
 
-		// $aesCipher=base64_decode($encryptedData);
+		$aesCipher=base64_decode($encryptedData);
 
-		// $pc = new Prpcrypt($aesKey);
-		// $result = $pc->decrypt($aesCipher,$aesIV);
-        
+		$pc = new Prpcrypt($aesKey);
+		$result = $pc->decrypt($aesCipher,$aesIV);
+        return 1;
 		// if ($result[0] != 0) {
 		// 	return $result[0];
 		// }
@@ -69,7 +69,7 @@ class WXBizDataCrypt
   //       }
 		// $data = $result[1];
 		// return ErrorCode::$OK;
-		return 1;
+
 	}
 
 }
