@@ -124,7 +124,7 @@ class ModuleObject extends MasterObject
 			$pc = new WXBizDataCrypt($this->appid, $session_array[0]);
 		
 			
-			$errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
+			// $errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
 
 			var_dump($post['encryptedData']);
 			var_dump($post['iv']);
