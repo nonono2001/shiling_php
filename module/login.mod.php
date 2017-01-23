@@ -4,14 +4,6 @@ class ModuleObject extends MasterObject
 {
 	public $appid;
 	public $secret;
-
-
-	function __construct(){
-		// $config = getSetting( 'sys_setting' );
-	
-		// $this->appid = $config['appid'];
-		// $this->secret = $config['appsecret'];
-	}
 	function ModuleObject()//构造函数
 	{
 		$this->MasterObject( 'db_on' );
@@ -92,7 +84,7 @@ class ModuleObject extends MasterObject
 		// include(template('login'));
 		// $code = $_REQUEST['code'];
 		// $session_array = $this->getKey($code);
-		var_dump(1);
+		echo 1;
 		// var_dump($session_array);
 
 	}
