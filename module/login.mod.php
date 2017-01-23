@@ -115,14 +115,13 @@ class ModuleObject extends MasterObject
 		//echo md5($post['rand']+$this->token_key);
 		$session = $_SESSION[md5($post['rand']+$this->token_key)];
 		$session_array = explode('@',$session );
-		var_dump($session_array);
 		$pc = new WXBizDataCrypt($this->appid, $session_array[0]);
 		
 
 		$errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
 
 		if ($errCode == 0) {
-		    print($data . "\n");
+		    var_dump($data);
 		} else {
 		    print($errCode . "\n");
 		}
