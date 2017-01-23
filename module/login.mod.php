@@ -70,15 +70,16 @@ class ModuleObject extends MasterObject
 //		include(template('login'));
 		
 		
-		if(MEMBER_ID>0)//说明用户已登录，已登录时不能进入登录页
-		{
-			//跳回到首页
-			header('Location: index.php');
-			exit();
-		}
-		$page_title="登录";
-		$redirect = getPG("redirect");//登录成功后重定向的目标url
-		include(template('login'));
+		// if(MEMBER_ID>0)//说明用户已登录，已登录时不能进入登录页
+		// {
+		// 	//跳回到首页
+		// 	header('Location: index.php');
+		// 	exit();
+		// }
+		// $page_title="登录";
+		// $redirect = getPG("redirect");//登录成功后重定向的目标url
+		// include(template('login'));
+		echo 1;
 	}
 	
 	function Error_tip()
