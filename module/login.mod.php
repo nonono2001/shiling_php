@@ -90,6 +90,7 @@ class ModuleObject extends MasterObject
 		$session = $this->get_key($code);
 		$session_array = print_r($session,true);
 		// var_dump($session_array,true);
+		echo $session_array['session_key'];
 		$pc = new WXBizDataCrypt($this->appid, $session_array['session_key']);
 		$errCode = $pc->decryptData($encryptedData, $iv, $data );
 
