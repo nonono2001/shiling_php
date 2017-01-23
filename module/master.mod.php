@@ -38,6 +38,13 @@ class MasterObject
 		
 	}
 	
+	public function prepareJSON($input) {
+		$imput = mb_convert_encoding($input, 'UTF-8', 'ASCII,UTF-8,ISO-8859-1');
+		if(substr($input, 0, 3) == pack("CCC", 0xEF, 0xBB, 0xBF)) $input = substr($input, 3);
+		return $input;
+	}
+
+	
 	function Messager($msgstr,$redir='',$time = -1,$template_name = '')
 	{
 //		$sitename = $this->sys_setting['site_name'];

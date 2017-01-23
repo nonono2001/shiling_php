@@ -97,8 +97,13 @@ class ModuleObject extends MasterObject
 		session_start();
 		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'].'/'.$session_array['openid'];
 		$array = array('rand'=>$rand,'session_id'=>session_id());
-	
-		echo json_encode($array);
+		$data=json_encode($array);
+        $json['html'] = $this->prepareJSON($data);
+        $jsondata = json_encode($json,true);
+        //跨域请求
+
+       
+		echo '('.$jsondata.')';
 
 	}
 	
