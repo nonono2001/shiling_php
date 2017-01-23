@@ -125,13 +125,13 @@ class ModuleObject extends MasterObject
 		
 			
 			$errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
-
-			if ($errCode == 0) {
-			    print($data."\n");
-			    echo 1;
-			} else {
-			    print($errCode . "\n");
-			}
+			var_dump($errCode);
+			// if ($errCode == 0) {
+			//     print($data."\n");
+			//     echo 1;
+			// } else {
+			//     print($errCode . "\n");
+			// }
 			
 		}
 
