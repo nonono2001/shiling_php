@@ -51,9 +51,9 @@ class WXBizDataCrypt
 
 		$aesCipher=base64_decode($encryptedData);
 
-		// $pc = new Prpcrypt($aesKey);
-		// $result = $pc->decrypt($aesCipher,$aesIV);
-        return $aesCipher;
+		$pc = new Prpcrypt($aesKey);
+		$result = $pc->decrypt($aesCipher,$aesIV);
+        return $result;
 		// if ($result[0] != 0) {
 		// 	return $result[0];
 		// }
