@@ -103,6 +103,7 @@ class ModuleObject extends MasterObject
 	
 	function Userinfo(){
 		$post = $_POST;
+		echo $post['session_id'];
 		session_id($post['session_id']);
 		session_start();
 		// $session = $_SESSION[md5($post['rand']+$this->token_key)]
