@@ -89,24 +89,24 @@ class ModuleObject extends MasterObject
 		// $redirect = getPG("redirect");//登录成功后重定向的目标url
 		// include(template('login'));
 		$code = $_REQUEST['code'];
-		$session_array = $this->getKey($code);
+		// $session_array = $this->getKey($code);
 		
-		var_dump($session_array);
+		var_dump($code);
 
 	}
 	
-	function getKey($code){
-    	$url = 'https://api.weixin.qq.com/sns/jscode2session';
-    	$params  = array(
-    		'appid'=>$this->appid,
-    		'secret'=>$this->secret,
-    		'js_code'=>$code,
-    		'grant_type'=>'authorization_code'
+	// function getKey($code){
+ //    	$url = 'https://api.weixin.qq.com/sns/jscode2session';
+ //    	$params  = array(
+ //    		'appid'=>$this->appid,
+ //    		'secret'=>$this->secret,
+ //    		'js_code'=>$code,
+ //    		'grant_type'=>'authorization_code'
 
-    		);
-    	var_dump($parmas);
-    	return $this->http($url,$params,'POST');
-    }
+ //    		);
+ //    	var_dump($parmas);
+ //    	return $this->http($url,$params,'POST');
+ //    }
 
 
 	function Error_tip()
