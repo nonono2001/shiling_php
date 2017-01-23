@@ -2,9 +2,14 @@
 
 class ModuleObject extends MasterObject
 {
-
+	public $appid;
+	public $secret;
 	function ModuleObject()//构造函数
 	{
+		$config = getSetting( 'sys_setting' );
+
+		$this->appid = $config['appid'];
+		$this->secret = $config['appsecret'];
 		$this->MasterObject( 'db_on' );
 		
 		
@@ -79,7 +84,7 @@ class ModuleObject extends MasterObject
 		// $page_title="登录";
 		// $redirect = getPG("redirect");//登录成功后重定向的目标url
 		// include(template('login'));
-		echo 1;
+		var_dump($this->appid);
 	}
 	
 	function Error_tip()
