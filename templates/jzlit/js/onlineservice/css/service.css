@@ -1,4 +1,4 @@
-﻿.fixed_box { width:154px; position:absolute; z-index:9999; top:220px; overflow:hidden;}
+.fixed_box { width:154px; position:absolute; z-index:9999; top:220px; overflow:hidden;}
 
 hr{border:5px solid #e2e2e2; border-width: 0 0 5px 0; margin: 20px 10px 10px 10px;}
 
