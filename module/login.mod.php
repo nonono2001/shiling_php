@@ -114,7 +114,7 @@ class ModuleObject extends MasterObject
 		session_start();
 		// $session = $_SESSION[md5($post['rand']+$this->token_key)]
 		//echo md5($post['rand']+$this->token_key);
-		var_dump($_SESSION);
+		var_dump($_SESSION[$post['rand']]);
 		$pc = new WXBizDataCrypt($this->appid, $session);
 		
 
