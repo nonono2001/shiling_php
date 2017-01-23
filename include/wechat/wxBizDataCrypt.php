@@ -44,16 +44,16 @@ class WXBizDataCrypt
 		$aesKey=base64_decode($this->sessionKey);
 
         
-		// if (strlen($iv) != 24) {
-		// 	return ErrorCode::$IllegalIv;
-		// }
-		// $aesIV=base64_decode($iv);
+		if (strlen($iv) != 24) {
+			return ErrorCode::$IllegalIv;
+		}
+		$aesIV=base64_decode($iv);
 
-		// $aesCipher=base64_decode($encryptedData);
+		$aesCipher=base64_decode($encryptedData);
 
 		// $pc = new Prpcrypt($aesKey);
 		// $result = $pc->decrypt($aesCipher,$aesIV);
-        return 1;
+        return $aesCipher;
 		// if ($result[0] != 0) {
 		// 	return $result[0];
 		// }
