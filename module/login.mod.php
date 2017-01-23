@@ -12,7 +12,7 @@ class ModuleObject extends MasterObject
 
 		$this->appid = $config['appid'];
 		$this->secret = $config['appsecret'];
-		$this->token_key =$config['token'];
+		$this->token_key =$config['token_key'];
 		$this->MasterObject( 'db_on' );
 		
 		
@@ -92,7 +92,7 @@ class ModuleObject extends MasterObject
 		$session_array = json_decode($session,true);
 		// var_dump($session_array,true);
 		$rand = time()+rand(100,999);
-		// $_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'];
+		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'];
 		echo $rand;
 
 
