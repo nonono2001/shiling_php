@@ -7,10 +7,10 @@ class ModuleObject extends MasterObject
 
 
 	function __construct(){
-		$config = getSetting( 'sys_setting' );
+		// $config = getSetting( 'sys_setting' );
 	
-		$this->appid = $config['appid'];
-		$this->secret = $config['appsecret'];
+		// $this->appid = $config['appid'];
+		// $this->secret = $config['appsecret'];
 	}
 	function ModuleObject()//构造函数
 	{
@@ -91,7 +91,7 @@ class ModuleObject extends MasterObject
 		// $redirect = getPG("redirect");//登录成功后重定向的目标url
 		// include(template('login'));
 		$code = $_REQUEST['code'];
-		$session_array = $this->getKey($code);
+		// $session_array = $this->getKey($code);
 		var_dump($code);
 		// var_dump($session_array);
 
