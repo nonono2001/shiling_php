@@ -89,21 +89,21 @@ class ModuleObject extends MasterObject
 		// $page_title="登录";
 		// $redirect = getPG("redirect");//登录成功后重定向的目标url
 		// include(template('login'));
-		$code = $_GET['code'];
-		$session = $this->get_key($code);
-		$session_array = json_decode($session,true);
-		// var_dump($session_array,true);
-		$rand = md5(time()+rand(100,999));
-		session_start();
-		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'].'/'.$session_array['openid'];
-		$array = array('rand'=>$rand,'session_id'=>session_id());
-		$data=json_encode($array);
-        $json['html'] = $this->prepareJSON($data);
-        $jsondata = json_encode($json,true);
-        //跨域请求
+		// $code = $_GET['code'];
+		// $session = $this->get_key($code);
+		// $session_array = json_decode($session,true);
+		// // var_dump($session_array,true);
+		// $rand = md5(time()+rand(100,999));
+		// session_start();
+		// $_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'].'/'.$session_array['openid'];
+		// $array = array('rand'=>$rand,'session_id'=>session_id());
+		// $data=json_encode($array);
+  //       $json['html'] = $this->prepareJSON($data);
+  //       $jsondata = json_encode($json,true);
+  //       //跨域请求
 
        
-		echo '('.$jsondata.')';
+		// echo '('.$jsondata.')';
 
 	}
 	
