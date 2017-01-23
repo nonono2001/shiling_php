@@ -11,7 +11,6 @@ class ModuleObject extends MasterObject
 		$this->appid = $config['appid'];
 		$this->secret = $config['appsecret'];
 		var_dump($this->appid);
-		var_dump($this->secret);
 	}
 	function ModuleObject()//构造函数
 	{
@@ -91,25 +90,25 @@ class ModuleObject extends MasterObject
 		// $page_title="登录";
 		// $redirect = getPG("redirect");//登录成功后重定向的目标url
 		// include(template('login'));
-		// $code = $_REQUEST['code'];
+		$code = $_REQUEST['code'];
 		// $session_array = $this->getKey($code);
 		
-		// var_dump($code);
+		var_dump($code);
 
 	}
 	
-	// function getKey($code){
- //    	$url = 'https://api.weixin.qq.com/sns/jscode2session';
- //    	$params  = array(
- //    		'appid'=>$this->appid,
- //    		'secret'=>$this->secret,
- //    		'js_code'=>$code,
- //    		'grant_type'=>'authorization_code'
+	function getKey($code){
+    	$url = 'https://api.weixin.qq.com/sns/jscode2session';
+    	$params  = array(
+    		'appid'=>$this->appid,
+    		'secret'=>$this->secret,
+    		'js_code'=>$code,
+    		'grant_type'=>'authorization_code'
 
- //    		);
- //    	var_dump($parmas);
- //    	return $this->http($url,$params,'POST');
- //    }
+    		);
+    	var_dump($parmas);
+    	return $this->http($url,$params,'POST');
+    }
 
 
 	function Error_tip()
