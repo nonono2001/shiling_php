@@ -123,9 +123,9 @@ class ModuleObject extends MasterObject
 		if($post['signature']==$signature2){
 			$pc = new WXBizDataCrypt($this->appid, $session_array[0]);
 		
-			echo $post['encryptedData'];
+			
 			$errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
-
+			var_dump($data);
 			if ($errCode == 0) {
 			    echo json_encode($data);
 			} else {
