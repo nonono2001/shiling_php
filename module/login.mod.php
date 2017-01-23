@@ -8,9 +8,9 @@ class ModuleObject extends MasterObject
 	function __construct(){
 		$config = getSetting( 'sys_setting' );
 
-		// $this->appid = $config['appid'];
-		// $this->secret = $config['appsecret'];
-		echo 1;
+		$this->appid = $config['appid'];
+		$this->secret = $config['appsecret'];
+		
 		
 	}
 	function ModuleObject()//构造函数
@@ -31,6 +31,7 @@ class ModuleObject extends MasterObject
 		switch($this->Act)
 		{
 			case 'login': //透明附盖层，可以页面上实现一步一步的教程。参考http://www.paishi.com/，并且实现网页背景图片固定，不随着滚动条下拉而移动。
+				echo 1;
 				$this->Login();
 				break;
 				
