@@ -90,7 +90,7 @@ class ModuleObject extends MasterObject
 		// $page_title="登录";
 		// $redirect = getPG("redirect");//登录成功后重定向的目标url
 		// include(template('login'));
-		$code = $_REQUEST;
+		$code = $_GET;
 		// $session_array = $this->getKey($code);
 		
 		var_dump($code);
