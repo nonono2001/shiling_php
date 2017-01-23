@@ -95,7 +95,7 @@ class ModuleObject extends MasterObject
 		// var_dump($session_array,true);
 		$rand = md5(time()+rand(100,999));
 		session_start();
-		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'].'/'.$session_array['openid'];
+		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'].'@'.$session_array['openid'];
 		$array = array('rand'=>$rand,'session_id'=>session_id());
 		
         $json = $this->prepareJSON($array);
@@ -114,11 +114,13 @@ class ModuleObject extends MasterObject
 		session_start();
 		// $session = $_SESSION[md5($post['rand']+$this->token_key)]
 		//echo md5($post['rand']+$this->token_key);
-		var_dump($_SESSION[md5($post['rand']+$this->token_key)]);
-		$pc = new WXBizDataCrypt($this->appid, $session);
+		$session = $_SESSION[md5($post['rand']+$this->token_key)];
+		$session_array = explode($session, '@');
+
+		$pc = new WXBizDataCrypt($this->appid, $session_array[0]);
 		
 
-		$errCode = $pc->decryptData($encryptedData, $iv, $data );
+		$errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
 
 		if ($errCode == 0) {
 		    print($data . "\n");
