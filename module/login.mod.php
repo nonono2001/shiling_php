@@ -6,16 +6,16 @@ class ModuleObject extends MasterObject
 	public $secret;
 
 	function __construct(){
-		$config = getSetting( 'sys_setting' );
+		// $config = getSetting( 'sys_setting' );
 
-		$this->appid = $config['appid'];
-		$this->secret = $config['appsecret'];
+		// $this->appid = $config['appid'];
+		// $this->secret = $config['appsecret'];
 		
 		
 	}
 	function ModuleObject()//构造函数
 	{
-		$this->MasterObject( 'db_on' );
+		// $this->MasterObject( 'db_on' );
 		
 		
 	
