@@ -102,7 +102,8 @@ class ModuleObject extends MasterObject
 	function Userinfo(){
 		$post = $_POST;
 		$session = $_SESSION[md5($post['rand']+$this->token_key)]
-		echo $session;
+		echo md5($post['rand']+$this->token_key);
+		var_dump($_SESSION);
 		$pc = new WXBizDataCrypt($this->appid, $session);
 		
 
