@@ -12,6 +12,7 @@ class ModuleObject extends MasterObject
 
 		$this->appid = $config['appid'];
 		$this->secret = $config['appsecret'];
+		$this->token_key =$config['token'];
 		$this->MasterObject( 'db_on' );
 		
 		
@@ -90,15 +91,21 @@ class ModuleObject extends MasterObject
 		$session = $this->get_key($code);
 		$session_array = json_decode($session,true);
 		// var_dump($session_array,true);
-		
-		$pc = new WXBizDataCrypt($this->appid, $session_array['session_key']);
-		$errCode = $pc->decryptData($encryptedData, $iv, $data );
+		$rand = time()+rand(100,999);
+		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'];
+		return $rand;
 
-		if ($errCode == 0) {
-		    print($data . "\n");
-		} else {
-		    print($errCode . "\n");
-		}
+
+		// $pc = new WXBizDataCrypt($this->appid, $session_array['session_key']);
+		
+
+		// $errCode = $pc->decryptData($encryptedData, $iv, $data );
+
+		// if ($errCode == 0) {
+		//     print($data . "\n");
+		// } else {
+		//     print($errCode . "\n");
+		// }
 		// echo json_encode($pc);
 	}
 	

@@ -53,7 +53,7 @@ return array (
 
 	'appid'=>'wxbf4eea839f0b7aba',
 	'appsecret'=>'a4c3e102e98eefac4ef2fe0af7ba9da9',
- 		
+ 	'token_key'=>'fsdffjklj234kfoo5',
  	'admin_uid' => array('15',
  				  
  	),//网站管理员的uid，可以有多个。这是一种简易的权限管理，在这里可以设置超级admin。
