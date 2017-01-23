@@ -7,9 +7,11 @@ class ModuleObject extends MasterObject
 
 	function __construct(){
 		$config = getSetting( 'sys_setting' );
-		var_dump($config);
-		// $this->appid = $config['appid'];
-		// $this->secret = $config['appsecret'];
+
+		$this->appid = $config['appid'];
+		$this->secret = $config['appsecret'];
+		var_dump($this->appid);
+		var_dump($this->secret);
 	}
 	function ModuleObject()//构造函数
 	{
