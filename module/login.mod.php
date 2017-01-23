@@ -95,6 +95,7 @@ class ModuleObject extends MasterObject
 		// var_dump($session_array,true);
 		$rand = md5(time()+rand(100,999));
 		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'];
+		var_dump($_SESSION);
 		echo $rand;
 
 	}
@@ -102,7 +103,7 @@ class ModuleObject extends MasterObject
 	function Userinfo(){
 		$post = $_POST;
 		// $session = $_SESSION[md5($post['rand']+$this->token_key)]
-		// echo md5($post['rand']+$this->token_key);
+		echo md5($post['rand']+$this->token_key);
 		var_dump($_SESSION);
 		$pc = new WXBizDataCrypt($this->appid, $session);
 		
