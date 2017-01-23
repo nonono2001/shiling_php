@@ -118,20 +118,23 @@ class ModuleObject extends MasterObject
 
 
 		// var_dump(json_decode($post['rawData'],true));
-		echo sha1($post['rawData'].$session_array[0]);
-
-
-		// $pc = new WXBizDataCrypt($this->appid, $session_array[0]);
+		$signature2 = sha1($post['rawData'].$session_array[0]);
+		//校验数据完整性
+		if($post['signature']==$signature2){
+			$pc = new WXBizDataCrypt($this->appid, $session_array[0]);
 		
+			echo $post['encryptedData'];
+			$errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
 
-		// $errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
+			if ($errCode == 0) {
+			    echo json_encode($data);
+			} else {
+			    print($errCode . "\n");
+			}
+			
+		}
 
-		// if ($errCode == 0) {
-		//     var_dump($data);
-		// } else {
-		//     print($errCode . "\n");
-		// }
-		// echo json_encode($pc);
+		
 	}
 
 
