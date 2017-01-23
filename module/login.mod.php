@@ -1,5 +1,7 @@
 <?php
-
+include_once './include/wechat/errorCode.php';
+include_once './include/wechat/pkcs7Encoder.php';
+include_once './include/wechat/wxBizDataCrypt.php';
 class ModuleObject extends MasterObject
 {
 	public $appid;
@@ -85,11 +87,10 @@ class ModuleObject extends MasterObject
 		// $redirect = getPG("redirect");//登录成功后重定向的目标url
 		// include(template('login'));
 		$code = $_GET['code'];
-		var_dump($_GET);
-		var_dump($_POST);
-		var_dump($_REQUEST);
 		$session = $this->get_key($code);
-		var_dump($session);
+		$session_array = print_r($session,true);
+		$pc = new WXBizDataCrypt($this->appid, $session_array['session_key']);
+		var_dump($pc);
 	}
 	
 	function get_key($code){
@@ -103,6 +104,9 @@ class ModuleObject extends MasterObject
     		);
     	return $this->http($url,$params,'POST');
 	}
+
+
+
 
 	function Error_tip()
 	{
