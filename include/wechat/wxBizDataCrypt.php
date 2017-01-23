@@ -68,7 +68,7 @@ class WXBizDataCrypt
             return ErrorCode::$IllegalBuffer;
         }
 		$data = $result[1];
-		return $data;
+		return ErrorCode::$OK;
 	}
 
 }
