@@ -117,8 +117,8 @@ class ModuleObject extends MasterObject
 		$session_array = explode('@',$session );
 
 
-		var_dump(json_decode($post['rawData'],true));
-
+		// var_dump(json_decode($post['rawData'],true));
+		echo sha1($post['rawData']+$session_array[0])
 
 
 		// $pc = new WXBizDataCrypt($this->appid, $session_array[0]);
