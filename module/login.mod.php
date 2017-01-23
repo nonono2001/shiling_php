@@ -92,8 +92,9 @@ class ModuleObject extends MasterObject
 		// include(template('login'));
 		$code = $_POST;
 		// $session_array = $this->getKey($code);
-		
 		var_dump($code);
+		var_dump(1);
+		
 
 	}
 	
