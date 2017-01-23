@@ -128,6 +128,7 @@ class ModuleObject extends MasterObject
 
 			var_dump($post['encryptedData']);
 			var_dump($post['iv']);
+			var_dump($session_array[0]);
 			// if ($errCode == 0) {
 			//     print($data."\n");
 			//     echo 1;
