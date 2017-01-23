@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include_once './include/wechat/errorCode.php';
 include_once './include/wechat/pkcs7Encoder.php';
 include_once './include/wechat/wxBizDataCrypt.php';
