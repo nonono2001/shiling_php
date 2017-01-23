@@ -112,7 +112,8 @@ class ModuleObject extends MasterObject
 	}
 	
 	function Userinfo(){
-		echo 2;
+		$post = $_POST;
+		var_dump($post);
 	}
 
 
