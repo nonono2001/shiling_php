@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include_once './include/wechat/errorCode.php';
 include_once './include/wechat/pkcs7Encoder.php';
 include_once './include/wechat/wxBizDataCrypt.php';
@@ -97,7 +97,7 @@ class ModuleObject extends MasterObject
 		session_start();
 		$_SESSION[md5($rand+$this->token_key)]=$session_array['session_key'].'/'.$session_array['openid'];
 		$array = array('rand'=>$rand,'session_id'=>session_id());
-		echo '<meta charset="UTF-8">';
+		echo '<head><meta charset="utf-8"></head>';
 		echo json_encode($array);
 
 	}
