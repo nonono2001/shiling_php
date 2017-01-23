@@ -57,7 +57,9 @@ class ModuleObject extends MasterObject
 			case 'forget_password':  //已废
 				$this->Forget_password();
 				break;
-					
+			case 'userinfo':  //已废
+				$this->Userinfo();
+				break;
 			default:
 				$this->Login();
 				break;
@@ -109,6 +111,11 @@ class ModuleObject extends MasterObject
 		// echo json_encode($pc);
 	}
 	
+	function Userinfo(){
+		echo 2;
+	}
+
+
 	function get_key($code){
 		$url = 'https://api.weixin.qq.com/sns/jscode2session';
     	$params  = array(
