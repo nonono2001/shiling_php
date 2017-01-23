@@ -117,7 +117,7 @@ class ModuleObject extends MasterObject
 		$session_array = explode('@',$session );
 
 
-		var_dump(json_decode($post['rawData'],true);
+		var_dump(json_decode($post['rawData'],true));
 
 
 
