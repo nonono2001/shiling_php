@@ -102,7 +102,7 @@ class ModuleObject extends MasterObject
         $jsondata = json_encode($json,true);
         //跨域请求
  
-		echo '('.$jsondata.')';
+		echo $jsondata;
 
 	}
 	
