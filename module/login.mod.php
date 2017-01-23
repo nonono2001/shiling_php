@@ -2,37 +2,23 @@
 
 class ModuleObject extends MasterObject
 {
-	public $appid;
-	public $secret;
 
-	function __construct(){
-		// $config = getSetting( 'sys_setting' );
-
-		// $this->appid = $config['appid'];
-		// $this->secret = $config['appsecret'];
-		$this->Execute();
-		
-	}
 	function ModuleObject()//构造函数
 	{
-		// $this->MasterObject( 'db_on' );
+		$this->MasterObject( 'db_on' );
 		
 		
 	
-		
-		
-
+		$this->Execute();
 		
 	}
 	
 	
 	function Execute()
 	{
-		echo $this->Act;
 		switch($this->Act)
 		{
 			case 'login': //透明附盖层，可以页面上实现一步一步的教程。参考http://www.paishi.com/，并且实现网页背景图片固定，不随着滚动条下拉而移动。
-				echo 1;
 				$this->Login();
 				break;
 				
@@ -84,37 +70,17 @@ class ModuleObject extends MasterObject
 //		include(template('login'));
 		
 		
-		// if(MEMBER_ID>0)//说明用户已登录，已登录时不能进入登录页
-		// {
-		// 	//跳回到首页
-		// 	header('Location: index.php');
-		// 	exit();
-		// }
-		// $page_title="登录";
-		// $redirect = getPG("redirect");//登录成功后重定向的目标url
-		// include(template('login'));
-		// $code = $_POST;
-		// $session_array = $this->getKey($code);
-		// var_dump($code);
-		echo 1;
-		
-
+		if(MEMBER_ID>0)//说明用户已登录，已登录时不能进入登录页
+		{
+			//跳回到首页
+			header('Location: index.php');
+			exit();
+		}
+		$page_title="登录";
+		$redirect = getPG("redirect");//登录成功后重定向的目标url
+		include(template('login'));
 	}
 	
-	// function getKey($code){
- //    	$url = 'https://api.weixin.qq.com/sns/jscode2session';
- //    	$params  = array(
- //    		'appid'=>$this->appid,
- //    		'secret'=>$this->secret,
- //    		'js_code'=>$code,
- //    		'grant_type'=>'authorization_code'
-
- //    		);
- //    	var_dump($parmas);
- //    	return $this->http($url,$params,'POST');
- //    }
-
-
 	function Error_tip()
 	{
 		$page_title="登录";
