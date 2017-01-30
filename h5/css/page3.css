@@ -1,0 +1,82 @@
+/* pages/register/register.wxss */
+.bg5{
+   background: url('../img/bg_5.jpg') no-repeat center center /cover;
+}
+.box2{
+  margin-top: 5rem;
+}
+    .box .box_top .title{
+      padding-top:1.4rem;
+      text-align: center;
+      margin-right: 0;
+      font-size:0.6rem;
+      letter-spacing: 0.5rem;
+    }
+  .box .box_con{
+    text-align: center;
+    clear: both;
+    overflow: hidden;
+    padding-bottom:1rem;
+  }
+    .box .box_con .text_1{
+      color:#cea869;
+      font-size:1.2rem;
+      border-bottom:1px solid #cea869;
+      width:90%;
+      margin: 0 auto;
+      padding-bottom:1rem;
+    }
+
+    .box .box_con .text_2{
+      color:#cea869;
+      font-size:1rem;
+      border-bottom:1px solid #cea869;
+      width:90%;
+      margin: 0 auto;
+      padding-bottom:0.6rem;
+      padding-top:0.8rem;
+      line-height: 1.7rem;
+      margin-bottom: 1.4rem;
+    }
+      
+      .box .box_con .img_box{
+        width:11rem;
+        margin: 0 auto;
+        padding-bottom:1rem;
+        text-align: center;
+        float: none;
+        overflow: hidden;
+        
+      }
+      .box .img_left{
+        float:left;
+      }
+
+      .box .img_right{
+        float:right;
+      }
+      .box .box_con .img_box img{
+        width:5rem;
+        padding:0;
+        margin:0;
+        height:5rem;
+      }
+      .box .box_con .img_text{
+        color: #c3caff;
+        font-size:1rem;
+        line-height: 1.5rem;
+      }
+      .box .btn_box button{
+        color:#cea869;
+        background-color: #0b1341;
+        text-align: center;
+        display: block;
+        width: 7rem;
+        margin: 0 auto;
+        line-height: 1.3rem;
+        border: 1px solid #856e56;
+        border-radius: 3px;
+        font-size:1rem;
+        clear: both;
+       
+      }
