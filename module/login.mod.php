@@ -123,21 +123,21 @@ class ModuleObject extends MasterObject
 		if($post['signature']==$signature2){
 			
 			
-			// $pc = new WXBizDataCrypt($this->appid, $session_array[0]);
+			$pc = new WXBizDataCrypt($this->appid, $session_array[0]);
 
-			// $errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
-			$data = '{"openId":"oUmH50OEoOVQjsSDGWbuGBhNUl_w","nickName":"A﹏Minîmum","gender":2,"language":"zh_CN","city":"Yangpu","province":"Shanghai","country":"CN","avatarUrl":"http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqlSOAINDtQV1V1TthZsHvuOkgkzibIuqnXszsF1aFCMgNvhjicImZ6tOIWPn8p7dbdsoydowictP9cA/0","watermark":{"timestamp":1485156966,"appid":"wxbf4eea839f0b7aba"}}';
+			$errCode = $pc->decryptData($post['encryptedData'], $post['iv'], $data );
+			// $data = '{"openId":"oUmH50OEoOVQjsSDGWbuGBhNUl_w","nickName":"A﹏Minîmum","gender":2,"language":"zh_CN","city":"Yangpu","province":"Shanghai","country":"CN","avatarUrl":"http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqlSOAINDtQV1V1TthZsHvuOkgkzibIuqnXszsF1aFCMgNvhjicImZ6tOIWPn8p7dbdsoydowictP9cA/0","watermark":{"timestamp":1485156966,"appid":"wxbf4eea839f0b7aba"}}';
 			// $data = array('openId'=>"oUmH50OEoOVQjsSDGWbuGBhNUl_w");
 			// $data = json_encode($data);
-			// if ($errCode == 0) {
+			if ($errCode == 0) {
 			   
-			//    $data = json_decode($data,true);
+			   $data = json_decode($data,true);
 			  
-			//    $_SESSION['openId']=$data['openId'];
-			// } else {
-			//     print($errCode . "\n");
-			// }
-			 echo $data;
+			   $_SESSION['openId']=$data['openId'];
+			} else {
+			    print($errCode . "\n");
+			}
+			 // echo $data;
 			
 		}
 
