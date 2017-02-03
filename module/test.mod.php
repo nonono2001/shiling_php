@@ -110,6 +110,10 @@ class ModuleObject extends MasterObject
 			case 'testhong':
 				$this->testhong();
 				break;
+
+			case 'test555':
+				$this->test555();
+				break;
 					
 			default:
 				$this->Common();
@@ -122,6 +126,17 @@ class ModuleObject extends MasterObject
 	{
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">缺少参数......';
 		
+	}
+
+	function test555()
+	{
+		$r = json_decode('{
+    "errcode": 40029,
+    "errmsg": "invalid code"
+}',true);
+
+		var_dump($r);
+
 	}
 	
 	function test1()
