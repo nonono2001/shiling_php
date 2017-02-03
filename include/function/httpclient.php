@@ -29,7 +29,15 @@ function send_get_url($url)
 
 }
 
-
+//$post_data是url带的参数，可以是数组，也可以是字符串。
+//数组如$params  = array(
+//'appid'=>$appid,
+//			'secret'=>$secret,
+//			'js_code'=>$xcx_code,
+//			'grant_type'=>'authorization_code'
+//
+//		);
+//字符串如：$params_str = 'appid='.$appid.'&secret='.$secret.'&js_code='.$xcx_code.'&grant_type=authorization_code';
 function send_post_url( $url, $post_data )
 {
 	//初始化

@@ -72,6 +72,7 @@ class ModuleObject extends MasterObject
         else
         {
             //$sessionkey_openid_array一定是成功信息
+            json_error('code可能过期，无法用code换取到openid和session_key');
             json_result($sessionkey_openid_array['openid'],'this is openid using params_str');
         }
 
