@@ -385,6 +385,52 @@ function write_cookie($row,$autologin)
 }
 
 
+//生成第三方session。第三方是相对于微信服务器来说的。
+//全站唯一为小程序写session的函数。调用它，一般是在登录功能。
+function gen_3rd_session($session_value)
+{
+	session_start();
+	$_SESSION['xcx_session_key']=$session_value['session_key'];
+	$_SESSION['openid'] = $session_value['openid'];
+	$_SESSION['member_id'] = $session_value['member_id'];
+	$_SESSION['client_type'] = 'xcx';
+	return session_id();
+}
+
+//用小程序客户端的code换取session_key和openid
+function code_to_sessionkey_openid($xcx_code)
+{
+	$config = getSetting( 'sys_setting' );
+
+	$appid = $config['appid']; //微信服务器提供给调用者的appid和appsecret。
+	$secret = $config['appsecret'];
+
+	$url = 'https://api.weixin.qq.com/sns/jscode2session';
+	$params  = array(
+		'appid'=>$appid,
+		'secret'=>$secret,
+		'js_code'=>$xcx_code,
+		'grant_type'=>'authorization_code'
+
+	);
+
+	$sessionkey_openid = send_post_url($url,$params);
+	/*$sessionkey_openid
+    正常返回的JSON数据包
+    {
+        "openid": "OPENID",
+          "session_key": "SESSIONKEY"
+    }
+    错误时返回JSON数据包(示例为Code无效)
+    {
+        "errcode": 40029,
+        "errmsg": "invalid code"
+    }
+    */
+
+	return $sessionkey_openid;
+}
+
 //得到一个商品图片的路径，若路径不存在，则创建它。
 //成功返回路径，失败返回空。
 function proimg_path($image_id)

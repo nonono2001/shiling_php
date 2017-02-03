@@ -54,14 +54,14 @@ class ModuleObject extends MasterObject
 		{
 			//提货券号+提货码，不存在。
 			$tips_message = '提货卡号或提货密码输入不正确，请返回重新输入。';
-			json_error($tips_message);
+			json_error($tips_message,'40013');
 		}
 
 		//判断该提货卡，是否已发货。如果已发货，则提示他已发货，不能再输入收货信息。
 		if($onecardinfo['ship_status'] == 'shipped')
 		{
 			$tips_message = '提货卡号或提货密码输入不正确，请返回重新输入。';
-			json_error($tips_message);
+			json_error($tips_message,'40013');
 
 		}
 
@@ -83,7 +83,7 @@ class ModuleObject extends MasterObject
 		if(!$shuohuoren || !$lianxidianhua || !$shouhuodizhi)
 		{
 			$tips_message = '收货人、联系电话、收货地址，都不能为空。';
-			json_error($tips_message);
+			json_error($tips_message,'40013');
 		}
 
 		//判断提货码+提货券号，是否正确
@@ -94,7 +94,7 @@ class ModuleObject extends MasterObject
 		{
 			//提货券号+提货码，不存在。
 			$tips_message = '对不起，您的提货券号或者提货码输入不正确，请重新输入。';
-			json_error($tips_message);
+			json_error($tips_message,'40013');
 		}
 
 		//将收货信息，update到DB。

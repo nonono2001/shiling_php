@@ -43,7 +43,7 @@ class ModuleObject extends MasterObject
 	{
 		if(!MEMBER_ID || MEMBER_ID <= 0)
 		{
-			json_error('未登录');
+			json_error('未登录','40010');
 		}
 		else
 		{
