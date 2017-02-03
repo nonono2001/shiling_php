@@ -47,8 +47,8 @@ class ModuleObject extends MasterObject
 			'grant_type'=>'authorization_code'
 
 		);
-
-		$sessionkey_openid = send_post_url($url,$params);
+        $params_str = 'appid='.$appid.'&secret='.$secret.'&js_code='.$xcx_code.'&grant_type=authorization_code';
+		$sessionkey_openid = send_post_url($url,$params_str);
 		/*$sessionkey_openid
 		正常返回的JSON数据包
 		{
