@@ -88,3 +88,20 @@ img {display:block;}
       border-radius: 0.8rem;
       font-size:1rem;
     }
+.pop-error p{
+	z-index: 5000;
+    min-width: 8.4em;
+    min-height: 0.4em;
+    max-width: 70%; 
+    padding:0 8px;
+	position: fixed;
+	border-radius: 5px;
+	line-height: 2rem;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	background: rgba(40, 40, 40, 0.75);
+	bottom: 5%;
+	color: #fff;
+
+}

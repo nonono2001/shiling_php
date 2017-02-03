@@ -16,6 +16,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<script type="text/javascript" src="js/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/page4.css">
 	</head>
@@ -37,7 +38,7 @@
 		            <div class="inputs_box">
 		              <div class="input_box">
 		                <text class="input_text">提货卡号</text>
-		                <input name="ticket"  type="text"/>
+		                <input name="ticket"  type="text"/>
 		              </div>
 		              <div class="input_box">
 		                <text class="input_text" >密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</text>
@@ -45,7 +46,7 @@
 		              </div>
 		            </div>
 		           
-		              <button formType="submit">确定</button>
+		              <button type="button" class="submit">确定</button>
 		          </div>
 		        
 		          
@@ -53,8 +54,36 @@
 		      </div>
 		    </div>
 		  </div>
-
+		  <div class="pop-error" style="display:none">
+		  	<p>请输入手机号</p>
+		  </div>
 		</div>
+		<script type="text/javascript">
+			
+			$(function(){
+				$('.submit').click(function(){
+					if(!$("input[name^='ticket'").val()){
+						$('.pop-error p').text('请输入提货卡号');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!$("input[name^='password'").val()){
+						$('.pop-error p').text('请输入密码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					
+
+					$('form').submit()
+
+				})
+
+				
+			})
+
+		</script>
 <!-- wetoast -->
 <!--index.wxml-->
 	</body>

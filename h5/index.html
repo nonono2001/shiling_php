@@ -16,6 +16,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<script type="text/javascript" src="js/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/index.css">
 	</head>
@@ -42,11 +43,11 @@
 		              </div>
 		              <div class="input_box">
 		                <text class="input_text" >密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</text>
-		                <input name="password" type="text" password/>
+		                <input name="password" type="password" />
 		              </div>
 		            </div>
 		           
-		              <button formType="submit">确定</button>
+		              <button class="submit" type="button">确定</button>
 		          </div>
 		        
 		          
@@ -54,11 +55,43 @@
 		      </div>
 		    </div>
 		  </div>
-
+		  <div class="pop-error" style="display:none">
+		  	<p>请输入手机号</p>
+		  </div>
 
 		</div>
 		<!--index.wxml-->
+		<script type="text/javascript">
+			$(function(){
+				
+				$('.submit').click(function(){
+					
+					if(!$("input[name^='mobile'").val()){
+						$('.pop-error p').text('请输入手机号码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!checkMobile($("input[name^='mobile'").val())){
+						$('.pop-error p').text('请输入正确的手机号码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!$("input[name^='password'").val()){
+						$('.pop-error p').text('请输入密码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
 
+					$('form').submit()
+
+				})
+		})
+
+
+		</script>
 	</body>
 
 </html>

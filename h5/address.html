@@ -16,6 +16,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<script type="text/javascript" src="js/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/page2.css">
 	</head>
@@ -24,7 +25,7 @@
 		  <div  class="bg bg4"> 
 		    <div class="box box2">
 		      <div class="box_form">
-		        <form class="" bindsubmit="formSubmit">
+		        <form class="form-box">
 		          <div class="box_top">
 		            <div class="img_box">
 		              <img class="box_logo" src="img/logo.png"></img>
@@ -50,15 +51,57 @@
 		                <input name="recevier" type="text" />
 		              </div>
 		            </div>
-		              <button formType="submit">确定</button>
+		              <button type="button" class="submit">确定</button>
 		          </div>  
 		        </form>
 		      </div>
 		    </div>
 		  </div>
-
+		  <div class="pop-error" style="display:none">
+		  	<p>请输入手机号</p>
+		  </div>
 		</div>
 	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.submit').click(function(){
+				if(!$("input[name^='user_address'").val()){
+					$('.pop-error p').text('请输入收货地址');
+					$('.pop-error').fadeIn();
+					doFade();
+					return 
+				}
+				if(!$("input[name^='street_address'").val()){
+					$('.pop-error p').text('请输入街道地址');
+					$('.pop-error').fadeIn();
+					doFade();
+					return 
+				}
+				if(!$("input[name^='mobile'").val()){
+					$('.pop-error p').text('请输入联系方式');
+					$('.pop-error').fadeIn();
+					doFade();
+					return 
+				}
+				if(!checkMobile($("input[name^='mobile'").val())){
+					$('.pop-error p').text('请输入正确的手机号码');
+					$('.pop-error').fadeIn();
+					doFade();
+					return 
+				}
+				if(!$("input[name^='recevier'").val()){
+					$('.pop-error p').text('请输入收件人');
+					$('.pop-error').fadeIn();
+					doFade();
+					return 
+				}
+
+				$('form').submit()
+
+			})
+		})
+
+	</script>
 </html>
 
 

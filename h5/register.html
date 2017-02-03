@@ -16,6 +16,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<script type="text/javascript" src="js/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/page1.css">
 	</head>
@@ -35,12 +36,12 @@
 		            <div class="inputs_box">
 		              <div class="input_box">
 		                <text class="input_text">手机号码</text>
-		                <input name="tel" bindinput="mobileInput" value=""  type="text"/>
+		                <input name="mobile"  type="tel"/>
 		              </div>
 		              <div class="input_box">
 		                <text class="input_text" >验&nbsp;&nbsp;证&nbsp;&nbsp;码</text>
 		                <input name="yzm" class="small_input" type="text" />
-		                <button class="yzm_btn">验证码</button>
+		                <button type="button" class="yzm_btn">验证码</button>
 		              </div>
 		              <div class="input_box">
 		                <text class="input_text" >密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</text>
@@ -51,13 +52,97 @@
 		                <input name="repassword" type="password" />
 		              </div>
 		            </div>
-		              <button formType="submit">确定</button>
+		              <button type="button" class="submit">确定</button>
 		          </div>    
 		        </form>
 		      </div>
 		    </div>
 		  </div>
+		  <div class="pop-error" style="display:none">
+		  	<p>请输入手机号</p>
+		  </div>
 		</div>
+		<script type="text/javascript">
+			$(function(){
+				$('.submit').click(function(){
+					if(!$("input[name^='mobile'").val()){
+						$('.pop-error p').text('请输入手机号码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!$("input[name^='yzm'").val()){
+						$('.pop-error p').text('请输入验证码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!$("input[name^='password'").val()){
+						$('.pop-error p').text('请输入密码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!$("input[name^='repassword'").val()){
+						$('.pop-error p').text('请再次输入密码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if($("input[name^='repassword'").val()!=$("input[name^='password'").val()){
+						$('.pop-error p').text('两次密码不一致');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+
+					$('form').submit()
+
+				})
+
+				$('.yzm_btn').click(function(){
+					var that = $(this)
+					var mobile = $("input[name^='mobile'").val()
+					if(!checkMobile(mobile)){
+						$('.pop-error p').text('请输入正确的手机号');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}else{
+						$.ajax({
+							url:'http://localhost',
+							async:'false',
+							data:"mobile="+mobile,
+							success:function(res){
+
+								$(that).attr('disabled','disabled');
+						        var time = 6;
+						        $(that).html(time)
+						        var timer = setInterval(function(){
+						        	time--;
+						        	if(time>=0){
+						        		$(that).html(time)
+						        	}else{
+						        		clearInterval(timer)
+						        		$(that).removeAttr('disabled');
+						        		$(that).html('验证码')
+
+						        	}
+						        	
+						        	
+						        },1000)
+						        
+						
+							}
+						})
+						
+					  }
+			
+    
+				})
+			})
+
+		</script>
 	</body>
 </html>
 
