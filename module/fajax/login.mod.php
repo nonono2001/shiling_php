@@ -14,12 +14,6 @@ class ModuleObject extends MasterObject
 	
 	function Execute()
 	{
-		//必需要已登录
-		if(!MEMBER_ID || MEMBER_ID <= 0)
-		{
-			json_error('未登录，需要登录','40010');
-		}
-
 		
 		switch($this->Act)
 		{
