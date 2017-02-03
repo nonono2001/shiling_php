@@ -49,7 +49,6 @@ class ModuleObject extends MasterObject
     		"errmsg": "invalid code"
 		}
 		*/
-        json_error('code可能过期，无法用code换取到openid和session_key','40011');
 		$sessionkey_openid_array = json_decode($sessionkey_openid,true);
 
 		if(!$sessionkey_openid_array || $sessionkey_openid_array['errcode'])
