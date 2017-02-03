@@ -30,7 +30,7 @@ function main()
 	$mod = isset($_POST['mod'])?$_POST['mod']:$_GET['mod'];
 	
 	//检查登录信息
-	login_info_init();
+	login_info_check();
 
 	if(!defined('MEMBER_ID'))
 	{
@@ -86,7 +86,7 @@ function main()
 }
 
 //登录信息检查，根据是否登录，初始化一些宏定义
-function login_info_init()
+function login_info_check()
 {
 	//define一个宏只能定义一次。后面不能改其值。
 	
@@ -152,4 +152,5 @@ function login_info_init()
 	
 	
 }
+
 ?>

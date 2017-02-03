@@ -6,7 +6,7 @@ return array (
 // 	'site_name' => '我爱鲜生',
  		
 //	'db_host' => '54.251.82.112',
-	'db_host' => '127.0.0.1',
+	'db_host' => '47.91.179.68',//阿里云食令小程序的服务器
  	'db_user' => 'shiling',
 //  	'db_pass' =>  'sgezi50602', //阿里云DB的密码
 //     'db_pass' =>  'mysqlweiyang123',//亚马逊EC2的DB密码
@@ -54,6 +54,7 @@ return array (
 	'appid'=>'wxbf4eea839f0b7aba',
 	'appsecret'=>'a4c3e102e98eefac4ef2fe0af7ba9da9',
  	'token_key'=>'fsdffjklj234kfoo5',
+
  	'admin_uid' => array('15',
  				  
  	),//网站管理员的uid，可以有多个。这是一种简易的权限管理，在这里可以设置超级admin。

@@ -357,7 +357,7 @@ class Load {
 }
 
 //整站唯一的写cookie的代码
-//读cookie的地方较多，比如：index.php里login_info_init函数
+//读cookie的地方较多，比如：index.php里login_info_check函数
 //参数：$row，是一个user信息的数组，$autologin代表是否“下次自动登录”
 function write_cookie($row,$autologin)
 {
