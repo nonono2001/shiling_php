@@ -72,7 +72,7 @@ class ModuleObject extends MasterObject
         else
         {
             //$sessionkey_openid_array一定是成功信息
-            json_result($sessionkey_openid_array['openid'],'this is openid');
+            json_result($sessionkey_openid_array['openid'],'this is openid using params_str');
         }
 
 
