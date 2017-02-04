@@ -38,8 +38,7 @@ class ModuleObject extends MasterObject
 
     //生成绑定手机号的验证码
     function Gen_valicode_bindphone()
-    {error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-        '$code_json: ' . var_export(1111, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+    {
         //前端会传来手机号
         $cellphone = getPG('mobile'); //前端已对手机号格式做过验证。这里省点事，不做格式验证了
 
@@ -58,87 +57,28 @@ class ModuleObject extends MasterObject
 
         $code_json = json_encode( array('code'=> strval($vali_code)), 1);
 
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$code_json: ' . var_export($code_json, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-
         $config = getSetting( 'sys_setting' );
 
         $aliyun_AccessKeyID = $config['aliyun_AccessKeyID']; //微信服务器提供给调用者的appid和appsecret。
         $aliyun_AccessKeySecret = $config['aliyun_AccessKeySecret'];
-        //调用sdk，向手机号发送一次短信。
-        //参考https://help.aliyun.com/document_detail/44368.html?spm=5176.doc44327.6.581.MadQEG
-//        include_once 'include/aliyun_sms/aliyun-php-sdk-core/Config.php';
-//
-//        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//            'here 111: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//        use Sms\Request\V20160927 as Sms;
-//
-//        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//            'here 222: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//        $iClientProfile = DefaultProfile::getProfile("cn-hangzhou", $aliyun_AccessKeyID, $aliyun_AccessKeySecret);
-//
-//        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//            'here 333: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//        $client = new DefaultAcsClient($iClientProfile);
-//
-//        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//            'here 444: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//        $request = new Sms\SingleSendSmsRequest();
-//
-//        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//            'here 555: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//        $request->setSignName("食令");/*签名名称*/
-//        $request->setTemplateCode("SMS_44480306");/*模板code*/
-//        $request->setRecNum($cellphone);/*目标手机号*/
-//        $request->setParamString($code_json);/*模板变量，数字一定要转换为字符串*/
-//
-//        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//            '$cellphone: ' . var_export($cellphone, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//        try {
-//            $response = $client->getAcsResponse($request);
-//            //print_r($response);
-//            error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//                'here 7777: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//
-//            json_result('验证码发送成功');
-//        }
-//        catch (ClientException  $e) {
-//            //print_r($e->getErrorCode());
-//            //print_r($e->getErrorMessage());
-//
-//            error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//                'here 8888: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//
-//            json_error('验证码生成失败，请重试','40013');
-//        }
-//        catch (ServerException  $e) {
-//            //print_r($e->getErrorCode());
-//            //print_r($e->getErrorMessage());
-//
-//            error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//                'here 9999: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//
-//            json_error('验证码生成失败，请重试','40013');
-//        }
 
+        //阿里云提供的发短信sdk不好用，搜出了一篇文章，自己写原生的发短信函数，抄来直接就用了。
+        //原文：http://blog.csdn.net/bakw/article/details/53914014
         $res = $this->SendSMS($cellphone, $code_json, "食令", "SMS_44480306",$aliyun_AccessKeyID,$aliyun_AccessKeySecret);
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            'SendSMS res: ' . var_export($res, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-
+        if($res)
+        {
+            json_result();
+        }
+        else
+        {
+            json_error('验证码发送失败，请重试','40013');
+        }
     }
 
 
 
-
+    //调用阿里云发短信接口api。成功返回true，失败返回false。
+    //原文：http://blog.csdn.net/bakw/article/details/53914014
     function SendSMS($RecNum,$ParamString,$SignName,$TemplateCode,$AccessKeyId,$AccessKeySecret)
     {
         $url='https://sms.aliyuncs.com/';//短信网关地址
@@ -166,10 +106,6 @@ class ModuleObject extends MasterObject
         $httphead['http']['content']=$PostData;
         $httphead=stream_context_create($httphead);
         $result=@simplexml_load_string(file_get_contents($url,false,$httphead));
-
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            'SendSMS $result: ' . var_export($result, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-
 
         return !isset($result->Code);
     }

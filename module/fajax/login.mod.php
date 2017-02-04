@@ -87,7 +87,10 @@ class ModuleObject extends MasterObject
 
     //绑定手机号和openid的动作。
     function Do_bind_cellphone_openid()
-    {
+    {error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+        '$_POST: ' . var_export($_POST, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$_GET: ' . var_export($_GET, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
         //前端会传来code、手机号、验证码、密码。
         $xcx_code = getPG('code');
         $cellphone = getPG('cellphone');
