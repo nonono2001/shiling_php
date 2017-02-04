@@ -399,7 +399,7 @@ function gen_3rd_session($session_value)
 	$_SESSION['client_type'] = 'xcx';
 
     error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-        'session_id: ' . var_export(session_id, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+        'session_id: ' . var_export(session_id(), 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
 
     return session_id();
