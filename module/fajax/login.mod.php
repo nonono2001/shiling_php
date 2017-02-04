@@ -126,7 +126,14 @@ class ModuleObject extends MasterObject
         //拿code换取session_key 和 openid。
         $sessionkey_openid = code_to_sessionkey_openid($xcx_code);
 
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$sessionkey_openid: ' . var_export($sessionkey_openid, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
         $sessionkey_openid_array = json_decode($sessionkey_openid,true);
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$sessionkey_openid_array: ' . var_export($sessionkey_openid_array, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
 
         if(!$sessionkey_openid_array || $sessionkey_openid_array['errcode'])
         {
