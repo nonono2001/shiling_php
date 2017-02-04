@@ -169,10 +169,17 @@ function login_info_check_wb()
 function login_info_check_xcx()
 {
 	$xcx_session_id = getPG('xcx_session_id');
+
+	error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+		'$xcx_session_id: ' . var_export($xcx_session_id, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+
 	session_id($xcx_session_id);
 	session_start();
 	$session_key = $_SESSION['session_key']; //$_SESSION['session_key']微信服务器提供给api调用者的token;
 	$openid = $_SESSION['openid']; //$_SESSION['openid']是微信用户唯一标识
+	error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+		'$_SESSION: ' . var_export($_SESSION, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
 	//在小程序客户端登录成功时，php就会存储$_SESSION['client_type']='xcx', $_SESSION['session_key']，$_SESSION['openid'], $_SESSION['member_id']=登录用户的id
 	if($_SESSION['member_id'] > 0)
@@ -193,17 +200,25 @@ function login_info_check_xcx()
 				$row['face_m_img'] = 'templates/images/noavatar.gif';
 			}
 			define('MEMBER_FACE_M', $row['face_m_img']);//用于整站页头上的小头像
+			error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+				'111111: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
             return;
 		}
 		else//session读取失败，即状态是未登录
 		{
+			error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+				'222222: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
 			return;
 		}
 	}
     else //session读取失败。
     {
-        return;
+		error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+			'333333: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+		return;
     }
 
 	
