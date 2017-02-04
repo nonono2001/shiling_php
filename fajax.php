@@ -172,7 +172,10 @@ function login_info_check_xcx()
 
 	error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
 		'$xcx_session_id: ' . var_export($xcx_session_id, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-
+	if(!$xcx_session_id)
+	{
+		return;
+	}
 
 	session_id($xcx_session_id);
 	session_start();
