@@ -38,7 +38,8 @@ class ModuleObject extends MasterObject
 
     //生成绑定手机号的验证码
     function Gen_valicode_bindphone()
-    {
+    {error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+        '$cellphone: ' . var_export($cellphone, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
         //前端会传来手机号
         $cellphone = getPG('mobile'); //前端已对手机号格式做过验证。这里省点事，不做格式验证了
 
