@@ -96,19 +96,18 @@ function main()
 //登录信息检查，根据是否登录，初始化一些宏定义
 function login_info_check()
 {
+	//fajax是专为小程序写的入口，所以不用判断是否从web browser进入。
 	//判断是否带有xcx_session_id 这个变量，如果有，说明是小程序客户端打来的请求。
-	$xcx_session_id = getPG('xcx_session_id');
-	if($xcx_session_id)   //说明客户端是小程序。
-	{
-        define('IS_CLIENT_XCX', 1);
-		login_info_check_xcx(); //小程序客户端，检查登录
-		return;
-	}
-    else
-    {
-        login_info_check_wb(); //浏览器客户端，检查登录
-        return;
-    }	
+
+	define('IS_CLIENT_XCX', 1);
+	login_info_check_xcx(); //小程序客户端，检查登录
+	return;
+
+//    else
+//    {
+//        login_info_check_wb(); //浏览器客户端，检查登录
+//        return;
+//    }
 }
 
 //浏览器web browser客户端，检查登录情况

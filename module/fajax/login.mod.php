@@ -87,15 +87,26 @@ class ModuleObject extends MasterObject
 
     //绑定手机号和openid的动作。
     function Do_bind_cellphone_openid()
-    {error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-        '$_POST: ' . var_export($_POST, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$_GET: ' . var_export($_GET, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+    {
+        /*前端传过来
+        'xcx_code' => '021BNw3v1iR7Ea0i3t2v1jwb3v1BNw3E',
+  'mobile' => '15899587743',
+  'yzm' => '1234',
+  'password' => '111',
+  'repassword' => '111',
+         *
+         */
         //前端会传来code、手机号、验证码、密码。
-        $xcx_code = getPG('code');
-        $cellphone = getPG('cellphone');
-        $vali_code = getPG('vali_code');
-        $password = getPG('pwd');
+        $xcx_code = getPG('xcx_code');
+        $cellphone = getPG('mobile');
+        $vali_code = getPG('yzm');
+        $password = getPG('password');
+        $repassword = getPG('repassword');
+
+        if($password != $repassword)
+        {
+            json_error('两次密码不相同，请重新输入','40013');
+        }
 
         if(!$xcx_code || !$cellphone || !$vali_code || !$password)
         {
