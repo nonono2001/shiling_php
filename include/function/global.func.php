@@ -389,12 +389,20 @@ function write_cookie($row,$autologin)
 //全站唯一为小程序写session的函数。调用它，一般是在登录功能。
 function gen_3rd_session($session_value)
 {
-	session_start();
+    error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+        '$session_value: ' . var_export($session_value, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+    session_start();
 	$_SESSION['xcx_session_key']=$session_value['session_key'];
 	$_SESSION['openid'] = $session_value['openid'];
 	$_SESSION['member_id'] = $session_value['member_id'];
 	$_SESSION['client_type'] = 'xcx';
-	return session_id();
+
+    error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+        'session_id: ' . var_export(session_id, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+
+    return session_id();
 }
 
 //用小程序客户端的code换取session_key和openid
