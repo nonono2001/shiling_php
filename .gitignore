@@ -1,6 +1,8 @@
 /.idea
 /doc
-/data/*
+/data/logs
+/data/cache
+/data/chutest
 /attachment
 /attachment_article
 /attachment_custompage
