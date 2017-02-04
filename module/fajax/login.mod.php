@@ -36,13 +36,9 @@ class ModuleObject extends MasterObject
 		//接收小程序发来的code登录凭证
 		$xcx_code = getPG('code');
 
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$xcx_code111: ' . var_export($xcx_code, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
 		$sessionkey_openid = code_to_sessionkey_openid($xcx_code);
 
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$sessionkey_openid111: ' . var_export($sessionkey_openid, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
         /*$sessionkey_openid，可能为空。
         正常返回的JSON数据包
@@ -85,6 +81,10 @@ class ModuleObject extends MasterObject
                 $session_value = $sessionkey_openid_array;
                 $session_value['member_id'] = $onemember['member_id'];
                 $third_session_id = gen_3rd_session($session_value);//生成第三方session。
+
+                error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+                    'gen_3rd_session: ' . var_export($third_session_id, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
                 json_result('this is 3rd_session_id',$third_session_id);
             }
 
@@ -140,7 +140,7 @@ class ModuleObject extends MasterObject
             '$sessionkey_openid222: ' . var_export($sessionkey_openid, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
         $sessionkey_openid_array = json_decode($sessionkey_openid,true);
-        
+
 
         if(!$sessionkey_openid_array || $sessionkey_openid_array['errcode'])
         {
