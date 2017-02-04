@@ -36,19 +36,26 @@ class ModuleObject extends MasterObject
 		//接收小程序发来的code登录凭证
 		$xcx_code = getPG('code');
 
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$xcx_code111: ' . var_export($xcx_code, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
 		$sessionkey_openid = code_to_sessionkey_openid($xcx_code);
-		/*$sessionkey_openid，可能为空。
-		正常返回的JSON数据包
-		{
-			"openid": "OPENID",
-      		"session_key": "SESSIONKEY"
-		}
-		错误时返回JSON数据包(示例为Code无效)
-		{
-			"errcode": 40029,
-    		"errmsg": "invalid code"
-		}
-		*/
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$sessionkey_openid111: ' . var_export($sessionkey_openid, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+        /*$sessionkey_openid，可能为空。
+        正常返回的JSON数据包
+        {
+            "openid": "OPENID",
+              "session_key": "SESSIONKEY"
+        }
+        错误时返回JSON数据包(示例为Code无效)
+        {
+            "errcode": 40029,
+            "errmsg": "invalid code"
+        }
+        */
 		$sessionkey_openid_array = json_decode($sessionkey_openid,true);
 
 		if(!$sessionkey_openid_array || $sessionkey_openid_array['errcode'])
@@ -124,16 +131,16 @@ class ModuleObject extends MasterObject
         }
 
         //拿code换取session_key 和 openid。
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$xcx_code222: ' . var_export($xcx_code, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
         $sessionkey_openid = code_to_sessionkey_openid($xcx_code);
 
         error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$sessionkey_openid: ' . var_export($sessionkey_openid, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+            '$sessionkey_openid222: ' . var_export($sessionkey_openid, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
         $sessionkey_openid_array = json_decode($sessionkey_openid,true);
-
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$sessionkey_openid_array: ' . var_export($sessionkey_openid_array, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-
+        
 
         if(!$sessionkey_openid_array || $sessionkey_openid_array['errcode'])
         {
