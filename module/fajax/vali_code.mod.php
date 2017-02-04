@@ -56,6 +56,10 @@ class ModuleObject extends MasterObject
         }
 
         $code_json = json_encode( array('code'=> strval($vali_code)), 1);
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$code_json: ' . var_export($code_json, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
         //调用sdk，向手机号发送一次短信。
         //参考https://help.aliyun.com/document_detail/44368.html?spm=5176.doc44327.6.581.MadQEG
         include_once 'include/aliyun_sms/aliyun-php-sdk-core/Config.php';
@@ -67,6 +71,10 @@ class ModuleObject extends MasterObject
         $request->setTemplateCode("SMS_44480306");/*模板code*/
         $request->setRecNum($cellphone);/*目标手机号*/
         $request->setParamString($code_json);/*模板变量，数字一定要转换为字符串*/
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$cellphone: ' . var_export($cellphone, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
         try {
             $response = $client->getAcsResponse($request);
             //print_r($response);
