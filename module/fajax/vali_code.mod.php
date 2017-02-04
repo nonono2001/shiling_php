@@ -67,34 +67,68 @@ class ModuleObject extends MasterObject
         $aliyun_AccessKeySecret = $config['aliyun_AccessKeySecret'];
         //调用sdk，向手机号发送一次短信。
         //参考https://help.aliyun.com/document_detail/44368.html?spm=5176.doc44327.6.581.MadQEG
-//        include_once 'include/aliyun_sms/aliyun-php-sdk-core/Config.php';
-//        use Sms\Request\V20160927 as Sms;
-//        $iClientProfile = DefaultProfile::getProfile("cn-hangzhou", $aliyun_AccessKeyID, $aliyun_AccessKeySecret);
-//        $client = new DefaultAcsClient($iClientProfile);
-//        $request = new Sms\SingleSendSmsRequest();
-//        $request->setSignName("食令");/*签名名称*/
-//        $request->setTemplateCode("SMS_44480306");/*模板code*/
-//        $request->setRecNum($cellphone);/*目标手机号*/
-//        $request->setParamString($code_json);/*模板变量，数字一定要转换为字符串*/
-//
-//        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-//            '$cellphone: ' . var_export($cellphone, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-//
-//        try {
-//            $response = $client->getAcsResponse($request);
-//            //print_r($response);
-//            json_result('验证码发送成功');
-//        }
-//        catch (ClientException  $e) {
-//            //print_r($e->getErrorCode());
-//            //print_r($e->getErrorMessage());
-//            json_error('验证码生成失败，请重试','40013');
-//        }
-//        catch (ServerException  $e) {
-//            //print_r($e->getErrorCode());
-//            //print_r($e->getErrorMessage());
-//            json_error('验证码生成失败，请重试','40013');
-//        }
+        include_once 'include/aliyun_sms/aliyun-php-sdk-core/Config.php';
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            'here 111: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+    use Sms\Request\V20160927 as Sms;
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            'here 222: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+        $iClientProfile = DefaultProfile::getProfile("cn-hangzhou", $aliyun_AccessKeyID, $aliyun_AccessKeySecret);
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            'here 333: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+        $client = new DefaultAcsClient($iClientProfile);
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            'here 444: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+        $request = new Sms\SingleSendSmsRequest();
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            'here 555: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+        $request->setSignName("食令");/*签名名称*/
+        $request->setTemplateCode("SMS_44480306");/*模板code*/
+        $request->setRecNum($cellphone);/*目标手机号*/
+        $request->setParamString($code_json);/*模板变量，数字一定要转换为字符串*/
+
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$cellphone: ' . var_export($cellphone, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+        try {
+            $response = $client->getAcsResponse($request);
+            //print_r($response);
+            error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+                'here 7777: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+
+            json_result('验证码发送成功');
+        }
+        catch (ClientException  $e) {
+            //print_r($e->getErrorCode());
+            //print_r($e->getErrorMessage());
+
+            error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+                'here 8888: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+
+            json_error('验证码生成失败，请重试','40013');
+        }
+        catch (ServerException  $e) {
+            //print_r($e->getErrorCode());
+            //print_r($e->getErrorMessage());
+
+            error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+                'here 9999: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+
+            json_error('验证码生成失败，请重试','40013');
+        }
 
 
     }
