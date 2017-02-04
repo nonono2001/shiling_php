@@ -51,9 +51,14 @@ return array (
 //  				  'F' => '她',			
 //  	),
 
-	'appid'=>'wxbf4eea839f0b7aba',
-	'appsecret'=>'a4c3e102e98eefac4ef2fe0af7ba9da9',
+	//因为这里可能会调用小程序以及阿里云等多方服务器的api，所以对appid和appsecret，加了前缀。
+	'xcx_appid'=>'wxbf4eea839f0b7aba',
+	'xcx_appsecret'=>'a4c3e102e98eefac4ef2fe0af7ba9da9',
  	'token_key'=>'fsdffjklj234kfoo5',
+
+	'aliyun_AccessKeyID' => 'LTAIaxScOPsGm7o0',
+	'aliyun_AccessKeySecret' => 'c0393imwBaenQXfHrNd6RFbEKlbnXF',
+
 
  	'admin_uid' => array('15',
  				  

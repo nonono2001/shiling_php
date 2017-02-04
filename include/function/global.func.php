@@ -402,8 +402,8 @@ function code_to_sessionkey_openid($xcx_code)
 {
 	$config = getSetting( 'sys_setting' );
 
-	$appid = $config['appid']; //微信服务器提供给调用者的appid和appsecret。
-	$secret = $config['appsecret'];
+	$appid = $config['xcx_appid']; //微信服务器提供给调用者的appid和appsecret。
+	$secret = $config['xcx_appsecret'];
 
 	$url = 'https://api.weixin.qq.com/sns/jscode2session';
 	$params  = array(
@@ -430,6 +430,85 @@ function code_to_sessionkey_openid($xcx_code)
 
 	return $sessionkey_openid;
 }
+
+//查检手机验证码是否有效。过期或不存在，都是无效。
+//成功返回true；失败返回false
+function check_sms_vali_code($cellphone, $vali_code)
+{
+    if(!$cellphone || !$vali_code)
+    {
+        return false;
+    }
+    //验证码的表是qkdb_sms_vali_code表
+    $sql = "select * from qkdb_sms_vali_code where  cellphone_no = '".$cellphone."'";
+
+    $db = GLX()->db;
+    $query = $db->Query($sql);
+    $row = $db->GetRow($query);
+    if($row)
+    {
+        if( ($row['sms_vali_code'] == $vali_code) && (TIMESTAMP <= $row['expiration_time']) )
+        {
+            //验证码正确，并且未过期
+            return true;
+        }
+        else
+        {
+            //验证码不正确
+            return false;
+        }
+
+    }
+    else
+    {
+        //手机号不存在，验证失败
+        return false;
+    }
+}
+
+//生成6位数字验证码。过期时间为5分钟
+function gen_vali_code_6n($cellphone)
+{
+    if(!$cellphone)
+    {
+        return false;
+    }
+    //6位随机数字，开头不要0。
+    $s = rand(1, 9);
+    $s .= rand(0, 9);
+    $s .= rand(0, 9);
+    $s .= rand(0, 9);
+    $s .= rand(0, 9);
+    $s .= rand(0, 9);
+
+    $db = CLX()->db;
+    $sql = "select * from qkdb_sms_vali_code where cellphone_no = '".$cellphone."'";
+    $query = $db->Query($sql);
+    $row = $db->GetRow($query);
+    if($row)
+    {
+        //update
+        $update_data = array(
+            'sms_vali_code' => $s,
+            'expiration_time' => (time() + 300), //300秒有效期。
+        );
+        $db->update('qkdb_sms_vali_code', $update_data, "cellphone_no = '".$cellphone."'");
+    }
+    else
+    {
+        //insert
+        $insert_data = array(
+            'cellphone_no' => $cellphone,
+            'sms_vali_code' => $s,
+            'expiration_time' => (time() + 300), //300秒有效期。
+        );
+        $db->insert('qkdb_sms_vali_code',$insert_data);
+    }
+
+    return $s;
+
+}
+
 
 //得到一个商品图片的路径，若路径不存在，则创建它。
 //成功返回路径，失败返回空。

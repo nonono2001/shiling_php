@@ -88,14 +88,23 @@ class ModuleObject extends MasterObject
     //绑定手机号和openid的动作。
     function Do_bind_cellphone_openid()
     {
-        //前端会传来code、手机号、验证码。
+        //前端会传来code、手机号、验证码、密码。
         $xcx_code = getPG('code');
         $cellphone = getPG('cellphone');
         $vali_code = getPG('vali_code');
+        $password = getPG('pwd');
 
-        if(!$xcx_code || !$cellphone || !$vali_code)
+        if(!$xcx_code || !$cellphone || !$vali_code || !$password)
         {
             json_error('缺少参数，请重新输入','40013');
+        }
+
+        //手机验证码，需要check它的正确性。
+        $res = check_sms_vali_code($cellphone, $vali_code);
+        if(!$res)
+        {
+            //验证码不正确，或者已过期。
+            json_error('验证码错误或已过期，请重新获取验证码后提交','40013');
         }
 
         //拿code换取session_key 和 openid。
@@ -125,6 +134,7 @@ class ModuleObject extends MasterObject
             {
                 //update
                 $update_data = array(
+                    'password' => md5($password),
                     'openid' => $openid,
                     'session_key' => $session_key,
                     'lastbindtime' => time(),
@@ -139,6 +149,7 @@ class ModuleObject extends MasterObject
                 //insert
                 $insert_data = array(
                     'cellphone' => addslashes($cellphone),
+                    'password' => md5($password),
                     'openid' => $openid,
                     'session_key' => $session_key,
                     'lastbindtime' => time(),
