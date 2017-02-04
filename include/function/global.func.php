@@ -481,7 +481,7 @@ function gen_vali_code_6n($cellphone)
     $s .= rand(0, 9);
     $s .= rand(0, 9);
 
-    $db = CLX()->db;
+    $db = GLX()->db;
     $sql = "select * from qkdb_sms_vali_code where cellphone_no = '".$cellphone."'";
     $query = $db->Query($sql);
     $row = $db->GetRow($query);

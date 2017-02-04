@@ -38,8 +38,7 @@ class ModuleObject extends MasterObject
 
     //生成绑定手机号的验证码
     function Gen_valicode_bindphone()
-    {error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-        '$cellphone: ' . var_export($cellphone, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+    {
         //前端会传来手机号
         $cellphone = getPG('mobile'); //前端已对手机号格式做过验证。这里省点事，不做格式验证了
 
@@ -60,7 +59,7 @@ class ModuleObject extends MasterObject
 
         error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
             '$code_json: ' . var_export($code_json, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-
+        json_error('验证码生成失败，请重试qqq','40013');
         //调用sdk，向手机号发送一次短信。
         //参考https://help.aliyun.com/document_detail/44368.html?spm=5176.doc44327.6.581.MadQEG
 //        include_once 'include/aliyun_sms/aliyun-php-sdk-core/Config.php';
