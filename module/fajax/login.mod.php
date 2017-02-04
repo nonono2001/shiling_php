@@ -96,6 +96,8 @@ class ModuleObject extends MasterObject
   'repassword' => '111',
          *
          */
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            '$_GET: ' . var_export($_GET, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
         //前端会传来code、手机号、验证码、密码。
         $xcx_code = getPG('xcx_code');
         $cellphone = getPG('mobile');
