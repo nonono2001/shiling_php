@@ -145,7 +145,7 @@ class ModuleObject extends MasterObject
         $Params['Action']='SingleSendSms';//操作接口名，系统规定参数，取值：SingleSendSms
         //$Params['RegionId']='cn-hangzhou';//机房信息
         $Params['AccessKeyId']=$AccessKeyId;//阿里云颁发给用户的访问服务所用的密钥ID
-        $Params['Format']='JSON';//返回值的类型，支持JSON与XML。默认为XML
+        //$Params['Format']='JSON';//返回值的类型，支持JSON与XML。默认为XML
         $Params['ParamString']=rawurlencode($ParamString);//短信模板中的变量；数字需要转换为字符串；个人用户每个变量长度必须小于15个字符。
         $Params['RecNum']=$RecNum;//目标手机号
         $Params['SignatureMethod']='HMAC-SHA1';//签名方式，目前支持HMAC-SHA1
@@ -165,8 +165,13 @@ class ModuleObject extends MasterObject
         $httphead['http']['header'].="Content-length:".strlen($PostData)."\n";
         $httphead['http']['content']=$PostData;
         $httphead=stream_context_create($httphead);
+        $result=@simplexml_load_string(file_get_contents($url,false,$httphead));
 
-        return $httphead;
+        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
+            'SendSMS $result: ' . var_export($result, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+
+
+        return !isset($result->Code);
     }
 
 
