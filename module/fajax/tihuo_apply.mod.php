@@ -25,24 +25,32 @@ class ModuleObject extends MasterObject
 		
 		switch($this->Act)
 		{
+			case 'do_send_cardinfo':
+				$this->Do_send_cardinfo();   //用户发送卡券号+密码，这里检查是否正确。
+				break;
+
 			case 'do_send_shouhuoinfo':    //用户发送收货地址等收货信息
 				$this->Do_send_shouhuoinfo();
 				break;
 
 			default:
-				$this->Do_tihuo_apply();
+				$this->Common();
 				break;
 		}
 
 	}
 
-
-
-	//客户凭借卡号+密码，进行提货申请。
-	function Do_tihuo_apply()
+	function Common()
 	{
-		$tihuo_card_no = getPG('tihuo_card_no');//提货卡号
-		$tihuo_password = getPG('tihuo_password');//提货密码
+		echo '';
+	}
+
+
+	//客户发送 卡号+密码，这里检查是否正确。
+	function Do_send_cardinfo()
+	{
+		$tihuo_card_no = getPG('ticket');//提货卡号
+		$tihuo_password = getPG('ticketpassword');//提货密码
 
 
 		//检查提货券号和提货码的正确性。字段tihuoquanhao代表卡号，tihuoma代表密码。
@@ -60,7 +68,7 @@ class ModuleObject extends MasterObject
 		//判断该提货卡，是否已发货。如果已发货，则提示他已发货，不能再输入收货信息。
 		if($onecardinfo['ship_status'] == 'shipped')
 		{
-			$tips_message = '提货卡号或提货密码输入不正确，请返回重新输入。';
+			$tips_message = '该卡号礼品已发货，不能再次输入收货信息。';
 			json_error($tips_message,'40013');
 
 		}
@@ -76,11 +84,13 @@ class ModuleObject extends MasterObject
 	{
 		$tihuoquanhao = getPG('tihuo_card_no');
 		$tihuoma = getPG('tihuo_password');
-		$shuohuoren = trim(getPG('shuohuoren'));
-		$lianxidianhua = trim(getPG('lianxidianhua'));
-		$shouhuodizhi = trim(getPG('shouhuodizhi'));
 
-		if(!$shuohuoren || !$lianxidianhua || !$shouhuodizhi)
+		$address_city = trim(getPG('address_city')); //收货地址，省市区
+		$address_street = trim(getPG('address_street')); //收货地址，街道门牌号
+		$lianxidianhua = trim(getPG('lianxidianhua')); //联系电话
+		$shuohuoren = getPG('shuohuoren'); //收货人
+
+		if(!$shuohuoren || !$lianxidianhua || !$address_city || !$address_street)
 		{
 			$tips_message = '收货人、联系电话、收货地址，都不能为空。';
 			json_error($tips_message,'40013');
@@ -93,7 +103,7 @@ class ModuleObject extends MasterObject
 		if(!$onecardinfo)
 		{
 			//提货券号+提货码，不存在。
-			$tips_message = '对不起，您的提货券号或者提货码输入不正确，请重新输入。';
+			$tips_message = '对不起，您的提货卡号或者密码输入不正确，请重新输入。';
 			json_error($tips_message,'40013');
 		}
 
@@ -101,9 +111,9 @@ class ModuleObject extends MasterObject
 		$update_data = array(
 			'is_ask_tihuo' => '1',
 			'last_ask_tihuo_time' => TIMESTAMP,
-			'shouhuoren_name' => $shuohuoren,
-			'shouhuoren_phone' => $lianxidianhua,
-			'shouhuoren_address' => $shouhuodizhi,
+			'shouhuoren_name' => addslashes($shuohuoren),
+			'shouhuoren_phone' => addslashes($lianxidianhua),
+			'shouhuoren_address' => addslashes($address_city.$address_street),
 		);
 		$this->DatabaseHandler->update('qkdb_tihuo_card',$update_data," id = '".$onecardinfo['id']."'");
 
