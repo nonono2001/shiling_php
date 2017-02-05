@@ -61,7 +61,7 @@ class ModuleObject extends MasterObject
 		if(!$onecardinfo)
 		{
 			//提货券号+提货码，不存在。
-			$tips_message = '提货卡号或提货密码输入不正确，请返回重新输入。';
+			$tips_message = '提货卡号或提货密码输入不正确，请重新输入。';
 			json_error($tips_message,'40013');
 		}
 
@@ -105,6 +105,13 @@ class ModuleObject extends MasterObject
 			//提货券号+提货码，不存在。
 			$tips_message = '对不起，您的提货卡号或者密码输入不正确，请重新输入。';
 			json_error($tips_message,'40013');
+		}
+
+		if($onecardinfo['ship_status'] == 'shipped')
+		{
+			$tips_message = '该卡号礼品已发货，不能再次输入收货信息。';
+			json_error($tips_message,'40013');
+
 		}
 
 		//将收货信息，update到DB。
