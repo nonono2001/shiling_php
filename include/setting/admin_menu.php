@@ -1,7 +1,7 @@
 <?php
 //敏感词汇集合
 return array(
-		
+/*
 'yemian' => array(  //这里的key：yemian，指明一个一级菜单，不能重复。
         'name' => '页面', //一级导航名称
         'url' => 'admin.php?mod=nav',
@@ -183,7 +183,7 @@ return array(
 
     ),
 
-
+*/
 'kaquan' => array(
     'name' => '卡券',
     'url' => 'admin.php?mod=thcard',

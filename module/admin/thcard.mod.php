@@ -63,7 +63,7 @@ class ModuleObject extends MasterObject
 		
 		$page_arr = page_limit($total_record, $per_page_num, $topage, 'admin.php?mod=thcard');
 		
-		$sql = "SELECT * FROM qkdb_tihuo_card order by ship_status DESC, is_ask_tihuo DESC , id ASC " . $page_arr['limit'];
+		$sql = "SELECT * FROM qkdb_tihuo_card order by ship_status DESC, is_ask_tihuo DESC , last_ask_tihuo_time DESC " . $page_arr['limit'];
 		$query = $this->DatabaseHandler->Query($sql);
 		
 		$thcard_info = array();

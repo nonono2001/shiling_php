@@ -77,13 +77,18 @@ class ModuleObject extends MasterObject
             }
             else
             {
-                //已经绑定过了。
+                //update
+                $update_data = array(
+                    'lastlogin_dateline' => TIMESTAMP,
+                );
+
+                $this->DatabaseHandler->update('qkdb_member',$update_data, "member_id = '".$onemember['member_id']."'");
+
+                //已经绑定过了。也算是登录成功。
                 $session_value = $sessionkey_openid_array;
                 $session_value['member_id'] = $onemember['member_id'];
                 $third_session_id = gen_3rd_session($session_value);//生成第三方session。
 
-                error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-                    'gen_3rd_session: ' . var_export($third_session_id, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
                 json_result('this is 3rd_session_id',$third_session_id);
             }
@@ -103,8 +108,7 @@ class ModuleObject extends MasterObject
   'repassword' => '111',
          *
          */
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$_GET: ' . var_export($_GET, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
+        
         //前端会传来code、手机号、验证码、密码。
         $xcx_code = getPG('xcx_code');
         $cellphone = getPG('mobile');
@@ -131,13 +135,9 @@ class ModuleObject extends MasterObject
         }
 
         //拿code换取session_key 和 openid。
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$xcx_code222: ' . var_export($xcx_code, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
         $sessionkey_openid = code_to_sessionkey_openid($xcx_code);
 
-        error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-            '$sessionkey_openid222: ' . var_export($sessionkey_openid, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
         $sessionkey_openid_array = json_decode($sessionkey_openid,true);
 
@@ -167,7 +167,8 @@ class ModuleObject extends MasterObject
                     'password' => md5($password),
                     'openid' => $openid,
                     'session_key' => $session_key,
-                    'lastbindtime' => time(),
+                    'lastbindtime' => TIMESTAMP,
+                    'lastlogin_dateline' => TIMESTAMP,
                 );
 
                 $this->DatabaseHandler->update('qkdb_member',$update_data, "member_id = '".$onemember['member_id']."'");
@@ -182,12 +183,13 @@ class ModuleObject extends MasterObject
                     'password' => md5($password),
                     'openid' => $openid,
                     'session_key' => $session_key,
-                    'lastbindtime' => time(),
+                    'lastbindtime' => TIMESTAMP,
+                    'lastlogin_dateline' => TIMESTAMP,
                 );
                 $member_id_login = $this->DatabaseHandler->insert('qkdb_member',$insert_data,true);
             }
 
-            //到这里，绑定成功。
+            //到这里，绑定成功。也算是登录成功。
             //生成3rd_session
             $session_value = $sessionkey_openid_array;
             $session_value['member_id'] = $member_id_login;
