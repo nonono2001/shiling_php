@@ -101,11 +101,10 @@ background: #FEF3D1;
 	  <!--thead style="background: #E9E9E9;"-->
       <tr class="">
         <th style="width: 10%;border-left: 1px solid #ccc;">全选<input id="all_item_select" type="checkbox" onclick="all_select_click(this);" style="vertical-align: middle;margin-left: 2px;" /></th>
-        <th style="width: 18%">手机号码</th>
-        <th style="width: 18%;">真实姓名</th>
-        <th style="width: 24%;">最近一次登录时间</th>
-        <th style="width: 18%;">新or老会员</th>
-		<th style="width: 12%;">操作</th>
+        <th style="width: 23%">手机号码</th>
+        <th style="width: 23%;">真实姓名</th>
+        <th style="width: 29%;">最近一次登录时间</th>
+		<th style="width: 15%;">操作</th>
       </tr>
       </thead>
       <tbody> 
@@ -116,7 +115,6 @@ background: #FEF3D1;
           <td>{$oneinfo[cellphone]}</td>
 		  <td>{$oneinfo[real_name]}</td>
 		  <td>{$oneinfo[lastlogin_dateline]}</td>
-		  <td>{$oneinfo[is_new_old_member]}</td>
 		  <td>
             <a href="admin.php?mod=member&act=member_edit&member_id={$oneinfo[member_id]}&topage={$topage}" class="blue_a" target="_self">编辑</a>
             <a href="javascript:void(0);" onclick="delete_selected_item('{$oneinfo[member_id]}');" class="blue_a" >删除</a>
