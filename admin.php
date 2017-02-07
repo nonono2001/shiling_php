@@ -138,7 +138,7 @@ function login_info_check_wb()
 
 	if($row) //用户信息读取成功，也就是说cookie的信息正确
 	{
-		define('MEMBER_ID', $row['member_id']);
+		define('MEMBER_ID', $row['uid']);
 		define('MEMBER_CELLPHONE', $row['cellphone']);
 		define('MEMBER_EMAIL', $row['email']);
 		define('MEMBER_NICKNAME', $row['nickname']);
