@@ -15,10 +15,10 @@
 		<meta content="telephone=no, address=no" name="format-detection">
 		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		<script type="text/javascript" src="js/jquery-2.2.0.js"></script>
-		<script type="text/javascript" src="js/common.js"></script>
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/page1.css">
+		<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/common.js"></script>
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/style.css">
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/page1.css">
 	</head>
 	<body>
 		<div class="container">
@@ -28,7 +28,7 @@
 		        <form class="" bindsubmit="formSubmit">
 		          <div class="box_top">
 		            <div class="img_box">
-		              <img class="box_logo" src="img/logo.png"></img>
+		              <img class="box_logo" src="templates/{TEMPLATE_NAME}/img/logo.png"></img>
 		            </div>
 		            <div class="title">会员注册</div>
 		          </div>
@@ -39,12 +39,12 @@
 		                <input name="mobile"  type="tel"/>
 		              </div>
 		              <div class="input_box">
-		                <text class="input_text" >验&nbsp;&nbsp;证&nbsp;&nbsp;码</text>
+		                <text class="input_text" >&nbsp;验证码</text>
 		                <input name="yzm" class="small_input" type="text" />
-		                <button type="button" class="yzm_btn">验证码</button>
+		                <button type="button" class="yzm_btn" id="aaa">验证码</button>
 		              </div>
 		              <div class="input_box">
-		                <text class="input_text" >密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</text>
+		                <text class="input_text" >&nbsp;密码</text>
 		                <input name="password" type="password" />
 		              </div>
 		              <div class="input_box">
@@ -71,6 +71,14 @@
 						doFade();
 						return 
 					}
+					var mobile = $("input[name^='mobile'").val();
+					if(!checkMobile(mobile)){
+						$('.pop-error p').text('请输入正确的手机号');
+						$('.pop-error').fadeIn();
+						doFade();
+						return
+					}
+
 					if(!$("input[name^='yzm'").val()){
 						$('.pop-error p').text('请输入验证码');
 						$('.pop-error').fadeIn();
@@ -96,7 +104,8 @@
 						return 
 					}
 
-					$('form').submit()
+					//$('form').submit()
+					//发送ajax进行注册。注册成功，跳转到登录页；失败弹出提示给用户。
 
 				})
 
@@ -110,31 +119,48 @@
 						return 
 					}else{
 						$.ajax({
-							url:'http://localhost',
-							async:'false',
-							data:"mobile="+mobile,
-							success:function(res){
+							type:"post",
+							async:'false',//false表示同步，true表示异步
+							url: 'fajax.php?mod=vali_code&act=gen_valicode_bindphone&type=2',
+							data:{mobile:mobile},
+							beforeSend: function(XMLHttpRequest){
 
-								$(that).attr('disabled','disabled');
-						        var time = 6;
-						        $(that).html(time)
-						        var timer = setInterval(function(){
-						        	time--;
-						        	if(time>=0){
-						        		$(that).html(time)
-						        	}else{
-						        		clearInterval(timer)
-						        		$(that).removeAttr('disabled');
-						        		$(that).html('验证码')
+							},
+							success:function(data){//data是json格式
+								data = jQuery.parseJSON( data );
+								if(data.done)//服务器返回成功状态
+								{
+                                    //弹出层提示验证码发送成功。
+                                    $('.pop-error p').text('验证码发送成功');
+                                    $('.pop-error').fadeIn();
+                                    doFade();
 
-						        	}
-						        	
-						        	
-						        },1000)
-						        
-						
+
+									$(that).attr('disabled','disabled');
+									var time = 6;
+									$(that).html(time)
+									var timer = setInterval(function(){
+										time--;
+										if(time>=0){
+											$(that).html(time)
+										}else{
+											clearInterval(timer)
+											$(that).removeAttr('disabled');
+											$(that).html('验证码')
+
+										}
+									},1000)
+									return;
+								}
+								else//服务器反回失败状态
+								{
+									$('.pop-error p').text(data.msg);
+									$('.pop-error').fadeIn();
+									doFade();
+									return
+								}
 							}
-						})
+						});
 						
 					  }
 			

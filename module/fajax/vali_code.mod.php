@@ -55,8 +55,6 @@ class ModuleObject extends MasterObject
             json_error('验证码生成失败，请重试','40013');
         }
 
-        $code_json = json_encode( array('code'=> strval($vali_code)), 1);
-
         $config = getSetting( 'sys_setting' );
 
         $aliyun_AccessKeyID = $config['aliyun_AccessKeyID']; //微信服务器提供给调用者的appid和appsecret。
@@ -64,7 +62,30 @@ class ModuleObject extends MasterObject
 
         //阿里云提供的发短信sdk不好用，搜出了一篇文章，自己写原生的发短信函数，抄来直接就用了。
         //原文：http://blog.csdn.net/bakw/article/details/53914014
-        $res = $this->SendSMS($cellphone, $code_json, "食令", "SMS_44480306",$aliyun_AccessKeyID,$aliyun_AccessKeySecret);
+        $sms_type = getPG('type');//短信类型
+        if(!$sms_type || $sms_type == 1)
+        {
+            //默认短信类型为 绑定手机号和openid的短信验证码
+            $TemplateCode = "SMS_44480306";
+            $ParamString = json_encode( array('code'=> strval($vali_code)), 1);
+        }
+        else if($sms_type == 2)
+        {
+            //注册验证码
+            $TemplateCode = "SMS_44315145";
+            $param_arr = array(
+                'code' => strval($vali_code),
+                'product' => '食令',
+            );
+            $ParamString = json_encode($param_arr, 1);
+        }
+        else
+        {
+            //默认短信类型
+            $TemplateCode = "SMS_44480306";
+            $ParamString = json_encode( array('code'=> strval($vali_code)), 1);
+        }
+        $res = $this->SendSMS($cellphone, $ParamString, "食令", $TemplateCode,$aliyun_AccessKeyID,$aliyun_AccessKeySecret);
         if($res)
         {
             json_result();

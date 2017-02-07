@@ -9,3 +9,5 @@ function checkMobile (mobile){
 
 	return mobileReg.test(mobile);
 }
+
+var global_domain = "https://www.sharingfoods.com/";
