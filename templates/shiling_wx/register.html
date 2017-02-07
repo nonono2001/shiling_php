@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
+		<!-- 禁止浏览器从本地缓存中调阅页面。--> 
+		<meta http-equiv="pragram" content="no-cache"> 
+		<!--网页不保存在缓存中，每次访问都刷新页面。--> 
+		<meta http-equiv="cache-control" content="no-cache, must-revalidate"> 
+		<!--同上面意思差不多，必须重新加载页面--> 
+		<meta http-equiv="expires" content="0"> 
+		<!-- Mobile Devices Support @begin -->
+		<meta content="telephone=no, address=no" name="format-detection">
+		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<script type="text/javascript" src="js/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/page1.css">
+	</head>
+	<body>
+		<div class="container">
+		  <div  class="bg bg2"> 
+		    <div class="box box2">
+		      <div class="box_form">   
+		        <form class="" bindsubmit="formSubmit">
+		          <div class="box_top">
+		            <div class="img_box">
+		              <img class="box_logo" src="img/logo.png"></img>
+		            </div>
+		            <div class="title">会员注册</div>
+		          </div>
+		          <div class="form_con">
+		            <div class="inputs_box">
+		              <div class="input_box">
+		                <text class="input_text">手机号码</text>
+		                <input name="mobile"  type="tel"/>
+		              </div>
+		              <div class="input_box">
+		                <text class="input_text" >验&nbsp;&nbsp;证&nbsp;&nbsp;码</text>
+		                <input name="yzm" class="small_input" type="text" />
+		                <button type="button" class="yzm_btn">验证码</button>
+		              </div>
+		              <div class="input_box">
+		                <text class="input_text" >密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</text>
+		                <input name="password" type="password" />
+		              </div>
+		              <div class="input_box">
+		                <text class="input_text" >密码确认</text>
+		                <input name="repassword" type="password" />
+		              </div>
+		            </div>
+		              <button type="button" class="submit">确定</button>
+		          </div>    
+		        </form>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="pop-error" style="display:none">
+		  	<p>请输入手机号</p>
+		  </div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$('.submit').click(function(){
+					if(!$("input[name^='mobile'").val()){
+						$('.pop-error p').text('请输入手机号码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!$("input[name^='yzm'").val()){
+						$('.pop-error p').text('请输入验证码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!$("input[name^='password'").val()){
+						$('.pop-error p').text('请输入密码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if(!$("input[name^='repassword'").val()){
+						$('.pop-error p').text('请再次输入密码');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+					if($("input[name^='repassword'").val()!=$("input[name^='password'").val()){
+						$('.pop-error p').text('两次密码不一致');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}
+
+					$('form').submit()
+
+				})
+
+				$('.yzm_btn').click(function(){
+					var that = $(this)
+					var mobile = $("input[name^='mobile'").val()
+					if(!checkMobile(mobile)){
+						$('.pop-error p').text('请输入正确的手机号');
+						$('.pop-error').fadeIn();
+						doFade();
+						return 
+					}else{
+						$.ajax({
+							url:'http://localhost',
+							async:'false',
+							data:"mobile="+mobile,
+							success:function(res){
+
+								$(that).attr('disabled','disabled');
+						        var time = 6;
+						        $(that).html(time)
+						        var timer = setInterval(function(){
+						        	time--;
+						        	if(time>=0){
+						        		$(that).html(time)
+						        	}else{
+						        		clearInterval(timer)
+						        		$(that).removeAttr('disabled');
+						        		$(that).html('验证码')
+
+						        	}
+						        	
+						        	
+						        },1000)
+						        
+						
+							}
+						})
+						
+					  }
+			
+    
+				})
+			})
+
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

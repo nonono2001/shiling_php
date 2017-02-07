@@ -1,0 +1,8 @@
+/**index.wxss**/
+.bg1{
+   background: url('../img/bg_1.jpg') no-repeat center center /cover;
+}
+
+.box1{
+  margin-top: 10rem;
+}

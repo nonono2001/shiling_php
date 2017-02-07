@@ -367,19 +367,19 @@ function write_cookie($row,$autologin)
 	$fac = $row['uid']*1.5+2013;
 	$uidsecret = base64_encode($fac);
 		
-	$fac = $row['num_url']."qinke.com";
-	$numurlsecret = base64_encode($fac);
+//	$fac = $row['num_url']."qinke.com";
+//	$numurlsecret = base64_encode($fac);
 	
 	if($autologin == 1)
 	{
 		//自动登录，写cookie 的有效期都要设为30天。
 		setcookie("cookiesecret1", $uidsecret, TIMESTAMP+2592000);//30天内自动登录，30天cookie过期，2592000单位是秒
-		setcookie("cookiesecret2", $numurlsecret, TIMESTAMP+2592000);
+//		setcookie("cookiesecret2", $numurlsecret, TIMESTAMP+2592000);
 	}
 	else
 	{
 		setcookie("cookiesecret1", $uidsecret);
-		setcookie("cookiesecret2", $numurlsecret);
+//		setcookie("cookiesecret2", $numurlsecret);
 	}
 	
 }

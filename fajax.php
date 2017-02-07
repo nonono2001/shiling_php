@@ -62,7 +62,7 @@ function main()
     }
 	if(!defined('IS_CLIENT_XCX'))
 	{
-		defined('IS_CLIENT_XCX', ''); //客户端是否为小程序
+		define('IS_CLIENT_XCX', ''); //客户端是否为小程序
 	}
 	
 	define('TIMESTAMP', time());
