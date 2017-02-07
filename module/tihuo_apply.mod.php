@@ -25,6 +25,10 @@ class ModuleObject extends MasterObject
 		
 		switch($this->Act)
 		{
+			case 'address_info':
+				$this->Address_info();
+				break;
+
 			case 'do_send_cardinfo':
 				$this->Do_send_cardinfo();   //用户发送卡券号+密码，这里检查是否正确。
 				break;
@@ -33,18 +37,41 @@ class ModuleObject extends MasterObject
 				$this->Do_send_shouhuoinfo();
 				break;
 
+			case 'tihuo_apply_success':
+				$this->Tihuo_apply_success(); //提货申请成功的一个提示页
+				break;
+
 			default:
-				$this->Common();
+				$this->Card_info(); //输入卡号密码的页面
 				break;
 		}
 
 	}
 
-	function Common()
+	//输入卡号密码的页面
+	function Card_info()
 	{
-		echo '';
+		$page_title = '提货卡信息';
+		include(template('ticket'));
 	}
 
+	//输入收货地址的页面
+	function Address_info()
+	{
+		//前台会传来提货卡号+密码。
+		$tihuo_card_no = getPG('ticket');
+		$tihuo_password = getPG('ticketpassword');
+
+		$page_title = '收货人信息';
+		include(template('address'));
+	}
+
+	//提货申请成功的一个提示页
+    function Tihuo_apply_success()
+	{
+		$page_title = '提货申请成功';
+		include(template('success'));
+	}
 
 	//客户发送 卡号+密码，这里检查是否正确。
 	function Do_send_cardinfo()
@@ -61,14 +88,14 @@ class ModuleObject extends MasterObject
 		if(!$onecardinfo)
 		{
 			//提货券号+提货码，不存在。
-			$tips_message = '提货卡号或提货密码输入不正确，请重新输入。';
+			$tips_message = '卡号或密码不正确，请重新输入。';
 			json_error($tips_message,'40013');
 		}
 
 		//判断该提货卡，是否已发货。如果已发货，则提示他已发货，不能再输入收货信息。
 		if($onecardinfo['ship_status'] == 'shipped')
 		{
-			$tips_message = '该卡号礼品已发货，不能再次输入收货信息。';
+			$tips_message = '该卡号礼品已发货，不能再次申请提货。';
 			json_error($tips_message,'40013');
 
 		}

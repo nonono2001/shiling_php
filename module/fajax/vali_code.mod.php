@@ -128,7 +128,11 @@ class ModuleObject extends MasterObject
         $httphead=stream_context_create($httphead);
         $result=@simplexml_load_string(file_get_contents($url,false,$httphead));
 
-        return !isset($result->Code);
+        if(isset($result->Code) || !$result)
+        {
+            return false;
+        }
+        return true;
     }
 
 

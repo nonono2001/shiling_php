@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title></title>
+		<title>{$page_title}</title>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
 		<!-- 禁止浏览器从本地缓存中调阅页面。--> 
@@ -15,10 +15,10 @@
 		<meta content="telephone=no, address=no" name="format-detection">
 		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		<script type="text/javascript" src="js/jquery-2.2.0.js"></script>
-		<script type="text/javascript" src="js/common.js"></script>
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/page4.css">
+		<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/common.js"></script>
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/style.css">
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/page4.css">
 	</head>
 	<body>
 		<!--index.wxml-->
@@ -30,7 +30,7 @@
 		        <form class="" bindsubmit="formSubmit">
 		          <div class="box_top">
 		            <div class="img_box">
-		              <img class="box_logo" src="img/logo.png"></img>
+		              <img class="box_logo" src="templates/{TEMPLATE_NAME}/img/logo.png"></img>
 		            </div>
 		            <div class="title">提货信息</div>
 		          </div>
@@ -62,21 +62,74 @@
 			
 			$(function(){
 				$('.submit').click(function(){
-					if(!$("input[name^='ticket'").val()){
+
+					var ticket = $("input[name^='ticket']").val();
+					if(!$("input[name^='ticket']").val()){
 						$('.pop-error p').text('请输入提货卡号');
 						$('.pop-error').fadeIn();
 						doFade();
 						return 
 					}
-					if(!$("input[name^='password'").val()){
+
+					var ticketpassword = $("input[name^='password']").val();
+					if(!$("input[name^='password']").val()){
 						$('.pop-error p').text('请输入密码');
 						$('.pop-error').fadeIn();
 						doFade();
 						return 
 					}
-					
 
-					$('form').submit()
+					$(this).attr('disabled','disabled');
+					$(this).html('请稍候...');
+					var that = $(this)
+
+					//ajax将提货卡号+密码发送到后端，验证其正确性。
+					//如果正确，则跳转到收货人信息填写页
+					$.ajax({
+						type:"post",
+						async:'false',//false表示同步，true表示异步
+						url: 'index.php?mod=tihuo_apply&act=do_send_cardinfo',
+						data:{ticket:ticket,ticketpassword:ticketpassword},
+						beforeSend: function(XMLHttpRequest){
+
+						},
+						success:function(res){//res是json格式
+							res = jQuery.parseJSON( res );
+							if(res.done)//服务器返回成功状态
+							{
+								//弹出层提示验证码发送成功。
+								$('.pop-error p').text('卡号密码正确，为您跳转下一步');
+								$('.pop-error').fadeIn();
+								doFade();
+
+//								setTimeout(function (){
+								//something you want to do after 2000 ms
+								//跳转到收货人地址填写页
+								location.href = "index.php?mod=tihuo_apply&act=address_info&ticket="+ticket+"&ticketpassword="+ticketpassword;
+//								},2000);
+							}
+							else//服务器反回失败状态
+							{
+								if(res.retval == '40010')
+								{
+									//未登录，失败
+									$('.pop-error p').text('请先登录，正在跳转登录页');
+									$('.pop-error').fadeIn();
+									doFade();
+									location.href = "index.php?mod=login";
+									return ;
+								}
+
+								$(that).removeAttr('disabled');
+								$(that).html('确定');
+
+								$('.pop-error p').text(res.msg);
+								$('.pop-error').fadeIn();
+								doFade();
+								return
+							}
+						}
+					});
 
 				})
 

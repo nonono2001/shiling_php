@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title></title>
+		<title>{$page_title}</title>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
 		<!-- 禁止浏览器从本地缓存中调阅页面。--> 
@@ -15,9 +15,9 @@
 		<meta content="telephone=no, address=no" name="format-detection">
 		<meta name="apple-mobile-web-app-capable" content="yes" /> <!-- apple devices fullscreen -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		<script type="text/javascript" src="js/jquery-2.2.0.js"></script>
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/page3.css">
+		<script type="text/javascript" src="templates/{TEMPLATE_NAME}/js/jquery-2.2.0.js"></script>
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/style.css">
+		<link rel="stylesheet" href="templates/{TEMPLATE_NAME}/css/page3.css">
 	</head>
 	<body>
 		<div class="container">
@@ -28,7 +28,7 @@
 		        
 		          <div class="box_top">
 		            <div class="img_box">
-		              <img class="box_logo" src="img/logo.png"></img>
+		              <img class="box_logo" src="templates/{TEMPLATE_NAME}/img/logo.png"></img>
 		            </div>
 		            <div class="title">重塑对食物的信仰</div>
 		          </div>
@@ -38,23 +38,23 @@
 		            </div>
 		            <div class="text_2">
 		              我们将尽快为您安排发货
-		              可致电xxxx查询
+		              可致电021-52912877查询
 		            </div>
 		            <div class="img_box">
 		              <div class="img_left">
-		                <img src="img/vcode_1.jpg"></img>
+		                <img src="templates/{TEMPLATE_NAME}/img/vcode_1.jpg"></img>
 		                <div class="img_text">
 		                  食令公众号
 		                </div>
 		              </div>
 		              <div class="img_right">
-		                <img src="img/vcode_2.jpg"></img>
+		                <img src="templates/{TEMPLATE_NAME}/img/vcode_2.jpg"></img>
 		                <div class="img_text">
 		                  食令小程序
 		                </div>
 		              </div>
 		            </div>
-		            <div class="btn_box">
+		            <div class="btn_box" style="display:none;">
 		              <button bindtap="gotoShop">食令微商城</button>
 		            </div>
 		          </div>  

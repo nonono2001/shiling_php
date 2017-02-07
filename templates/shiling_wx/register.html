@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title></title>
+		<title>{$page_title}</title>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
 		<!-- 禁止浏览器从本地缓存中调阅页面。--> 
@@ -25,10 +25,10 @@
 		  <div  class="bg bg2"> 
 		    <div class="box box2">
 		      <div class="box_form">   
-		        <form class="" bindsubmit="formSubmit">
+		        <form class="" >
 		          <div class="box_top">
 		            <div class="img_box">
-		              <img class="box_logo" src="templates/{TEMPLATE_NAME}/img/logo.png"></img>
+		              <img class="box_logo" src="templates/{TEMPLATE_NAME}/img/logo.png" />
 		            </div>
 		            <div class="title">会员注册</div>
 		          </div>
@@ -65,13 +65,14 @@
 		<script type="text/javascript">
 			$(function(){
 				$('.submit').click(function(){
-					if(!$("input[name^='mobile'").val()){
+
+                    var mobile = $("input[name^='mobile']").val();
+					if(!$("input[name^='mobile']").val()){
 						$('.pop-error p').text('请输入手机号码');
 						$('.pop-error').fadeIn();
 						doFade();
 						return 
 					}
-					var mobile = $("input[name^='mobile'").val();
 					if(!checkMobile(mobile)){
 						$('.pop-error p').text('请输入正确的手机号');
 						$('.pop-error').fadeIn();
@@ -79,39 +80,76 @@
 						return
 					}
 
-					if(!$("input[name^='yzm'").val()){
+                    var yzm = $("input[name^='yzm']").val();
+					if(!$("input[name^='yzm']").val()){
 						$('.pop-error p').text('请输入验证码');
 						$('.pop-error').fadeIn();
 						doFade();
 						return 
 					}
-					if(!$("input[name^='password'").val()){
+
+                    var password = $("input[name^='password']").val();
+					if(!$("input[name^='password']").val()){
 						$('.pop-error p').text('请输入密码');
 						$('.pop-error').fadeIn();
 						doFade();
 						return 
 					}
-					if(!$("input[name^='repassword'").val()){
+
+                    var repassword = $("input[name^='repassword']").val();
+					if(!$("input[name^='repassword']").val()){
 						$('.pop-error p').text('请再次输入密码');
 						$('.pop-error').fadeIn();
 						doFade();
 						return 
 					}
-					if($("input[name^='repassword'").val()!=$("input[name^='password'").val()){
+					if($("input[name^='repassword']").val()!=$("input[name^='password']").val()){
 						$('.pop-error p').text('两次密码不一致');
 						$('.pop-error').fadeIn();
 						doFade();
 						return 
 					}
 
-					//$('form').submit()
 					//发送ajax进行注册。注册成功，跳转到登录页；失败弹出提示给用户。
+                    $.ajax({
+                        type:"post",
+                        async:'false',//false表示同步，true表示异步
+                        url: 'index.php?mod=reg&act=do_reg',
+                        data:{mobile:mobile,yzm:yzm,password:password,repassword:repassword},
+                        beforeSend: function(XMLHttpRequest){
 
+                        },
+                        success:function(data){//data是json格式
+                            data = jQuery.parseJSON( data );
+                            if(data.done)//服务器返回成功状态
+                            {
+                                //弹出层提示验证码发送成功。
+                                $('.pop-error p').text('恭喜注册成功，为您跳转登录页');
+                                $('.pop-error').fadeIn();
+                                doFade();
+
+                                setTimeout(function (){
+                                    //something you want to do after 2000 ms
+                                    //跳转到登录页
+                                    location.href = "index.php?mod=login";
+                                },2000);
+
+
+                            }
+                            else//服务器反回失败状态
+                            {
+                                $('.pop-error p').text(data.msg);
+                                $('.pop-error').fadeIn();
+                                doFade();
+                                return
+                            }
+                        }
+                    });
 				})
 
 				$('.yzm_btn').click(function(){
 					var that = $(this)
-					var mobile = $("input[name^='mobile'").val()
+					var mobile = $("input[name^='mobile']").val()
 					if(!checkMobile(mobile)){
 						$('.pop-error p').text('请输入正确的手机号');
 						$('.pop-error').fadeIn();

@@ -363,8 +363,21 @@ function write_cookie($row,$autologin)
 {
 	//网站整体主要用cookie保存登录信息。
 	//setcookie()中，如果不写时间，那么它的到期时间就是在浏览器关闭之后
-	//cookie的加密，当然，这个公式越复杂就越难破解
-	$fac = $row['uid']*1.5+2013;
+
+	//因为本函数，有可能是后台管理系统登录时调用；也有可能是前端网站登录时调用。
+	//后台管理系统登录时，传入的是user表的一条记录；前端网站登录时传入的是member表的一条记录。
+	//user表是uid，member表是member_id。
+	if($row['uid'])
+	{
+		//cookie的加密，当然，这个公式越复杂就越难破解
+		$fac = $row['uid']*1.5+2013;
+	}
+	else
+	{
+		//cookie的加密，当然，这个公式越复杂就越难破解
+		$fac = $row['member_id']*1.5+2013;
+	}
+
 	$uidsecret = base64_encode($fac);
 		
 //	$fac = $row['num_url']."qinke.com";

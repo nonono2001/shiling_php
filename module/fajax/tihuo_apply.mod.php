@@ -42,7 +42,7 @@ class ModuleObject extends MasterObject
 
 	function Common()
 	{
-		echo '';
+		echo 'tihuo page';
 	}
 
 
