@@ -110,68 +110,11 @@ function login_info_check()
 //    }
 }
 
-//浏览器web browser客户端，检查登录情况
-function login_info_check_wb()
-{
-    //读取cookie，并对cookie解密
-    $uidsecret = $_COOKIE["cookiesecret1"];
-    $numurlsecret = $_COOKIE["cookiesecret2"];
-
-    if(!$uidsecret || !$numurlsecret)
-    {
-        //cookie值不完整，说明有的cookie已过期或不存在，即状态是未登录
-        return;
-    }
-
-    //解密
-    $uid = (base64_decode($uidsecret)-2013)/1.5;
-    $num_url = base64_decode($numurlsecret);
-    $endpos = strrpos($num_url, 'qinke.com');
-    if($endpos > 0)
-    {
-        $num_url = substr($num_url, 0, $endpos);
-    }
-    else//cookie值不完整，即状态是未登录
-    {
-        return;
-    }
-
-    //从数据库中读出用户的信息，包括uid和昵称
-//	$dbhandle = new SqlClass();
-//	$dbhandle->connect();
-
-    $sql = "select * from qkdb_member where member_id='".$uid."' and num_url='".$num_url."'";
-    $query = GLX()->db->Query($sql);
-    $row = GLX()->db->GetRow($query);
-
-
-    if($row) //用户信息读取成功，也就是说cookie的信息正确
-    {
-        define('MEMBER_ID', $row['member_id']);
-        define('MEMBER_EMAIL', $row['email']);
-        define('MEMBER_NICKNAME', $row['nickname']);
-        define('MEMBER_NUMURL', $row['num_url']);
-        //$row['face_m_img'] = face_path_m($row['num_url']);
-        if(!is_file($row['face_m_img']))
-        {
-            $row['face_m_img'] = 'templates/images/noavatar.gif';
-        }
-        define('MEMBER_FACE_M', $row['face_m_img']);//用于整站页头上的小头像
-        
-    }
-	else//cookie值不满足条件，即状态是未登录
-    {
-        return;
-    }
-}
-
 //小程序客户端，检查登录情况
 function login_info_check_xcx()
 {
 	$xcx_session_id = getPG('xcx_session_id');
 
-	error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-		'$xcx_session_id: ' . var_export($xcx_session_id, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 	if(!$xcx_session_id)
 	{
 		return;
@@ -181,8 +124,6 @@ function login_info_check_xcx()
 	session_start();
 	$session_key = $_SESSION['session_key']; //$_SESSION['session_key']微信服务器提供给api调用者的token;
 	$openid = $_SESSION['openid']; //$_SESSION['openid']是微信用户唯一标识
-	error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-		'$_SESSION: ' . var_export($_SESSION, 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
 	//在小程序客户端登录成功时，php就会存储$_SESSION['client_type']='xcx', $_SESSION['session_key']，$_SESSION['openid'], $_SESSION['member_id']=登录用户的id
 	if($_SESSION['member_id'] > 0)
@@ -203,24 +144,16 @@ function login_info_check_xcx()
 				$row['face_m_img'] = 'templates/images/noavatar.gif';
 			}
 			define('MEMBER_FACE_M', $row['face_m_img']);//用于整站页头上的小头像
-			error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-				'111111: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
 
             return;
 		}
 		else//session读取失败，即状态是未登录
 		{
-			error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-				'222222: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-
 			return;
 		}
 	}
     else //session读取失败。
     {
-		error_log(date('Y-m-d H:i:s ') . __CLASS__ . '::' . __FUNCTION__ . ' @ '.
-			'333333: ' . var_export('', 1) . "\r\n", 3, "data/chutest/CHUTEST-XX.log");
-
 		return;
     }
 

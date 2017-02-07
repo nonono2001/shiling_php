@@ -157,47 +157,4 @@ function login_info_check_wb()
 	}
 }
 
-//小程序客户端，检查登录情况
-function login_info_check_xcx()
-{
-	$xcx_session_id = getPG('xcx_session_id');
-	session_id($xcx_session_id);
-	session_start();
-	$session_key = $_SESSION['session_key']; //$_SESSION['session_key']微信服务器提供给api调用者的token;
-	$openid = $_SESSION['openid']; //$_SESSION['openid']是微信用户唯一标识
-
-	//在小程序客户端登录成功时，php就会存储$_SESSION['client_type']='xcx', $_SESSION['session_key']，$_SESSION['openid'], $_SESSION['member_id']=登录用户的id
-	if($_SESSION['member_id'] > 0)
-	{
-		$sql = "select * from qkdb_member where member_id='".$_SESSION['member_id']."' ";
-		$query = GLX()->db->Query($sql);
-		$row = GLX()->db->GetRow($query);
-
-
-		if($row) //会员信息读取成功
-		{
-			define('MEMBER_ID', $row['member_id']);
-			define('MEMBER_CELLPHONE', $row['cellphone']);
-
-			//$row['face_m_img'] = face_path_m($row['num_url']);
-			if(!is_file($row['face_m_img']))
-			{
-				$row['face_m_img'] = 'templates/images/noavatar.gif';
-			}
-			define('MEMBER_FACE_M', $row['face_m_img']);//用于整站页头上的小头像
-
-			return;
-		}
-		else//session读取失败，即状态是未登录
-		{
-			return;
-		}
-	}
-	else //session读取失败。
-	{
-		return;
-	}
-
-
-}
 ?>
