@@ -101,9 +101,8 @@ background: #FEF3D1;
 	  <!--thead style="background: #E9E9E9;"-->
       <tr class="">
         <th style="width: 10%;border-left: 1px solid #ccc;">全选<input id="all_item_select" type="checkbox" onclick="all_select_click(this);" style="vertical-align: middle;margin-left: 2px;" /></th>
-        <th style="width: 23%">手机号码</th>
-        <th style="width: 23%;">真实姓名</th>
-        <th style="width: 29%;">最近一次登录时间</th>
+        <th style="width: 35%">手机号码</th>
+        <th style="width: 40%;">最近一次登录时间</th>
 		<th style="width: 15%;">操作</th>
       </tr>
       </thead>
@@ -113,7 +112,6 @@ background: #FEF3D1;
       <tr class="">
           <td style="text-align: center;"><input name="one_item_select" onclick="one_select_click(this);" type="checkbox" value="{$oneinfo[member_id]}" style="margin-top:2px;"/></td>
           <td>{$oneinfo[cellphone]}</td>
-		  <td>{$oneinfo[real_name]}</td>
 		  <td>{$oneinfo[lastlogin_dateline]}</td>
 		  <td>
             <a href="admin.php?mod=member&act=member_edit&member_id={$oneinfo[member_id]}&topage={$topage}" class="blue_a" target="_self">编辑</a>
