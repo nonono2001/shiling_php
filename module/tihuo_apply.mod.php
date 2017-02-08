@@ -16,13 +16,7 @@ class ModuleObject extends MasterObject
 	
 	function Execute()
 	{
-		//必需要已登录
-		if(!MEMBER_ID || MEMBER_ID <= 0)
-		{
-			json_error('未登录，需要登录','40010');
-		}
 
-		
 		switch($this->Act)
 		{
 			case 'address_info':
@@ -51,6 +45,14 @@ class ModuleObject extends MasterObject
 	//输入卡号密码的页面
 	function Card_info()
 	{
+		//必需要已登录
+		if(!MEMBER_ID || MEMBER_ID <= 0)
+		{
+			//未登录，直接跳转登录页
+			header('Location: index.php?mod=login');
+			exit();
+		}
+
 		$page_title = '提货卡信息';
 		include(template('ticket'));
 	}
@@ -58,6 +60,14 @@ class ModuleObject extends MasterObject
 	//输入收货地址的页面
 	function Address_info()
 	{
+		//必需要已登录
+		if(!MEMBER_ID || MEMBER_ID <= 0)
+		{
+			//未登录，直接跳转登录页
+			header('Location: index.php?mod=login');
+			exit();
+		}
+
 		//前台会传来提货卡号+密码。
 		$tihuo_card_no = getPG('ticket');
 		$tihuo_password = getPG('ticketpassword');
@@ -76,6 +86,12 @@ class ModuleObject extends MasterObject
 	//客户发送 卡号+密码，这里检查是否正确。
 	function Do_send_cardinfo()
 	{
+		//必需要已登录
+		if(!MEMBER_ID || MEMBER_ID <= 0)
+		{
+			json_error('未登录，需要登录','40010');
+		}
+
 		$tihuo_card_no = getPG('ticket');//提货卡号
 		$tihuo_password = getPG('ticketpassword');//提货密码
 
@@ -109,6 +125,12 @@ class ModuleObject extends MasterObject
 	//用户发送收货地址等收货信息。
 	function Do_send_shouhuoinfo()
 	{
+		//必需要已登录
+		if(!MEMBER_ID || MEMBER_ID <= 0)
+		{
+			json_error('未登录，需要登录','40010');
+		}
+		
 		$tihuoquanhao = getPG('tihuo_card_no');
 		$tihuoma = getPG('tihuo_password');
 
