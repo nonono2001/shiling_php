@@ -117,6 +117,7 @@ class ModuleObject extends MasterObject
 		//将收货信息，update到DB。
 		$update_data = array(
 			'is_ask_tihuo' => '1',
+			'front_type' => 'xcx',
 			'member_id' => MEMBER_ID,
 			'last_ask_tihuo_time' => TIMESTAMP,
 			'shouhuoren_name' => addslashes($shuohuoren),
