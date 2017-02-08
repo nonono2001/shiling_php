@@ -41,7 +41,7 @@
 		                <input name="user_address"  type="text" />
 		              </div>
 		              <div class="input_box">
-		                <text class="input_text" >街道地址</text>
+		                <text class="input_text" >详细地址</text>
 		                <input name="street_address"  type="text" />
 		              </div>
 		              <div class="input_box">
@@ -81,7 +81,7 @@
 
 				var address_street = $("input[name^='street_address']").val();
 				if(!$("input[name^='street_address']").val()){
-					$('.pop-error p').text('请输入街道地址');
+					$('.pop-error p').text('请输入详细地址');
 					$('.pop-error').fadeIn();
 					doFade();
 					return 

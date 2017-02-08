@@ -28,6 +28,14 @@ class ModuleObject extends MasterObject
 				$this->DoLogout(); //退出登录动作
 				break;
 
+			case 'forget_password':
+				$this->Forget_password(); //用户忘记密码，修改密码页面。
+				break;
+
+			case 'do_modify_password':
+				$this->Do_modify_password(); //修改密码的动作。
+				break;
+
 			default:
 				$this->Login(); //登录的页面
 				break;
@@ -129,17 +137,60 @@ class ModuleObject extends MasterObject
 
 	}
 
-
-
-
-
-
-
-
-	//忘记密码
+	//忘记密码，修改密码的页面
 	function Forget_password()
 	{
-		$this->Messager('找回密码，请联系食令客服: 021-52912877');
+		$page_title = '修改密码';
+		include(template('modify_pwd'));
+	}
+
+
+	function Do_modify_password()
+	{
+		//前端会传来，手机号+新密码+新密码确认+短信验证码
+		$cellphone = getPG('mobile');
+		$vali_code = getPG('yzm');
+		$password = getPG('password');
+		$repassword = getPG('repassword');
+		if($password != $repassword)
+		{
+			json_error('两次密码不相同，请重新输入','40013');
+		}
+
+		if(!$cellphone || !$vali_code || !$password)
+		{
+			json_error('缺少参数，请重新输入','40013');
+		}
+
+		//手机验证码，需要check它的正确性。
+		$res = check_sms_vali_code($cellphone, $vali_code);
+		if(!$res)
+		{
+			//验证码不正确，或者已过期。
+			json_error('验证码错误或已过期，请重新获取验证码后提交','40013');
+		}
+
+		//判断该手机号是否已经注册过。
+		$sql = "select member_id from qkdb_member where cellphone = '".addslashes($cellphone)."'"; //因为$cellphone是用户填的，所以需要防卡sql注入，加反斜杠。
+		$query = $this->DatabaseHandler->Query($sql);
+		$onemember = $this->DatabaseHandler->GetRow($query);
+		if(!$onemember)
+		{
+			//未注册过，不能修改密码。
+			json_error('该手机号尚未注册，请先注册','40013');
+
+		}
+		else
+		{
+			//update
+			$update_data = array(
+				'password' => md5($password),
+			);
+			$this->DatabaseHandler->update('qkdb_member',$update_data,"member_id = '".$onemember['member_id']."'");
+
+			json_result();
+		}
+
 	}
 	
 	

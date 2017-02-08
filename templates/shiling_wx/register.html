@@ -41,7 +41,7 @@
 		              <div class="input_box">
 		                <text class="input_text" >&nbsp;验证码</text>
 		                <input name="yzm" class="small_input" type="text" />
-		                <button type="button" class="yzm_btn" id="aaa">验证码</button>
+		                <button type="button" class="yzm_btn" >验证码</button>
 		              </div>
 		              <div class="input_box">
 		                <text class="input_text" >&nbsp;密码</text>
@@ -111,6 +111,10 @@
 						return 
 					}
 
+					$(this).attr('disabled','disabled');
+					$(this).html('注册中...');
+					var that = $(this)
+
 					//发送ajax进行注册。注册成功，跳转到登录页；失败弹出提示给用户。
                     $.ajax({
                         type:"post",
@@ -124,7 +128,7 @@
                             data = jQuery.parseJSON( data );
                             if(data.done)//服务器返回成功状态
                             {
-                                //弹出层提示验证码发送成功。
+                                //弹出层提示注册成功。
                                 $('.pop-error p').text('恭喜注册成功，为您跳转登录页');
                                 $('.pop-error').fadeIn();
                                 doFade();
@@ -139,6 +143,9 @@
                             }
                             else//服务器反回失败状态
                             {
+								$(that).removeAttr('disabled');
+								$(that).html('确定');
+
                                 $('.pop-error p').text(data.msg);
                                 $('.pop-error').fadeIn();
                                 doFade();

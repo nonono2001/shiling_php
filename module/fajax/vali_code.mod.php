@@ -79,6 +79,17 @@ class ModuleObject extends MasterObject
             );
             $ParamString = json_encode($param_arr, 1);
         }
+        else if($sms_type == 3)
+        {
+            //修改密码验证码
+            $TemplateCode = "SMS_44315143";
+            $param_arr = array(
+                'code' => strval($vali_code),
+                'product' => '食令',
+            );
+            $ParamString = json_encode($param_arr, 1);
+
+        }
         else
         {
             //默认短信类型
