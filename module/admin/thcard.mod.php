@@ -90,6 +90,16 @@ class ModuleObject extends MasterObject
 				$row['ship_time'] = '';
 			}
 
+			//提货客户端类型
+			if($row['front_type'] == 'wx')
+			{
+				$row['front_type_name'] = '微信';
+			}
+			else if($row['front_type'] == 'xcx')
+			{
+				$row['front_type_name'] = '小程序';
+			}
+
 			$thcard_info[$row['id']] = $row;
 		}
 		
