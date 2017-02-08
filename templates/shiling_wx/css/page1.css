@@ -3,7 +3,7 @@
    background: url('../img/bg_2.jpg') no-repeat center center /cover;
 }
 .box2{
-  margin-top: 5rem;
+  top:7%;
 }
 .box .form_con .input_box .small_input{
   width:30%;

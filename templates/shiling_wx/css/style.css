@@ -17,10 +17,13 @@ img {display:block;}
 .box{
   padding:1.2%;
   width:80%;
+  position: absolute;
   background-color:#262142;
   border:1px solid #cea869;
   border-radius:0.8rem;
   margin:0 auto;
+  left: 50%;
+  transform: translateX(-50%);
 }
   .box .box_form{
     background-color:#262142;
